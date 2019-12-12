@@ -1,0 +1,1 @@
+# IC_WSN_Fuzzy_Genetico
