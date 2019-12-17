@@ -1,0 +1,3 @@
+package wsn;
+
+@license(LGPL);

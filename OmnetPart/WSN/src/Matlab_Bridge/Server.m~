@@ -1,0 +1,17 @@
+% classdef Server
+%     properties
+        
+        
+        rssi
+        throughput
+%     end
+%     methods
+        pipe = OMNeTPipe("localhost", 18638);
+        [headerName, pktMap] = recvPk(pipe);
+        sensors = pktMap('sensors');
+        neighbors 
+        
+%     end
+
+    
+% end
