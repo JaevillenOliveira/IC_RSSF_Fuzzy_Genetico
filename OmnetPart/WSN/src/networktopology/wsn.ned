@@ -19,7 +19,7 @@ import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.inet.StandardHost;
 import inet.node.inet.WirelessHost;
 import inet.node.wireless.AccessPoint;
-import inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium;
+import inet.physicallayer.ieee80211.packetlevel.Ieee80211DimensionalRadioMedium;
 import inet.power.contract.IEnergyGenerator;
 import inet.power.contract.IEnergyManagement;
 import inet.power.contract.IEnergyStorage;
@@ -79,8 +79,8 @@ network wsn
         @statistic[packetSent](title="packets sent"; source=(packetSent); record=count,"sum(packetBytes)","vector(packetBytes)"; interpolationmode=none);
         @statistic[packetLoss](title="packet loss"; source=(count(packetSent)-count(packetReceived)); record=last; interpolationmode=none);
         @statistic[throughput](title="throughput"; unit=bps; source="throughput(packetReceived)"; record=vector);
-//        @statistic[endToEndDelay](title="end-to-end delay"; source="dataAge(packetReceived)"; unit=s; record=histogram,vector; interpolationmode=none);
- //       @statistic[jitter](title="jitter"; source="jitter(packetReceived)"; unit=s; record=histogram,vector; interpolationmode=none);
+        //        @statistic[endToEndDelay](title="end-to-end delay"; source="dataAge(packetReceived)"; unit=s; record=histogram,vector; interpolationmode=none);
+        //       @statistic[jitter](title="jitter"; source="jitter(packetReceived)"; unit=s; record=histogram,vector; interpolationmode=none);
         @statistic[handoverTime](title="handover time"; source=handoverDelay; unit=s; record=histogram,vector; interpolationmode=none);
 
     submodules:
@@ -93,7 +93,7 @@ network wsn
         configurator: Ipv4NetworkConfigurator {
             @display("p=3575.5125,159.01874");
         }
-        radioMedium: Ieee80211ScalarRadioMedium {
+        radioMedium: Ieee80211DimensionalRadioMedium {
             @display("p=3575.5125,703.5375");
         }
         sensor1: Sensor {
