@@ -145,10 +145,13 @@ protected:
     /** Utility function: creates and sends a beacon frame */
     virtual void sendBeacon();
 
-    //ADDED BY JAEVILLEN
-    /**Used for sending reports to the controller*/
+    //ADDED BY JAEVILLEN: BEGIN
+
     simsignal_t concatRegister(std::string s, std::string s1);
+
+    /**Used to send reports to the controller*/
     virtual void sendReport();
+    virtual int countAssocSta();
     virtual void beaconLost(ApInfo *ap);
     virtual ApInfo *lookupAP(const MacAddress& address);
     virtual void storeAPInfo(Packet *packet,const Ptr<const Ieee80211MgmtHeader>& header,const Ptr<const Ieee80211BeaconFrame>& body);
@@ -157,6 +160,7 @@ protected:
     virtual void receiveSignal(cComponent *source, simsignal_t signalID, bool b,cObject *details) override;
     virtual void receiveSignal(cComponent *source, simsignal_t signalID, cObject *obj,cObject *details) override;
     virtual void restart() ;
+    //ADDED BY JAEVILLEN: END
 
     /** @name Processing of different frame types */
     //@{

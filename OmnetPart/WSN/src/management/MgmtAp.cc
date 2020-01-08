@@ -196,7 +196,7 @@ void MgmtAp::receiveSignal(cComponent *source, simsignal_t signalID, cObject *ob
 void MgmtAp::sendReport() {
     EV << "Sending Report\n";
     ApReport reportNotif;
-    reportNotif.setNumberOfSta(staList.size() - 1);
+    reportNotif.setNumberOfSta(this->countAssocSta() - 1);
     reportNotif.setNumberOfNeighbours(apList.size());
     reportNotif.setRssiMean(calculateRssiMean());
     if(th != nullptr){
@@ -206,6 +206,15 @@ void MgmtAp::sendReport() {
     }else
         reportNotif.setThroughput(0.0);
     emit(reportReadySignalID, &reportNotif);
+}
+
+int MgmtAp::countAssocSta(){
+    int counter = 0;
+    for (std::map<MacAddress, StaInfo, MacCompare>::iterator it = staList.begin(); it != staList.end(); ++it) {
+        if(mib->bssAccessPointData.stations[it->first] == Ieee80211Mib::ASSOCIATED)
+            counter++;
+    }
+    return counter;
 }
 
 //calculates the rssi mean based on the power of the transmissions from the sensors
@@ -454,8 +463,6 @@ void MgmtAp::handleDisassociationFrame(Packet *packet, const Ptr<const Ieee80211
         if (mib->bssAccessPointData.stations[sta->address] == Ieee80211Mib::ASSOCIATED)
             sendDisAssocNotification(sta->address);
         mib->bssAccessPointData.stations[sta->address] = Ieee80211Mib::AUTHENTICATED;
-        //ADDED BY JAEVILLEN
-        this->staList.erase(sta->address);
 
     }
 }
