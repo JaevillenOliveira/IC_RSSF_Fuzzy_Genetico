@@ -1,11 +1,12 @@
 /*
- * MgmtSensor.cc
+ * MgmtSensorHH.cc
  *
  *  Created on: Sep 3, 2019
  *      Author: jaevillen
  */
 
-#include "MgmtSensor.h"
+#include "MgmtSensorHH.h"
+
 #include "inet/common/INETUtils.h"
 #include "inet/common/ModuleAccess.h"
 #include "inet/common/ProtocolTag_m.h"
@@ -29,13 +30,13 @@ using namespace std;
 using namespace ieee80211;
 using namespace physicallayer;
 
-Define_Module(MgmtSensor);
+Define_Module(MgmtSensorHH);
 
 #define MK_BEACON_TIMEOUT         6
 #define MAX_BEACONS_MISSED        3.5  // beacon lost timeout, in beacon intervals (doesn't need to be integer)
 #define MK_ASSOC_TIMEOUT          2
 
-void MgmtSensor::handleCommand(int msgkind, cObject *ctrl)
+void MgmtSensorHH::handleCommand(int msgkind, cObject *ctrl)
 {
     if (auto cmd = dynamic_cast<Ieee80211Prim_ScanRequest *>(ctrl))
         processScanCommand(cmd);
@@ -56,7 +57,7 @@ void MgmtSensor::handleCommand(int msgkind, cObject *ctrl)
     delete ctrl;
 }
 
-void MgmtSensor::processScanCommand(Ieee80211Prim_ScanRequest *ctrl)
+void MgmtSensorHH::processScanCommand(Ieee80211Prim_ScanRequest *ctrl)
 {
     EV << "Received Scan Request from agent, clearing AP list and starting scanning...\n";
 
@@ -110,13 +111,10 @@ void MgmtSensor::processScanCommand(Ieee80211Prim_ScanRequest *ctrl)
 
 }
 
-void MgmtSensor::startAssociation(ApInfo *ap, simtime_t timeout)
+void MgmtSensorHH::startAssociation(ApInfo *ap, simtime_t timeout)
 {
-//Commented by Jaevillen
-//    if (mib->bssStationData.isAssociated || assocTimeoutMsg)
-//        throw cRuntimeError("startAssociation: already associated or association currently in progress");
-    if (assocTimeoutMsg)
-        throw cRuntimeError("startAssociation: association currently in progress");
+    if (mib->bssStationData.isAssociated || assocTimeoutMsg)
+        throw cRuntimeError("startAssociation: already associated or association currently in progress");
     if (!ap->isAuthenticated)
         throw cRuntimeError("startAssociation: not yet authenticated with AP address=", ap->address.str().c_str());
 
@@ -141,7 +139,7 @@ void MgmtSensor::startAssociation(ApInfo *ap, simtime_t timeout)
 }
 
 
-void MgmtSensor::handleAssociationResponseFrame(Packet *packet, const Ptr<const Ieee80211MgmtHeader>& header)
+void MgmtSensorHH::handleAssociationResponseFrame(Packet *packet, const Ptr<const Ieee80211MgmtHeader>& header)
 {
     EV << "Received Association Response frame\n";
 
@@ -171,16 +169,6 @@ void MgmtSensor::handleAssociationResponseFrame(Packet *packet, const Ptr<const 
         assocAP.beaconTimeoutMsg = nullptr;
         assocAP = AssociatedApInfo();
     }
-//        //ADDED BY JAEVILLEN: BEGIN
-//    if (mib->bssStationData.isAssociated) {
-//        EV << "Breaking existing association with AP address=" << assocAP.address << "\n";
-//        Ieee80211Prim_DisassociateRequest *req = new Ieee80211Prim_DisassociateRequest();
-//        req->setAddress(assocAP.address);
-//        req->setReasonCode(RC_UNSPECIFIED);
-//        processDisassociateCommand(req);
-//    }
-//        //ADDED BY JAEVILLEN: END
-
 
     delete cancelEvent(assocTimeoutMsg);
     assocTimeoutMsg = nullptr;
@@ -209,7 +197,7 @@ void MgmtSensor::handleAssociationResponseFrame(Packet *packet, const Ptr<const 
     sendAssociationConfirm(ap, statusCodeToPrimResultCode(statusCode));
 }
 
-void MgmtSensor::processDisassociateCommand(Ieee80211Prim_DisassociateRequest *ctrl)
+void MgmtSensorHH::processDisassociateCommand(Ieee80211Prim_DisassociateRequest *ctrl)
 {
     const MacAddress& address = ctrl->getAddress();
 
@@ -228,7 +216,7 @@ void MgmtSensor::processDisassociateCommand(Ieee80211Prim_DisassociateRequest *c
     sendManagementFrame("Disass", body, ST_DISASSOCIATION, address);
 }
 
-void MgmtSensor::disassociate()
+void MgmtSensorHH::disassociate()
 {
     EV << "Disassociating from AP address=" << assocAP.address << "\n";
     ASSERT(mib->bssStationData.isAssociated);

@@ -17,7 +17,7 @@ import inet.linklayer.ieee80211.mgmt.IIeee80211Mgmt;
 
 package wsn.management;
 
-simple MgmtSensor like IIeee80211Mgmt
+simple MgmtSensorSH like IIeee80211Mgmt
 {
     parameters:
         string interfaceTableModule;   // The path to the InterfaceTable module

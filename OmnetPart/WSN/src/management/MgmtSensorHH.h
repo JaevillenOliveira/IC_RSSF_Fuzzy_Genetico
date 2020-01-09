@@ -5,8 +5,8 @@
  *      Author: jaevillen
  */
 
-#ifndef MANAGEMENT_MGMTSENSOR_H_
-#define MANAGEMENT_MGMTSENSOR_H_
+#ifndef MANAGEMENT_MGMTSENSORHH_H_
+#define MANAGEMENT_MGMTSENSORHH_H_
 
 #include "inet/linklayer/ieee80211/mgmt/Ieee80211MgmtSta.h"
 #include "inet/common/INETDefs.h"
@@ -19,7 +19,7 @@ class InterfaceEntry;
 
 using namespace ieee80211;
 
-class MgmtSensor : public Ieee80211MgmtSta
+class MgmtSensorHH : public Ieee80211MgmtSta
 {
 protected:
     std::string s_handover = "handoverFromAp";
@@ -35,4 +35,4 @@ protected:
     virtual void disassociate()override;
 };
 
-#endif /* MANAGEMENT_MGMTSENSOR_H_ */
+#endif /* MANAGEMENT_MGMTSENSORHH_H_ */

@@ -58,7 +58,7 @@ module Sensor extends WirelessHost
 {
     parameters:
         string sinkAddress;
-        wlan[*].mgmt.typename = default("MgmtSensor");
+        wlan[*].mgmt.typename = default("MgmtSensorSH");
         wlan[*].agent.typename = default("AgentSensor");
 }
 
