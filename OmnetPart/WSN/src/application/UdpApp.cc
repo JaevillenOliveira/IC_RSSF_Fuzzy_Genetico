@@ -93,9 +93,10 @@ void UdpApp::processStart()
 void UdpApp::processSend()
 {
     sendPacket();
-
+//COMMENTED BY JAEVILLEN
 //    simtime_t d = simTime() + par("sendInterval");
-    simtime_t d = simTime() + poisson(par("sendInterval"));
+
+    simtime_t d = simTime() + poisson(par("sendInterval"));//ADDED BY JAEVILLEN
     if (stopTime < SIMTIME_ZERO || d < stopTime) {
         selfMsg->setKind(SEND);
         scheduleAt(d, selfMsg);
