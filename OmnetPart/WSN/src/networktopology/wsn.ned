@@ -108,12 +108,12 @@ network wsn
         sink1: WirelessHost {
             @display("p=1103.4937,1166.1375;is=s");
         }
-//        sink2: WirelessHost {
-//            @display("p=1643.1937,1166.1375;is=s");
-//        }
-//        ap2: myAccesspoint {
-//            @display("p=1493.8125,1132.4062;r=791,,,1");
-//        }
+        sink2: WirelessHost {
+            @display("p=1643.1937,1166.1375;is=s");
+        }
+        ap2: myAccesspoint {
+            @display("p=1493.8125,1132.4062;r=791,,,1");
+        }
         ap3: myAccesspoint {
             @display("p=2052.7874,1161.3187;r=791,,,1");
         }

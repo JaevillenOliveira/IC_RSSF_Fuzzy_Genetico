@@ -32,7 +32,7 @@ void ControllerInterface::initialize()
     this->getSimulation()->getSystemModule()->subscribe("reportReadySignal", this);
     apSortingTimer = new cMessage("apSortingTimer");
     scheduleAt(simTime() + 2, apSortingTimer);
-    //p = new OMNeTPipe("localhost", 18638);
+    p = new OMNeTPipe("localhost", 18638);
 
 };
 
@@ -52,7 +52,7 @@ void ControllerInterface::handleMessage(cMessage *msg)
 //                printf("\n");
 //            }
             for (auto it = vec.begin(); it != vec.end(); ++it) {
-                //apAnalisys(it->first, it->second);
+                apAnalisys(it->first, it->second);
             }
             scheduleAt(simTime() + 10, apSortingTimer);
         }
@@ -117,9 +117,9 @@ void ControllerInterface::apAnalisys (const int id, ApInfo &ap){
     float resp = *(float *)&r;
     cout << rName << "  " << resp << endl;
 
-    if(resp <= 50 && ap.isOff()){
+    if(resp <= 20 && ap.isOff()){
         restartAp(id, &ap);
-    } else if (resp > 50 && !ap.isOff()){
+    } else if (resp > 20 && !ap.isOff()){
         shutdownAp(id, &ap);
         cout << "Shutting down ap" << id << endl ;
 

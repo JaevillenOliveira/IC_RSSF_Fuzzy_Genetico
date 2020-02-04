@@ -172,8 +172,8 @@ void MgmtAp::receiveSignal(cComponent *source, simsignal_t signalID, bool b,cObj
     Enter_Method_Silent();
     if (signalID == turnOnOffSignalID) {
         if (b == true){
-            emit(handoverSignalID, true);
             this->handoverDelayTime = this->getSimulation()->getSimTime();
+            emit(handoverSignalID, true);
             scheduleAt(simTime() + 0.5, handoverTimer);
         }else
             this->restart();
