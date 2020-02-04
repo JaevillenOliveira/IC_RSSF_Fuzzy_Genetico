@@ -40,6 +40,7 @@ OBJS = \
     $O/management/AgentSensor.o \
     $O/management/AgentSink.o \
     $O/management/MgmtAp.o \
+    $O/management/MgmtApSF.o \
     $O/management/MgmtSensorHH.o \
     $O/management/MgmtSensorSH.o \
     $O/networkcontroller/ControllerInterface.o

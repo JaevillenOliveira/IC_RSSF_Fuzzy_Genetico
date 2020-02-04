@@ -115,15 +115,7 @@ void MgmtAp::handleTimer(cMessage *msg) {
         ApInfo *ap = static_cast<ApInfo*>(msg->getControlInfo());
         beaconLost(ap);
     }else if(msg == handoverTimer){//ADDED BY JAEVILLEN
-        if(this->staList.size() == 1){ //the AP only turns off when all its sensors are connected with another AP
-            handoverDelayTime = this->getSimulation()->getSimTime() - handoverDelayTime;
-            this->stop();
-            cout << "   ";
-            cout << "handover: ";
-            cout << handoverDelayTime;
-            emit(handoverDelay, handoverDelayTime);
-        }else
-            scheduleAt(simTime() + 0.05, handoverTimer);
+        this->stop();
     } else {
         throw cRuntimeError("internal error: unrecognized timer '%s'", msg->getName());
     }

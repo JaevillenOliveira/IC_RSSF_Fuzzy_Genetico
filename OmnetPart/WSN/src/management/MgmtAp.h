@@ -21,7 +21,6 @@
  *
  * @author Andras Varga
  */
-using namespace WSN;
 using namespace inet;
 using namespace ieee80211;
 

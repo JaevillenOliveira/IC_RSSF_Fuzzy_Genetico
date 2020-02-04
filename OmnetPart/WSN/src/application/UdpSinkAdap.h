@@ -13,7 +13,6 @@
 #include "inet/applications/base/ApplicationBase.h"
 #include "inet/transportlayer/contract/udp/UdpSocket.h"
 #include "inet/applications/udpapp/UdpSink.h"
-using namespace WSN;
 using namespace inet;
 
 /**

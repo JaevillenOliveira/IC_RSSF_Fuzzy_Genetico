@@ -10,8 +10,6 @@
 
 using namespace omnetpp;
 
-namespace WSN{
-
 
 class ThroughputReport : public cObject{
     private:
@@ -22,5 +20,5 @@ class ThroughputReport : public cObject{
 };
 
 
-}
+
 #endif /* APPLICATION_THROUGHPUT_H_ */
