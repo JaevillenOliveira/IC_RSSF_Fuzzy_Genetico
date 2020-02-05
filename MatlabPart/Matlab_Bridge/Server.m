@@ -1,4 +1,4 @@
-fis = readfis;
+fis = readfis('Comnet');
 
 pipe = OMNeTPipe("localhost", 18638);
 responseNames = 'respPk';
@@ -10,10 +10,14 @@ for k=1:inf
     neighbors = pktMap('neighbors');
     rssi = pktMap('rssi');
     throughput = pktMap('throughput');
-         
+    
+    fprintf("Sensors:");
     disp(sensors)
+    fprintf("Neighbors:");
     disp(neighbors)
+    fprintf("RSSI:");
     disp(rssi)
+    fprintf("Throughput:");
     disp(throughput)
     
     output = evalfis(fis,[rssi neighbors sensors throughput]);   

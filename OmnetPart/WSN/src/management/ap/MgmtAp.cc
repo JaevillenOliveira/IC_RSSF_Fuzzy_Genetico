@@ -450,6 +450,7 @@ void MgmtAp::handleReassociationResponseFrame(Packet *packet,const Ptr<const Iee
 void MgmtAp::handleDisassociationFrame(Packet *packet, const Ptr<const Ieee80211MgmtHeader>& header) {
     StaInfo *sta = lookupSenderSTA(header);
     delete packet;
+    printf("Disassociating");
 
     if (sta) {
         if (mib->bssAccessPointData.stations[sta->address] == Ieee80211Mib::ASSOCIATED)
