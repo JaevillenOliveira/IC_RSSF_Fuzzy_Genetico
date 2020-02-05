@@ -117,9 +117,9 @@ void ControllerInterface::apAnalisys (const int id, ApInfo &ap){
     float resp = *(float *)&r;
     cout << rName << "  " << resp << endl;
 
-    if(resp <= 50 && ap.isOff()){
+    if(resp < 50 && ap.isOff()){
         restartAp(id, &ap);
-    } else if (resp > 50 && !ap.isOff()){
+    } else if (resp >= 50 && !ap.isOff()){
         shutdownAp(id, &ap);
         cout << "Shutting down ap" << id << endl ;
 
