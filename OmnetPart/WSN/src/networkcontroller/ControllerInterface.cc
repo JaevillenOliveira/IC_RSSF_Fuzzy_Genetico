@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "ControllerInterface.h"
-#include "../management/ApReport.h"
+#include "../management/ap/ApReport.h"
 
 
 using namespace std;

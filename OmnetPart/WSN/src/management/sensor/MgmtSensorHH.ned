@@ -15,7 +15,7 @@
 
 import inet.linklayer.ieee80211.mgmt.IIeee80211Mgmt;
 
-package wsn.management;
+package wsn.management.sensor;
 
 simple MgmtSensorHH like IIeee80211Mgmt
 {

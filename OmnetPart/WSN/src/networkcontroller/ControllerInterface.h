@@ -9,7 +9,7 @@
 #define NETWORKCONTROLLER_CONTROLLERINTERFACE_H_
 
 #include <map>
-#include "../management/ApReport.h"
+#include "../management/ap/ApReport.h"
 #include "../Matlab_Bridge/OMNeTPk.h"
 #include "../Matlab_Bridge/OMNeTPipe.h"
 

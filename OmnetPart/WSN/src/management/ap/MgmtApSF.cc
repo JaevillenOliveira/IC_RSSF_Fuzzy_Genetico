@@ -1,15 +1,21 @@
 /*
  * MgmtApSF.cc
  *
+ * This implementation is about a soft handover: when an access point receives the signal to turn off it waits until all of its sensors
+ * are disconnected before it really turns off.
+ *
  *  Created on: Feb 4, 2020
  *      Author: jaevillen
  */
 
 
+#include "inet/linklayer/ieee80211/mac/Ieee80211SubtypeTag_m.h"
+
+using namespace inet;
+using namespace std;
+
 #include "MgmtApSF.h"
 #include <iostream>
-
-using namespace std;
 
 Define_Module(MgmtApSF);
 

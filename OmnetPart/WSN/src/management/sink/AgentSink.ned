@@ -13,13 +13,14 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package wsn.management;
+package wsn.management.sink;
 
 import inet.linklayer.ieee80211.mgmt.IIeee80211Agent;
 
-simple AgentSensor like IIeee80211Agent
+simple AgentSink like IIeee80211Agent
 {
     parameters:
+        string assocApAddress;
         string interfaceTableModule;   // The path to the InterfaceTable module
         string mibModule;
         bool activeScan = default(true);  // selects between active and passive scanning
@@ -45,3 +46,4 @@ simple AgentSensor like IIeee80211Agent
         input mgmtIn;
         output mgmtOut;
 }
+

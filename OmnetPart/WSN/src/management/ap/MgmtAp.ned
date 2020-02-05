@@ -13,7 +13,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package wsn.management;
+package wsn.management.ap;
 
 import inet.linklayer.ieee80211.mgmt.IIeee80211Mgmt;
 //
@@ -35,7 +35,7 @@ import inet.linklayer.ieee80211.mgmt.IIeee80211Mgmt;
 // the wireless card and a copy sent also up to the relay unit so it can broadcast
 // it on other interfaces.
 //
-simple MgmtApSF like IIeee80211Mgmt
+simple MgmtAp like IIeee80211Mgmt
 {  
     parameters:
         //        string turnOffSignalName = default("turnOnOffap1");

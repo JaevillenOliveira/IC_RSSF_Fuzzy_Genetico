@@ -12,12 +12,14 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
-import inet.linklayer.ieee80211.mgmt.IIeee80211Mgmt;
-package wsn.management;
 
-simple MgmtSink like IIeee80211Mgmt
-{  
-   parameters:
+import inet.linklayer.ieee80211.mgmt.IIeee80211Mgmt;
+
+package wsn.management.sensor;
+
+simple MgmtSensorSH like IIeee80211Mgmt
+{
+    parameters:
         string interfaceTableModule;   // The path to the InterfaceTable module
         int numChannels = default(1);  // number of channels to scan
         string mibModule;
@@ -25,10 +27,10 @@ simple MgmtSink like IIeee80211Mgmt
         @display("i=block/cogwheel");
         @signal[l2Associated](type=inet::InterfaceEntry);
         @signal[l2BeaconLost](type=inet::InterfaceEntry);
+//        @statistic[handoverTime](title="handover time"; source=l2Associated; record=count,"sum(packetBytes)","vector(packetBytes)"; interpolationmode=none);
     gates:
         input macIn @labels(Ieee80211MacHeader);
         output macOut @labels(Ieee80211MacHeader);
         input agentIn;   // used for attaching an agent algorithm
         output agentOut; // used for attaching an agent algorithm
 }
-

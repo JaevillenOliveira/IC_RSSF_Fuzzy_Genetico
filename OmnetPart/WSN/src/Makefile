@@ -37,12 +37,12 @@ OBJS = \
     $O/Matlab_Bridge/Sockets.o \
     $O/application/UdpApp.o \
     $O/application/UdpSinkAdap.o \
-    $O/management/AgentSensor.o \
-    $O/management/AgentSink.o \
-    $O/management/MgmtAp.o \
-    $O/management/MgmtApSF.o \
-    $O/management/MgmtSensorHH.o \
-    $O/management/MgmtSensorSH.o \
+    $O/management/ap/MgmtAp.o \
+    $O/management/ap/MgmtApSF.o \
+    $O/management/sensor/AgentSensor.o \
+    $O/management/sensor/MgmtSensorHH.o \
+    $O/management/sensor/MgmtSensorSH.o \
+    $O/management/sink/AgentSink.o \
     $O/networkcontroller/ControllerInterface.o
 
 # Message files

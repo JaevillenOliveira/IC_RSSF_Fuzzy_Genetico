@@ -9,7 +9,7 @@
 #define MANAGEMENT_MGMTAP_H_
 
 #include <map>
-#include "../application/Throughput.h"
+#include "../../application/Throughput.h"
 
 #include "inet/common/INETDefs.h"
 #include "inet/linklayer/ieee80211/mgmt/Ieee80211MgmtApBase.h"

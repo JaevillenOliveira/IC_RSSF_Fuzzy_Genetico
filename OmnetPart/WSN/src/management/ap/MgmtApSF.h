@@ -27,7 +27,6 @@ protected:
     //ADDED BY JAEVILLEN:BEGIN
 
     cMessage *handoverTimer = nullptr;
-
     simsignal_t handoverDelay = registerSignal("handoverDelay");
     simtime_t handoverDelayTime;
 
