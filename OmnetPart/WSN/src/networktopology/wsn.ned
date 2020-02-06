@@ -94,13 +94,16 @@ network wsn
             @display("p=3575.5125,159.01874");
         }
         radioMedium: Ieee80211ScalarRadioMedium {
-            @display("p=3575.5125,703.5375");
+            @display("p=3093.6375,1161.3187");
+        }
+        radioMedium1: Ieee80211ScalarRadioMedium {
+            @display("p=240.93748,293.94373");
         }
         sensor1: Sensor {
-            @display("p=954.1125,732.44995;is=s");
+            @display("p=1098.6749,915.56244;is=s");
         }
         sensor2: Sensor {
-            @display("p=1416.7124,862.5562;is=s");
+            @display("p=1455.2625,997.4812;is=s");
         }
         ap1: myAccesspoint {
             @display("p=954.1125,1161.3187;r=791,,,1");
@@ -121,18 +124,18 @@ network wsn
             @display("p=2202.1687,1166.1375;is=s");
         }
         sensor3: Sensor {
-            @display("p=1917.8624,1599.825;is=s");
+            @display("p=1903.4061,1382.9812;is=s");
         }
         sensor4: Sensor {
-            @display("p=1917.8624,708.3562;is=s");
+            @display("p=1970.8687,1016.7562;is=s");
         }
         sensor5: Sensor {
-            @display("p=1098.6749,1498.6312;is=s");
+            @display("p=1209.5062,1382.9812;is=s");
         }
         sensor6: Sensor {
-            @display("p=1527.5437,1440.8062;is=s");
+            @display("p=1566.0938,1325.1562;is=s");
         }
         sensor7: Sensor {
-            @display("p=1344.4312,1797.3937;is=s");
+            @display("p=1320.3374,1599.825;is=s");
         }
 }

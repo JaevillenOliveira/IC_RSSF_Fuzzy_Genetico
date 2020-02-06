@@ -29,7 +29,7 @@ class ControllerInterface : public cSimpleModule,  protected cListener{
                 const ApReport& getCurrentReport() const { return currentReport; }
                 void setCurrentReport(const ApReport& currentReport) { this->currentReport = currentReport; }
                 bool isOff() const { return Off;  }
-                void setOff(bool Off) { this->Off = Off; }
+                void setOff(bool o) { this->Off = o; }
                 const simsignal_t& getControlSignalID() const { return controlSignalID;}
                 void setControlSignalID(const simsignal_t& controlSignalID) { this->controlSignalID = controlSignalID; }
         };
@@ -42,6 +42,7 @@ class ControllerInterface : public cSimpleModule,  protected cListener{
 
     protected:
         cMessage *apSortingTimer = nullptr;
+        cMessage *stopTimer = nullptr;
         ApList aplist;
         std::vector<pair> vec;
         std::string s = "turnOnOffap";

@@ -520,6 +520,7 @@ void MgmtAp::restart() {
 }
 
 void MgmtAp::stop() {
+    getContainingNode(this)->bubble("Shutting Down!");
     state = OFF;
     cancelEvent(beaconTimer);
     cancelEvent(reportTimer);

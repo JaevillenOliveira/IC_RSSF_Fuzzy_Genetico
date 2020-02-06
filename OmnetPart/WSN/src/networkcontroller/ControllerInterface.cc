@@ -31,7 +31,9 @@ void ControllerInterface::initialize()
 {
     this->getSimulation()->getSystemModule()->subscribe("reportReadySignal", this);
     apSortingTimer = new cMessage("apSortingTimer");
+    stopTimer = new cMessage("stopTimer");
     scheduleAt(simTime() + 2, apSortingTimer);
+    scheduleAt(simTime() + 50, stopTimer);
     p = new OMNeTPipe("localhost", 18638);
 
 };
@@ -56,6 +58,12 @@ void ControllerInterface::handleMessage(cMessage *msg)
             }
             scheduleAt(simTime() + 10, apSortingTimer);
         }
+    }
+    if(msg == stopTimer){
+//        for (auto it = aplist.begin(); it != aplist.end(); ++it) {
+//            if(it->first == 498)
+//                this->shutdownAp(it->first, &it->second);
+//        }
     }
 }
 
@@ -117,9 +125,20 @@ void ControllerInterface::apAnalisys (const int id, ApInfo &ap){
     float resp = *(float *)&r;
     cout << rName << "  " << resp << endl;
 
-    if(resp < 50 && ap.isOff()){
+
+    int numberApsOff = 0;
+    for (auto it = aplist.begin(); it != aplist.end(); ++it) {
+        if(it->second.isOff())
+            numberApsOff++;
+    }
+    if(resp <= 50 && ap.isOff()){
+        ApInfo *apinfo = lookupAp(id);
+        apinfo->setOff(false);
         restartAp(id, &ap);
-    } else if (resp >= 50 && !ap.isOff()){
+
+    } else if (resp > 50 && !ap.isOff() && numberApsOff < (aplist.size()/2)){
+        ApInfo *apinfo = lookupAp(id);
+        apinfo->setOff(true);
         shutdownAp(id, &ap);
         cout << "Shutting down ap" << id << endl ;
 
@@ -128,14 +147,12 @@ void ControllerInterface::apAnalisys (const int id, ApInfo &ap){
 
 void ControllerInterface::shutdownAp (const int id, ApInfo *ap){
     printf("\n %s %i ", "Shutting Down AP", id);
-    ap->setOff(true);
     this->emit(ap->getControlSignalID(),true, nullptr);
 }
 
 void ControllerInterface::restartAp (const int id, ApInfo *ap){
     printf("\n %s %i", "Restarting AP", id);
     this->emit(ap->getControlSignalID(),false, nullptr);
-    ap->setOff(false);
 }
 
 
