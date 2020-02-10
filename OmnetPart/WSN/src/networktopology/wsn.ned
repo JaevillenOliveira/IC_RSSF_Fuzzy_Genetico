@@ -26,6 +26,7 @@ import inet.power.contract.IEnergyStorage;
 import inet.visualizer.integrated.IntegratedCanvasVisualizer;
 
 
+
 module myAccesspoint extends AccessPoint
 {
     parameters:

@@ -59,6 +59,12 @@ void MgmtAp::initialize(int stage) {
         beaconInterval = par("beaconInterval");
         numAuthSteps = par("numAuthSteps");
 
+        //ADDED BY JAEVILLEN:BEGIN
+        networkNode = findContainingNode(this);
+        nodeStatus = dynamic_cast<NodeStatus *>(networkNode->getSubmodule("status"));
+        lifecycleOperationTimer = new cMessage("lifecycleOperation");
+        //ADDED BY JAEVILLEN:END
+
         if (numAuthSteps != 2 && numAuthSteps != 4)
             throw cRuntimeError("parameter 'numAuthSteps' (number of frames exchanged during authentication) must be 2 or 4, not %d", numAuthSteps);
         channelNumber = -1; // value will arrive from physical layer in receiveChangeNotification()
@@ -158,6 +164,23 @@ void MgmtAp::sendBeacon() {
 }
 
 //ADDED BY JAEVILLEN: BEGIN
+
+
+void MgmtAp::executeNodeOperation(bool b)
+{
+    if (b && nodeStatus->getState() == NodeStatus::UP) {
+        LifecycleOperation::StringMap params;
+        ModuleStopOperation *operation = new ModuleStopOperation();
+        operation->initialize(networkNode, params);
+        lifecycleController.initiateOperation(operation);
+    }
+    else if (!b && nodeStatus->getState() == NodeStatus::DOWN) {
+        LifecycleOperation::StringMap params;
+        ModuleStartOperation *operation = new ModuleStartOperation();
+        operation->initialize(networkNode, params);
+        lifecycleController.initiateOperation(operation);
+    }
+}
 
 //listens for the signal to turn off --from the controller
 void MgmtAp::receiveSignal(cComponent *source, simsignal_t signalID, bool b,cObject *details) {
@@ -535,5 +558,6 @@ void MgmtAp::stop() {
     apList.clear();
     this->th = nullptr; //clear the throughput counter
     emit(resetSinkSignalID, true, nullptr);
+    this->executeNodeOperation(true);
     Ieee80211MgmtApBase::stop();
 }

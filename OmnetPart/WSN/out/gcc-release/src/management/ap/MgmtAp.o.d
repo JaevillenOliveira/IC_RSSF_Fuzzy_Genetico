@@ -65,6 +65,9 @@
  /home/jaevillen/IC/inet4/src/inet/linklayer/ieee80211/mib/Ieee80211Mib.h \
  /home/jaevillen/IC/inet4/src/inet/physicallayer/common/packetlevel/SignalTag_m.h \
  /home/jaevillen/IC/inet4/src/inet/physicallayer/base/packetlevel/PhysicalLayerDefs.h \
+ /home/jaevillen/IC/inet4/src/inet/common/lifecycle/NodeStatus.h \
+ /home/jaevillen/IC/inet4/src/inet/common/lifecycle/LifecycleController.h \
+ /home/jaevillen/IC/inet4/src/inet/common/scenario/IScriptable.h \
  management/ap/ApReport.h \
  /home/jaevillen/IC/inet4/src/inet/physicallayer/ieee80211/packetlevel/Ieee80211Radio.h \
  /home/jaevillen/IC/inet4/src/inet/physicallayer/base/packetlevel/FlatRadioBase.h \
@@ -289,6 +292,12 @@ management/ap/../../application/Throughput.h:
 /home/jaevillen/IC/inet4/src/inet/physicallayer/common/packetlevel/SignalTag_m.h:
 
 /home/jaevillen/IC/inet4/src/inet/physicallayer/base/packetlevel/PhysicalLayerDefs.h:
+
+/home/jaevillen/IC/inet4/src/inet/common/lifecycle/NodeStatus.h:
+
+/home/jaevillen/IC/inet4/src/inet/common/lifecycle/LifecycleController.h:
+
+/home/jaevillen/IC/inet4/src/inet/common/scenario/IScriptable.h:
 
 management/ap/ApReport.h:
 

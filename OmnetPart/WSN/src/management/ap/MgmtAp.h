@@ -10,10 +10,12 @@
 
 #include <map>
 #include "../../application/Throughput.h"
-
 #include "inet/common/INETDefs.h"
 #include "inet/linklayer/ieee80211/mgmt/Ieee80211MgmtApBase.h"
 #include "inet/physicallayer/common/packetlevel/SignalTag_m.h"
+
+#include "inet/common/lifecycle/NodeStatus.h"
+#include "inet/common/lifecycle/LifecycleController.h"
 
 /**
  * Used in 802.11 infrastructure mode: handles management frames for
@@ -24,7 +26,7 @@
 using namespace inet;
 using namespace ieee80211;
 
-class MgmtAp: public Ieee80211MgmtApBase, protected cListener {
+class MgmtAp: public Ieee80211MgmtApBase, protected cListener{
 public:
     /** Describes a STA */
     struct StaInfo {
@@ -114,6 +116,11 @@ protected:
     ThroughputReport *th = nullptr;
     int udpSinkID = -1;
     int state = 1;
+
+    cModule *networkNode = nullptr;
+    NodeStatus *nodeStatus = nullptr;
+    cMessage *lifecycleOperationTimer = nullptr;
+    LifecycleController lifecycleController;
     //ADDED BY JAEVILLEN:END
 
 
@@ -159,6 +166,7 @@ protected:
     virtual void receiveSignal(cComponent *source, simsignal_t signalID, bool b,cObject *details) override;
     virtual void receiveSignal(cComponent *source, simsignal_t signalID, cObject *obj,cObject *details) override;
     virtual void restart() ;
+    virtual void executeNodeOperation(bool b);
     //ADDED BY JAEVILLEN: END
 
     /** @name Processing of different frame types */

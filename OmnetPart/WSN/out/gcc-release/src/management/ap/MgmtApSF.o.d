@@ -59,7 +59,10 @@
  /home/jaevillen/IC/inet4/src/inet/networklayer/common/ModulePathAddress.h \
  /home/jaevillen/IC/inet4/src/inet/networklayer/contract/clns/ClnsAddress.h \
  /home/jaevillen/IC/inet4/src/inet/physicallayer/common/packetlevel/SignalTag_m.h \
- /home/jaevillen/IC/inet4/src/inet/physicallayer/base/packetlevel/PhysicalLayerDefs.h
+ /home/jaevillen/IC/inet4/src/inet/physicallayer/base/packetlevel/PhysicalLayerDefs.h \
+ /home/jaevillen/IC/inet4/src/inet/common/lifecycle/NodeStatus.h \
+ /home/jaevillen/IC/inet4/src/inet/common/lifecycle/LifecycleController.h \
+ /home/jaevillen/IC/inet4/src/inet/common/scenario/IScriptable.h
 
 /home/jaevillen/IC/inet4/src/inet/linklayer/ieee80211/mac/Ieee80211SubtypeTag_m.h:
 
@@ -182,3 +185,9 @@ management/ap/../../application/Throughput.h:
 /home/jaevillen/IC/inet4/src/inet/physicallayer/common/packetlevel/SignalTag_m.h:
 
 /home/jaevillen/IC/inet4/src/inet/physicallayer/base/packetlevel/PhysicalLayerDefs.h:
+
+/home/jaevillen/IC/inet4/src/inet/common/lifecycle/NodeStatus.h:
+
+/home/jaevillen/IC/inet4/src/inet/common/lifecycle/LifecycleController.h:
+
+/home/jaevillen/IC/inet4/src/inet/common/scenario/IScriptable.h:
