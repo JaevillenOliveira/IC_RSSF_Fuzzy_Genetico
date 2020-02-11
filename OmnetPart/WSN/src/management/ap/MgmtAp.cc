@@ -37,10 +37,6 @@ Register_Class(MgmtAp::NotificationInfoSta);
 #define MK_BEACON_TIMEOUT         6
 #define MAX_BEACONS_MISSED        3.5
 
-//ADDED BY JAEVILLEN
-#define ON                        1
-#define OFF                       0
-
 static std::ostream& operator<<(std::ostream& os, const MgmtAp::StaInfo& sta) {
     os << "address:" << sta.address;
     return os;
@@ -290,96 +286,92 @@ void MgmtAp::storeAPInfo(Packet *packet,const Ptr<const Ieee80211MgmtHeader>& he
 
 //METHOD CHANGED BY JAEVILLEN
 void MgmtAp::handleBeaconFrame(Packet *packet,const Ptr<const Ieee80211MgmtHeader>& header) {
-    if (state == ON) { //ADDED BY JAEVILLEN
-        EV << "Received Beacon frame\n";
-        const auto& beaconBody = packet->peekData<Ieee80211BeaconFrame>();
-        storeAPInfo(packet, header, beaconBody);
+    EV << "Received Beacon frame\n";
+    const auto& beaconBody = packet->peekData<Ieee80211BeaconFrame>();
+    storeAPInfo(packet, header, beaconBody);
 
-        delete packet;
-    }
+    delete packet;
+
 
 // Original code
 //     dropManagementFrame(packet);
 }
 
 void MgmtAp::handleAuthenticationFrame(Packet *packet,const Ptr<const Ieee80211MgmtHeader>& header) {
-    if (state == ON) { //ADDED BY JAEVILLEN
-        const auto& requestBody = packet->peekData<Ieee80211AuthenticationFrame>();
-        int frameAuthSeq = requestBody->getSequenceNumber();
-        EV << "Processing Authentication frame, seqNum=" << frameAuthSeq << "\n";
+    const auto& requestBody = packet->peekData<Ieee80211AuthenticationFrame>();
+    int frameAuthSeq = requestBody->getSequenceNumber();
+    EV << "Processing Authentication frame, seqNum=" << frameAuthSeq << "\n";
 
-        // create STA entry if needed
-        StaInfo *sta = lookupSenderSTA(header);
-        if (!sta) {
-            MacAddress staAddress = header->getTransmitterAddress();
-            sta = &staList[staAddress];   // this implicitly creates a new entry
-            sta->address = staAddress;
-            mib->bssAccessPointData.stations[staAddress] = Ieee80211Mib::NOT_AUTHENTICATED;
-            sta->authSeqExpected = 1;
-        }
-        //ADDED BY JAEVILLEN: BEGIN; gets the power of transmission from the packets received to calculate the rssi
-        SignalPowerInd * signalPowerInd;
-        signalPowerInd = packet->getTag<SignalPowerInd>();
-        if (signalPowerInd != nullptr) {
-            double power = signalPowerInd->getPower().get();
-            sta->rssi = (10 * log10(1000 * power));
-        }
-        //END
+    // create STA entry if needed
+    StaInfo *sta = lookupSenderSTA(header);
+    if (!sta) {
+        MacAddress staAddress = header->getTransmitterAddress();
+        sta = &staList[staAddress];   // this implicitly creates a new entry
+        sta->address = staAddress;
+        mib->bssAccessPointData.stations[staAddress] = Ieee80211Mib::NOT_AUTHENTICATED;
+        sta->authSeqExpected = 1;
+    }
+    //ADDED BY JAEVILLEN: BEGIN; gets the power of transmission from the packets received to calculate the rssi
+    SignalPowerInd * signalPowerInd;
+    signalPowerInd = packet->getTag<SignalPowerInd>();
+    if (signalPowerInd != nullptr) {
+        double power = signalPowerInd->getPower().get();
+        sta->rssi = (10 * log10(1000 * power));
+    }
+    //END
 
 
-        // reset authentication status, when starting a new auth sequence
-        // The statements below are added because the L2 handover time was greater than before when
-        // a STA wants to re-connect to an AP with which it was associated before. When the STA wants to
-        // associate again with the previous AP, then since the AP is already having an entry of the STA
-        // because of old association, and thus it is expecting an authentication frame number 3 but it
-        // receives authentication frame number 1 from STA, which will cause the AP to return an Auth-Error
-        // making the MN STA to start the handover process all over again.
-        if (frameAuthSeq == 1) {
-            if (mib->bssAccessPointData.stations[sta->address] == Ieee80211Mib::ASSOCIATED)
-                sendDisAssocNotification(sta->address);
-            mib->bssAccessPointData.stations[sta->address] = Ieee80211Mib::NOT_AUTHENTICATED;
-            sta->authSeqExpected = 1;
-        }
-
-        // check authentication sequence number is OK
-        if (frameAuthSeq != sta->authSeqExpected) {
-            // wrong sequence number: send error and return
-            EV << "Wrong sequence number, " << sta->authSeqExpected << " expected\n";
-            const auto& body = makeShared<Ieee80211AuthenticationFrame>();
-            body->setStatusCode(SC_AUTH_OUT_OF_SEQ);
-            sendManagementFrame("Auth-ERROR", body, ST_AUTHENTICATION,header->getTransmitterAddress());
-            delete packet;
-            sta->authSeqExpected = 1;    // go back to start square
-            return;
-        }
-
-        // station is authenticated if it made it through the required number of steps
-        bool isLast = (frameAuthSeq + 1 == numAuthSteps);
-
-        // send OK response (we don't model the cryptography part, just assume
-        // successful authentication every time)
-        EV << "Sending Authentication frame, seqNum=" << (frameAuthSeq + 1) << "\n";
-        const auto& body = makeShared<Ieee80211AuthenticationFrame>();
-        body->setSequenceNumber(frameAuthSeq + 1);
-        body->setStatusCode(SC_SUCCESSFUL);
-        body->setIsLast(isLast);
-        // XXX frame length could be increased to account for challenge text length etc.
-        sendManagementFrame(isLast ? "Auth-OK" : "Auth", body, ST_AUTHENTICATION, header->getTransmitterAddress());
-
-        delete packet;
-
-        // update status
-        if (isLast) {
-            if (mib->bssAccessPointData.stations[sta->address] == Ieee80211Mib::ASSOCIATED)
-                sendDisAssocNotification(sta->address);
-            mib->bssAccessPointData.stations[sta->address] = Ieee80211Mib::AUTHENTICATED; // XXX only when ACK of this frame arrives
-            EV << "STA authenticated\n";
-        } else {
-            sta->authSeqExpected += 2;
-            EV << "Expecting Authentication frame " << sta->authSeqExpected << "\n";
-        }
+    // reset authentication status, when starting a new auth sequence
+    // The statements below are added because the L2 handover time was greater than before when
+    // a STA wants to re-connect to an AP with which it was associated before. When the STA wants to
+    // associate again with the previous AP, then since the AP is already having an entry of the STA
+    // because of old association, and thus it is expecting an authentication frame number 3 but it
+    // receives authentication frame number 1 from STA, which will cause the AP to return an Auth-Error
+    // making the MN STA to start the handover process all over again.
+    if (frameAuthSeq == 1) {
+        if (mib->bssAccessPointData.stations[sta->address] == Ieee80211Mib::ASSOCIATED)
+            sendDisAssocNotification(sta->address);
+        mib->bssAccessPointData.stations[sta->address] = Ieee80211Mib::NOT_AUTHENTICATED;
+        sta->authSeqExpected = 1;
     }
 
+    // check authentication sequence number is OK
+    if (frameAuthSeq != sta->authSeqExpected) {
+        // wrong sequence number: send error and return
+        EV << "Wrong sequence number, " << sta->authSeqExpected << " expected\n";
+        const auto& body = makeShared<Ieee80211AuthenticationFrame>();
+        body->setStatusCode(SC_AUTH_OUT_OF_SEQ);
+        sendManagementFrame("Auth-ERROR", body, ST_AUTHENTICATION,header->getTransmitterAddress());
+        delete packet;
+        sta->authSeqExpected = 1;    // go back to start square
+        return;
+    }
+
+    // station is authenticated if it made it through the required number of steps
+    bool isLast = (frameAuthSeq + 1 == numAuthSteps);
+
+    // send OK response (we don't model the cryptography part, just assume
+    // successful authentication every time)
+    EV << "Sending Authentication frame, seqNum=" << (frameAuthSeq + 1) << "\n";
+    const auto& body = makeShared<Ieee80211AuthenticationFrame>();
+    body->setSequenceNumber(frameAuthSeq + 1);
+    body->setStatusCode(SC_SUCCESSFUL);
+    body->setIsLast(isLast);
+    // XXX frame length could be increased to account for challenge text length etc.
+    sendManagementFrame(isLast ? "Auth-OK" : "Auth", body, ST_AUTHENTICATION, header->getTransmitterAddress());
+
+    delete packet;
+
+    // update status
+    if (isLast) {
+        if (mib->bssAccessPointData.stations[sta->address] == Ieee80211Mib::ASSOCIATED)
+            sendDisAssocNotification(sta->address);
+        mib->bssAccessPointData.stations[sta->address] = Ieee80211Mib::AUTHENTICATED; // XXX only when ACK of this frame arrives
+        EV << "STA authenticated\n";
+    } else {
+        sta->authSeqExpected += 2;
+        EV << "Expecting Authentication frame " << sta->authSeqExpected << "\n";
+    }
 }
 
 void MgmtAp::handleDeauthenticationFrame(Packet *packet,const Ptr<const Ieee80211MgmtHeader>& header) {
@@ -398,37 +390,34 @@ void MgmtAp::handleDeauthenticationFrame(Packet *packet,const Ptr<const Ieee8021
 }
 
 void MgmtAp::handleAssociationRequestFrame(Packet *packet,const Ptr<const Ieee80211MgmtHeader>& header) {
-    if (state == ON) { //ADDED BY JAEVILLEN
-        EV << "Processing AssociationRequest frame\n";
+    EV << "Processing AssociationRequest frame\n";
 
-        // "11.3.2 AP association procedures"
-        StaInfo *sta = lookupSenderSTA(header);
-        if (!sta || mib->bssAccessPointData.stations[sta->address] == Ieee80211Mib::NOT_AUTHENTICATED) {
-            // STA not authenticated: send error and return
-            const auto& body = makeShared<Ieee80211DeauthenticationFrame>();
-            body->setReasonCode(RC_NONAUTH_ASS_REQUEST);
-            sendManagementFrame("Deauth", body, ST_DEAUTHENTICATION, header->getTransmitterAddress());
-            delete packet;
-            return;
-        }
-
+    // "11.3.2 AP association procedures"
+    StaInfo *sta = lookupSenderSTA(header);
+    if (!sta || mib->bssAccessPointData.stations[sta->address] == Ieee80211Mib::NOT_AUTHENTICATED) {
+        // STA not authenticated: send error and return
+        const auto& body = makeShared<Ieee80211DeauthenticationFrame>();
+        body->setReasonCode(RC_NONAUTH_ASS_REQUEST);
+        sendManagementFrame("Deauth", body, ST_DEAUTHENTICATION, header->getTransmitterAddress());
         delete packet;
-
-        // mark STA as associated
-        if (mib->bssAccessPointData.stations[sta->address] != Ieee80211Mib::ASSOCIATED)
-            sendAssocNotification(sta->address);
-        mib->bssAccessPointData.stations[sta->address] = Ieee80211Mib::ASSOCIATED; // XXX this should only take place when MAC receives the ACK for the response
-
-        // send OK response
-        const auto& body = makeShared<Ieee80211AssociationResponseFrame>();
-        body->setStatusCode(SC_SUCCESSFUL);
-        body->setAid(0);    //XXX
-        body->setSupportedRates(supportedRates);
-        body->setChunkLength(B(2 + 2 + 2 + body->getSupportedRates().numRates + 2));
-        body->setSinkAddress(this->par("sinkAddress").stdstringValue()); //LINE INSERTED BY JAEVILLEN
-        sendManagementFrame("AssocResp-OK", body, ST_ASSOCIATIONRESPONSE,sta->address);
+        return;
     }
 
+    delete packet;
+
+    // mark STA as associated
+    if (mib->bssAccessPointData.stations[sta->address] != Ieee80211Mib::ASSOCIATED)
+        sendAssocNotification(sta->address);
+    mib->bssAccessPointData.stations[sta->address] = Ieee80211Mib::ASSOCIATED; // XXX this should only take place when MAC receives the ACK for the response
+
+    // send OK response
+    const auto& body = makeShared<Ieee80211AssociationResponseFrame>();
+    body->setStatusCode(SC_SUCCESSFUL);
+    body->setAid(0);    //XXX
+    body->setSupportedRates(supportedRates);
+    body->setChunkLength(B(2 + 2 + 2 + body->getSupportedRates().numRates + 2));
+    body->setSinkAddress(this->par("sinkAddress").stdstringValue()); //LINE INSERTED BY JAEVILLEN
+    sendManagementFrame("AssocResp-OK", body, ST_ASSOCIATIONRESPONSE,sta->address);
 }
 
 void MgmtAp::handleAssociationResponseFrame(Packet *packet,const Ptr<const Ieee80211MgmtHeader>& header) {
@@ -436,34 +425,33 @@ void MgmtAp::handleAssociationResponseFrame(Packet *packet,const Ptr<const Ieee8
 }
 
 void MgmtAp::handleReassociationRequestFrame(Packet *packet,const Ptr<const Ieee80211MgmtHeader>& header) {
-    if (state == ON) { //ADDED BY JAEVILLEN
-        EV << "Processing ReassociationRequest frame\n";
+    EV << "Processing ReassociationRequest frame\n";
 
-        // "11.3.4 AP reassociation procedures" -- almost the same as AssociationRequest processing
-        StaInfo *sta = lookupSenderSTA(header);
-        if (!sta || mib->bssAccessPointData.stations[sta->address] == Ieee80211Mib::NOT_AUTHENTICATED) {
-            // STA not authenticated: send error and return
-            const auto& body = makeShared<Ieee80211DeauthenticationFrame>();
-            body->setReasonCode(RC_NONAUTH_ASS_REQUEST);
-            sendManagementFrame("Deauth", body, ST_DEAUTHENTICATION, header->getTransmitterAddress());
-            delete packet;
-            return;
-        }
-
+    // "11.3.4 AP reassociation procedures" -- almost the same as AssociationRequest processing
+    StaInfo *sta = lookupSenderSTA(header);
+    if (!sta || mib->bssAccessPointData.stations[sta->address] == Ieee80211Mib::NOT_AUTHENTICATED) {
+        // STA not authenticated: send error and return
+        const auto& body = makeShared<Ieee80211DeauthenticationFrame>();
+        body->setReasonCode(RC_NONAUTH_ASS_REQUEST);
+        sendManagementFrame("Deauth", body, ST_DEAUTHENTICATION, header->getTransmitterAddress());
         delete packet;
-
-        // mark STA as associated
-        mib->bssAccessPointData.stations[sta->address] =
-                Ieee80211Mib::ASSOCIATED; // XXX this should only take place when MAC receives the ACK for the response
-
-        // send OK response
-        const auto& body = makeShared<Ieee80211ReassociationResponseFrame>();
-        body->setStatusCode(SC_SUCCESSFUL);
-        body->setAid(0);    //XXX
-        body->setSupportedRates(supportedRates);
-        body->setChunkLength( B(2 + (2 + ssid.length()) + (2 + supportedRates.numRates) + 6));
-        sendManagementFrame("ReassocResp-OK", body, ST_REASSOCIATIONRESPONSE,sta->address);
+        return;
     }
+
+    delete packet;
+
+    // mark STA as associated
+    mib->bssAccessPointData.stations[sta->address] =
+            Ieee80211Mib::ASSOCIATED; // XXX this should only take place when MAC receives the ACK for the response
+
+    // send OK response
+    const auto& body = makeShared<Ieee80211ReassociationResponseFrame>();
+    body->setStatusCode(SC_SUCCESSFUL);
+    body->setAid(0);    //XXX
+    body->setSupportedRates(supportedRates);
+    body->setChunkLength( B(2 + (2 + ssid.length()) + (2 + supportedRates.numRates) + 6));
+    sendManagementFrame("ReassocResp-OK", body, ST_REASSOCIATIONRESPONSE,sta->address);
+
 }
 
 void MgmtAp::handleReassociationResponseFrame(Packet *packet,const Ptr<const Ieee80211MgmtHeader>& header) {
@@ -484,28 +472,26 @@ void MgmtAp::handleDisassociationFrame(Packet *packet, const Ptr<const Ieee80211
 }
 
 void MgmtAp::handleProbeRequestFrame(Packet *packet,const Ptr<const Ieee80211MgmtHeader>& header) {
-    if (state == ON) { //ADDED BY JAEVILLEN
-        EV << "Processing ProbeRequest frame\n";
+    EV << "Processing ProbeRequest frame\n";
 
-        const auto& requestBody =  packet->peekData<Ieee80211ProbeRequestFrame>();
-        if (strcmp(requestBody->getSSID(), "") != 0 && strcmp(requestBody->getSSID(), ssid.c_str()) != 0) {
-            EV << "SSID `" << requestBody->getSSID() << "' does not match, ignoring frame\n";
-            dropManagementFrame(packet);
-            return;
-        }
-
-        MacAddress staAddress = header->getTransmitterAddress();
-        delete packet;
-
-        EV << "Sending ProbeResponse frame\n";
-        const auto& body = makeShared<Ieee80211ProbeResponseFrame>();
-        body->setSSID(ssid.c_str());
-        body->setSupportedRates(supportedRates);
-        body->setBeaconInterval(beaconInterval);
-        body->setChannelNumber(channelNumber);
-        body->setChunkLength(B(8 + 2 + 2 + (2 + ssid.length()) + (2 + supportedRates.numRates)));
-        sendManagementFrame("ProbeResp", body, ST_PROBERESPONSE, staAddress);
+    const auto& requestBody =  packet->peekData<Ieee80211ProbeRequestFrame>();
+    if (strcmp(requestBody->getSSID(), "") != 0 && strcmp(requestBody->getSSID(), ssid.c_str()) != 0) {
+        EV << "SSID `" << requestBody->getSSID() << "' does not match, ignoring frame\n";
+        dropManagementFrame(packet);
+        return;
     }
+
+    MacAddress staAddress = header->getTransmitterAddress();
+    delete packet;
+
+    EV << "Sending ProbeResponse frame\n";
+    const auto& body = makeShared<Ieee80211ProbeResponseFrame>();
+    body->setSSID(ssid.c_str());
+    body->setSupportedRates(supportedRates);
+    body->setBeaconInterval(beaconInterval);
+    body->setChannelNumber(channelNumber);
+    body->setChunkLength(B(8 + 2 + 2 + (2 + ssid.length()) + (2 + supportedRates.numRates)));
+    sendManagementFrame("ProbeResp", body, ST_PROBERESPONSE, staAddress);
 }
 
 void MgmtAp::handleProbeResponseFrame(Packet *packet,const Ptr<const Ieee80211MgmtHeader>& header) {
@@ -528,7 +514,6 @@ void MgmtAp::sendDisAssocNotification(const MacAddress& addr) {
 
 void MgmtAp::start() {
     Ieee80211MgmtApBase::start();
-    state = ON;
     scheduleAt(simTime() + uniform(0, beaconInterval), beaconTimer);
     scheduleAt(simTime() + uniform(0.5, 0.5), reportTimer);//ADDED BY JAEVILLEN
 }
@@ -536,7 +521,6 @@ void MgmtAp::start() {
 //ADDED BY JAEVILLEN
 void MgmtAp::restart() {
     Ieee80211MgmtApBase::start();
-    state = ON;
     scheduleAt(simTime() + uniform(0, beaconInterval), beaconTimer);
     scheduleAt(simTime() + uniform(0.5, 0.5), reportTimer);
     emit(resetSinkSignalID, false, nullptr);
@@ -544,7 +528,6 @@ void MgmtAp::restart() {
 
 void MgmtAp::stop() {
     getContainingNode(this)->bubble("Shutting Down!");
-    state = OFF;
     cancelEvent(beaconTimer);
     cancelEvent(reportTimer);
     staList.clear();

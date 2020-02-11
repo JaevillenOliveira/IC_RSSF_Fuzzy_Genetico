@@ -33,7 +33,7 @@ void ControllerInterface::initialize()
     apSortingTimer = new cMessage("apSortingTimer");
     stopTimer = new cMessage("stopTimer");
 //    scheduleAt(simTime() + 2, apSortingTimer);
-//    scheduleAt(simTime() + 20, stopTimer);
+    scheduleAt(simTime() + 20, stopTimer);
     p = new OMNeTPipe("localhost", 18638);
 
 };

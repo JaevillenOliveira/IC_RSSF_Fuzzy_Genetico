@@ -115,7 +115,6 @@ protected:
     simtime_t handoverDelayTime;
     ThroughputReport *th = nullptr;
     int udpSinkID = -1;
-    int state = 1;
 
     cModule *networkNode = nullptr;
     NodeStatus *nodeStatus = nullptr;
