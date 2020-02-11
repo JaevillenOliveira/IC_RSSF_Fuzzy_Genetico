@@ -73,7 +73,7 @@ void MgmtAp::initialize(int stage) {
         //TBD fill in supportedRates
 
         // subscribe for notifications
-        cModule *radioModule = getModuleFromPar<cModule>(par("radioModule"),this);
+        radioModule = getModuleFromPar<cModule>(par("radioModule"),this);
         radioModule->subscribe(Ieee80211Radio::radioChannelChangedSignal, this);
 
         //ADDED BY JAEVILLEN: BEGIN; registers control signals
@@ -169,6 +169,7 @@ void MgmtAp::executeNodeOperation(bool b)
         ModuleStopOperation *operation = new ModuleStopOperation();
         operation->initialize(networkNode, params);
         lifecycleController.initiateOperation(operation);
+
     }
     else if (!b && nodeStatus->getState() == NodeStatus::DOWN) {
         LifecycleOperation::StringMap params;
@@ -520,14 +521,14 @@ void MgmtAp::start() {
 
 //ADDED BY JAEVILLEN
 void MgmtAp::restart() {
+    this->executeNodeOperation(false);
     Ieee80211MgmtApBase::start();
-    scheduleAt(simTime() + uniform(0, beaconInterval), beaconTimer);
-    scheduleAt(simTime() + uniform(0.5, 0.5), reportTimer);
+//    scheduleAt(simTime() + uniform(0, beaconInterval), beaconTimer);
+//    scheduleAt(simTime() + uniform(0.5, 0.5), reportTimer);
     emit(resetSinkSignalID, false, nullptr);
 }
 
 void MgmtAp::stop() {
-    getContainingNode(this)->bubble("Shutting Down!");
     cancelEvent(beaconTimer);
     cancelEvent(reportTimer);
     staList.clear();

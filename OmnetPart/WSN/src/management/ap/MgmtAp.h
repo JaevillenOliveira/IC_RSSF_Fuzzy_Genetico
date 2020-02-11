@@ -120,6 +120,8 @@ protected:
     NodeStatus *nodeStatus = nullptr;
     cMessage *lifecycleOperationTimer = nullptr;
     LifecycleController lifecycleController;
+    cModule *radioModule;
+    cModule *energyManagement;
     //ADDED BY JAEVILLEN:END
 
 
