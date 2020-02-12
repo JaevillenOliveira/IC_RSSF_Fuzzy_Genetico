@@ -1,3 +1,4 @@
+package wsn.networktopology;
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -13,10 +14,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package wsn.networktopology;
-
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
-import inet.node.inet.StandardHost;
 import inet.node.inet.WirelessHost;
 import inet.node.wireless.AccessPoint;
 import inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium;
@@ -24,7 +22,6 @@ import inet.power.contract.IEnergyGenerator;
 import inet.power.contract.IEnergyManagement;
 import inet.power.contract.IEnergyStorage;
 import inet.visualizer.integrated.IntegratedCanvasVisualizer;
-
 
 
 module myAccesspoint extends AccessPoint

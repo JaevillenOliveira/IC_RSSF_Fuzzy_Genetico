@@ -16,13 +16,9 @@
 package wsn.testingOriginalInetComponents;
 
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
-import inet.node.inet.StandardHost;
 import inet.node.inet.WirelessHost;
 import inet.node.wireless.AccessPoint;
 import inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium;
-import inet.power.contract.IEnergyGenerator;
-import inet.power.contract.IEnergyManagement;
-import inet.power.contract.IEnergyStorage;
 import inet.visualizer.integrated.IntegratedCanvasVisualizer;
 
 
