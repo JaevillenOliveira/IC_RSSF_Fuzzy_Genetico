@@ -61,54 +61,56 @@ void MgmtSensorHH::processScanCommand(Ieee80211Prim_ScanRequest *ctrl)
 {
     EV << "Received Scan Request from agent, clearing AP list and starting scanning...\n";
 
-    if (isScanning)
-       throw cRuntimeError("processScanCommand: scanning already in progress");
+    if (!isScanning){
+       //throw cRuntimeError("processScanCommand: scanning already in progress");
 
-    if (mib->bssStationData.isAssociated){
-        //disassociate(); COMMENTED BY JAEVILLEN
-        //ADDED BY JAEVILLEN
-        /*In the original code the station doesn't notify the AP that it's breaking the association
-         * and, therefore the AP can't register the correct number of sensors that are associated */
-        Ieee80211Prim_DisassociateRequest *req = new Ieee80211Prim_DisassociateRequest();
-        req->setAddress(assocAP.address);
-        req->setReasonCode(RC_UNSPECIFIED);
-        processDisassociateCommand(req);
+        if (mib->bssStationData.isAssociated){
+            //disassociate(); COMMENTED BY JAEVILLEN
+            //ADDED BY JAEVILLEN
+            /*In the original code the station doesn't notify the AP that it's breaking the association
+             * and, therefore the AP can't register the correct number of sensors that are associated */
+            Ieee80211Prim_DisassociateRequest *req = new Ieee80211Prim_DisassociateRequest();
+            req->setAddress(assocAP.address);
+            req->setReasonCode(RC_UNSPECIFIED);
+            processDisassociateCommand(req);
+        }
+
+        if (assocTimeoutMsg) {
+            EV << "Cancelling ongoing association process\n";
+            delete cancelEvent(assocTimeoutMsg);
+            assocTimeoutMsg = nullptr;
+        }
+
+        // clear existing AP list (and cancel any pending authentications) -- we want to start with a clean page
+        clearAPList();
+
+        // fill in scanning state
+        ASSERT(ctrl->getBSSType() == BSSTYPE_INFRASTRUCTURE);
+        scanning.bssid = ctrl->getBSSID().isUnspecified() ? MacAddress::BROADCAST_ADDRESS : ctrl->getBSSID();
+        scanning.ssid = ctrl->getSSID();
+        scanning.activeScan = ctrl->getActiveScan();
+        scanning.probeDelay = ctrl->getProbeDelay();
+        scanning.channelList.clear();
+        scanning.minChannelTime = ctrl->getMinChannelTime();
+        scanning.maxChannelTime = ctrl->getMaxChannelTime();
+        ASSERT(scanning.minChannelTime <= scanning.maxChannelTime);
+
+        // channel list to scan (default: all channels)
+        for (size_t i = 0; i < ctrl->getChannelListArraySize(); i++)
+            scanning.channelList.push_back(ctrl->getChannelList(i));
+        if (scanning.channelList.empty())
+            for (int i = 0; i < numChannels; i++)
+                scanning.channelList.push_back(i);
+
+        // start scanning
+        if (scanning.activeScan)
+            host->subscribe(IRadio::receptionStateChangedSignal, this);
+        scanning.currentChannelIndex = -1;    // so we'll start with index==0
+        isScanning = true;
+        scanNextChannel();
+    }else{
+        cout << "Already scanning,there is a problem with your code?";
     }
-
-    if (assocTimeoutMsg) {
-        EV << "Cancelling ongoing association process\n";
-        delete cancelEvent(assocTimeoutMsg);
-        assocTimeoutMsg = nullptr;
-    }
-
-    // clear existing AP list (and cancel any pending authentications) -- we want to start with a clean page
-    clearAPList();
-
-    // fill in scanning state
-    ASSERT(ctrl->getBSSType() == BSSTYPE_INFRASTRUCTURE);
-    scanning.bssid = ctrl->getBSSID().isUnspecified() ? MacAddress::BROADCAST_ADDRESS : ctrl->getBSSID();
-    scanning.ssid = ctrl->getSSID();
-    scanning.activeScan = ctrl->getActiveScan();
-    scanning.probeDelay = ctrl->getProbeDelay();
-    scanning.channelList.clear();
-    scanning.minChannelTime = ctrl->getMinChannelTime();
-    scanning.maxChannelTime = ctrl->getMaxChannelTime();
-    ASSERT(scanning.minChannelTime <= scanning.maxChannelTime);
-
-    // channel list to scan (default: all channels)
-    for (size_t i = 0; i < ctrl->getChannelListArraySize(); i++)
-        scanning.channelList.push_back(ctrl->getChannelList(i));
-    if (scanning.channelList.empty())
-        for (int i = 0; i < numChannels; i++)
-            scanning.channelList.push_back(i);
-
-    // start scanning
-    if (scanning.activeScan)
-        host->subscribe(IRadio::receptionStateChangedSignal, this);
-    scanning.currentChannelIndex = -1;    // so we'll start with index==0
-    isScanning = true;
-    scanNextChannel();
-
 }
 
 void MgmtSensorHH::startAssociation(ApInfo *ap, simtime_t timeout)
