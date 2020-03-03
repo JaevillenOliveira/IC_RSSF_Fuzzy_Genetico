@@ -1,4 +1,4 @@
-fis = readfis('ComnetUniformSets');
+fis = readfis('ComnetUniformSetsV1');
 
 pipe = OMNeTPipe("localhost", 18638);
 responseNames = 'respPk';
