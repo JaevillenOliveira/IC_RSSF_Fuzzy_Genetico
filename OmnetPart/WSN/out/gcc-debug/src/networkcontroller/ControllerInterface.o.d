@@ -2,7 +2,7 @@
  networkcontroller/ControllerInterface.cc \
  /home/jaevillen/omnetpp-5.5.1/include/omnetpp.h \
  networkcontroller/ControllerInterface.h \
- networkcontroller/../management/ApReport.h \
+ networkcontroller/../management/ap/ApReport.h \
  networkcontroller/../Matlab_Bridge/OMNeTPk.h \
  networkcontroller/../Matlab_Bridge/OMNeTPipe.h \
  networkcontroller/../Matlab_Bridge/OMNeTPk.h \
@@ -12,7 +12,7 @@
 
 networkcontroller/ControllerInterface.h:
 
-networkcontroller/../management/ApReport.h:
+networkcontroller/../management/ap/ApReport.h:
 
 networkcontroller/../Matlab_Bridge/OMNeTPk.h:
 

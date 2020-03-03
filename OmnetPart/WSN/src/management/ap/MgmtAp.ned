@@ -49,9 +49,9 @@ simple MgmtAp like IIeee80211Mgmt
         string mibModule;
         string macModule;               // The path to the MAC module
         @display("i=block/cogwheel");
-        @signal[l2ApAssociated](type="management::MgmtAp::NotificationInfoSta");
-        @signal[l2ApDisassociated](type="management::MgmtAp::NotificationInfoSta");
-        @signal[reportReadySignal](type="management::MgmtAp::NotificationReport");
+        @signal[l2ApAssociated];
+        @signal[l2ApDisassociated];
+        @signal[reportReadySignal];
     gates:
         input macIn @labels(Ieee80211MacHeader); // from ~Ieee80211Mac
         output macOut @labels(Ieee80211MacHeader); // to ~Ieee80211Mac

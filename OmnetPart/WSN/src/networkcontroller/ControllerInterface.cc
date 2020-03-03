@@ -31,8 +31,8 @@ void ControllerInterface::initialize()
 {
     this->getSimulation()->getSystemModule()->subscribe("reportReadySignal", this);
     apSortingTimer = new cMessage("apSortingTimer");
-    scheduleAt(simTime() +  2, apSortingTimer);
-    p = new OMNeTPipe("localhost", 18638);
+//    scheduleAt(simTime() +  2, apSortingTimer);
+//    p = new OMNeTPipe("localhost", 18638);
 
 };
 

@@ -92,7 +92,7 @@ network wsn
             @display("p=3575.5125,159.01874");
         }
         radioMedium: Ieee80211ScalarRadioMedium {
-            @display("p=3093.6375,1161.3187");
+            @display("p=3339.3936,544.51874");
         }
         sensor1: Sensor {
             @display("p=1045.6687,636.07495;is=s");
