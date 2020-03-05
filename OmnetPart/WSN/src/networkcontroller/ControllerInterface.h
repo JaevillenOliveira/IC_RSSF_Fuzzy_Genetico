@@ -13,8 +13,7 @@
 #include "../Matlab_Bridge/OMNeTPk.h"
 #include "../Matlab_Bridge/OMNeTPipe.h"
 
-using namespace std;
-using namespace omnetpp;
+
 
 class ControllerInterface : public cSimpleModule,  protected cListener{
 
@@ -62,7 +61,6 @@ class ControllerInterface : public cSimpleModule,  protected cListener{
         virtual void shutdownAp (const int id, ApInfo *ap);
         virtual void restartAp (const int id, ApInfo *ap);
 };
-
 
 
 #endif /* NETWORKCONTROLLER_CONTROLLERINTERFACE_H_ */

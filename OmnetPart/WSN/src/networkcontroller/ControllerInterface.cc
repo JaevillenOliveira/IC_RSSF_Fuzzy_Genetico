@@ -12,15 +12,8 @@
 #include "ControllerInterface.h"
 #include "../management/ap/ApReport.h"
 
-
-using namespace std;
-using std::endl;
-using namespace omnetpp;
-
-#define ON                        1
-#define OFF                       0
-
 Define_Module(ControllerInterface);
+
 Register_Class(ControllerInterface::ApInfo);
 
 ControllerInterface::~ControllerInterface() {
@@ -31,8 +24,8 @@ void ControllerInterface::initialize()
 {
     this->getSimulation()->getSystemModule()->subscribe("reportReadySignal", this);
     apSortingTimer = new cMessage("apSortingTimer");
-//    scheduleAt(simTime() +  2, apSortingTimer);
-//    p = new OMNeTPipe("localhost", 18638);
+    scheduleAt(simTime() +  2, apSortingTimer);
+    p = new OMNeTPipe("localhost", 18638);
 
 };
 
@@ -47,10 +40,6 @@ void ControllerInterface::handleMessage(cMessage *msg)
                 if (l.second.getCurrentReport().getThroughput() != r.second.getCurrentReport().getThroughput())
                     return l.second.getCurrentReport().getThroughput() < r.second.getCurrentReport().getThroughput();
             });
-//            for (auto const &pair: vec) {
-//                cout <<  pair.first;
-//                printf("\n");
-//            }
             for (auto it = vec.begin(); it != vec.end(); ++it) {
                 apAnalisys(it->first, it->second);
             }

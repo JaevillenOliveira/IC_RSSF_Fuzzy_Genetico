@@ -60,10 +60,11 @@ module Sensor extends WirelessHost
         wlan[*].agent.typename = default("AgentSensor");
 }
 
-simple MatlabInterface
+module ControllerInterface
 {
     @class(ControllerInterface);
 }
+
 
 network wsn
 {
@@ -82,7 +83,7 @@ network wsn
         @statistic[handoverTime](title="handover time"; source=handoverDelay; unit=s; record=histogram,vector; interpolationmode=none);
 
     submodules:
-        interface: MatlabInterface {
+        interface: ControllerInterface {
             @display("p=3093.6375,159.01874");
         }
         visualizer: IntegratedCanvasVisualizer {
