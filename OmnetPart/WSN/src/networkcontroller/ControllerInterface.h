@@ -47,6 +47,7 @@ class ControllerInterface : public cSimpleModule,  protected cListener{
         std::string s = "turnOnOffap";
         OMNeTPipe* p;
         int packetsCount = 1;
+        bool fuzzyControlled;
 
     public:
         ControllerInterface() {}

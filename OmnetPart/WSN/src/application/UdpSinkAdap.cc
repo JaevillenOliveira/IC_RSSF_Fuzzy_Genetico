@@ -25,7 +25,6 @@ UdpSinkAdap::~UdpSinkAdap()
     cancelAndDelete(selfMsg);
 }
 
-
 // sends a report informing the current throughput of the sink/AP
 void UdpSinkAdap::sendReport(){
     this->th.setThroughput(rcvdThCount*8 / this->getSimulation()->getSimTime());
@@ -38,10 +37,11 @@ void UdpSinkAdap::receiveSignal(cComponent *source, simsignal_t signalID, bool b
     Enter_Method_Silent();
     if (signalID == resetSignalID) {
         if (b == true){
-            cancelEvent(selfMsg);
             selfMsg->setKind(STOP);
             scheduleAt(this->getSimulation()->getSimTime(), selfMsg);
+            cancelAndDelete(selfMsg);
         }else{
+            selfMsg = new cMessage("UDPSinkTimer");
             selfMsg->setKind(START);
             scheduleAt(this->getSimulation()->getSimTime(), selfMsg);
         }
@@ -51,15 +51,15 @@ void UdpSinkAdap::receiveSignal(cComponent *source, simsignal_t signalID, bool b
 void UdpSinkAdap::processStart()
 {
     socket.setOutputGate(gate("socketOut"));
-    socket.bind(localPort);
-    setSocketOptions();
-
+    socket.setReuseAddress(true);
+    if(!socket.isOpen()){
+        socket.bind(localPort);
+        setSocketOptions();
+    }
     if (stopTime >= SIMTIME_ZERO) {
         selfMsg->setKind(STOP);
         scheduleAt(stopTime, selfMsg);
     }
-
-
     else{
         //LINES ADDED BY JAEVILLEN
         //make the IDs for listening the controller
@@ -101,6 +101,7 @@ void UdpSinkAdap::handleMessageWhenUp(cMessage *msg)
             case STOP:
                 processStop();
                 rcvdThCount = 0;// ADDED BY JAEVILLEN; counts the received packets to calculate the throughput
+                cancelAndDelete(selfMsg);
                 break;
 
             case SEND:
@@ -166,6 +167,7 @@ void UdpSinkAdap::processStop()
 {
     if (!multicastGroup.isUnspecified())
         socket.leaveMulticastGroup(multicastGroup); // FIXME should be done by socket.close()
+    socket.setReuseAddress(true);
     socket.close();
 }
 
