@@ -99,7 +99,7 @@ void UdpSinkAdap::handleMessageWhenUp(cMessage *msg)
             case STOP:
                 processStop();
                 rcvdThCount = 0;// ADDED BY JAEVILLEN; counts the received packets to calculate the throughput
-                cancelAndDelete(selfMsg);
+//                cancelAndDelete(selfMsg);
                 break;
 
             case SEND:
