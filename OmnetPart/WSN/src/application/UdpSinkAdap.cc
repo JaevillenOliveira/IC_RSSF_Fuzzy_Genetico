@@ -39,13 +39,11 @@ void UdpSinkAdap::receiveSignal(cComponent *source, simsignal_t signalID, bool b
         if (b == true){
             selfMsg->setKind(STOP);
             scheduleAt(this->getSimulation()->getSimTime(), selfMsg);
-            cancelAndDelete(selfMsg);
         }else{
             selfMsg = new cMessage("UDPSinkTimer");
             selfMsg->setKind(START);
             scheduleAt(this->getSimulation()->getSimTime(), selfMsg);
         }
-
     }
 }
 void UdpSinkAdap::processStart()
