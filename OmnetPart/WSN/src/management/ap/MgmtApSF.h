@@ -22,25 +22,13 @@ using namespace ieee80211;
 
 class MgmtApSF: public MgmtAp{
 
-protected:
-
-    //ADDED BY JAEVILLEN:BEGIN
-
-    cMessage *handoverTimer = nullptr;
-    simsignal_t handoverDelay = registerSignal("handoverDelay");
-    simtime_t handoverDelayTime;
-
-    //ADDED BY JAEVILLEN:END
-
-
-
 public:
     MgmtApSF() {}
     virtual ~MgmtApSF();
 
 protected:
     virtual void handleTimer(cMessage *msg) override;
-//    virtual void receiveSignal(cComponent *source, simsignal_t signalID, bool b,cObject *details) override;
+    virtual void receiveSignal(cComponent *source, simsignal_t signalID, bool b,cObject *details) override;
 };
 
 

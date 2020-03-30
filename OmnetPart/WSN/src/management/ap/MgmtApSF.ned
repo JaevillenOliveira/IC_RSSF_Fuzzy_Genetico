@@ -50,7 +50,6 @@ simple MgmtApSF like IIeee80211Mgmt
         string macModule;               // The path to the MAC module
         @display("i=block/cogwheel");
         @signal[handoverDelay](type="double");
-        @statistic[handoverTime](title="handover time"; source=handoverDelay; unit=s; record=mean; interpolationmode=none);
         @signal[l2ApAssociated];
         @signal[l2ApDisassociated];
         @signal[reportReadySignal];

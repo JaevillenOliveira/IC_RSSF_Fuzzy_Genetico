@@ -5,6 +5,10 @@ responseNames = 'respPk';
 while 1
     try
         [headerName, pktMap] = recvPk(pipe);
+        
+        if(headerName == "endingPacket")
+            exit;
+        end
 
         disp(headerName);
         sensors = pktMap('sensors');

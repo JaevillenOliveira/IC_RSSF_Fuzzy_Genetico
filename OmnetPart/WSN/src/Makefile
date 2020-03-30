@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for WSN
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -KINET_PROJ=/home/jaevillen/IC/inet4 -DINET_IMPORT -I/home/jaevillen/IC/MatlabPart/Matlab_Bridge -I$$\(INET_PROJ\)/src -L$$\(INET_PROJ\)/src -L$$\(INET_PROJ\)/src -lINET$$\(D\)
+#  opp_makemake -f --deep -KINET_PROJ=/home/jaevillen/IC/inet4 -KWSN_PROJ=.. -DINET_IMPORT -I/home/jaevillen/IC/MatlabPart/Matlab_Bridge -I$$\(INET_PROJ\)/src -L$$\(INET_PROJ\)/src -L$$\(INET_PROJ\)/src -lINET$$\(D\)
 #
 
 # Name of target to be created (-o option)
@@ -53,6 +53,7 @@ SMFILES =
 
 # Other makefile variables (-K)
 INET_PROJ=/home/jaevillen/IC/inet4
+WSN_PROJ=..
 
 #------------------------------------------------------------------------------
 

@@ -12,3 +12,5 @@ sleep 20
 .././WSN -u Cmdenv -f wsn.ini -n ../../simulations:..:../../../../inet4/src:../../../../inet4/examples:../../../../inet4/tutorials:../../../../inet4/showcases -c wsnSc1T${i} --vector-recording=false
 
 done
+
+/results scavetool x *.sca -o wsn.csv

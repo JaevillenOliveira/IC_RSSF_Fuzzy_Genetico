@@ -8,7 +8,6 @@
  *      Author: jaevillen
  */
 
-
 #include "inet/linklayer/ieee80211/mac/Ieee80211SubtypeTag_m.h"
 
 using namespace inet;
@@ -24,7 +23,6 @@ Define_Module(MgmtApSF);
 MgmtApSF::~MgmtApSF() {
     cancelAndDelete(beaconTimer);
     cancelAndDelete(reportTimer); //ADDED BY JAEVILLEN
-//  recordScalar("#handover", handoverDelayTime);
 }
 
 void MgmtApSF::handleTimer(cMessage *msg) {
@@ -39,12 +37,12 @@ void MgmtApSF::handleTimer(cMessage *msg) {
         beaconLost(ap);
     }else if(msg == handoverTimer){//ADDED BY JAEVILLEN
         if(this->staList.size() == 1){ //the AP only turns off when all its sensors are connected with another AP
-            handoverDelayTime = this->getSimulation()->getSimTime() - handoverDelayTime;
             this->stop();
+            handoverDelayTime = this->getSimulation()->getSimTime() - handoverDelayTime;
             cout << "   ";
             cout << "handover: ";
             cout << handoverDelayTime;
-            emit(handoverDelay, handoverDelayTime.dbl());
+            emit(handoverDelay, handoverDelayTime);
         }else
             scheduleAt(simTime() + 0.05, handoverTimer);
     } else {
@@ -52,15 +50,15 @@ void MgmtApSF::handleTimer(cMessage *msg) {
     }
 }
 //listens for the signal to turn off --from the controller
-//void MgmtApSF::receiveSignal(cComponent *source, simsignal_t signalID, bool b,cObject *details) {
-//    Enter_Method_Silent();
-//    if (signalID == turnOnOffSignalID) {
-//        if (b == true){
-//            this->handoverDelayTime = this->getSimulation()->getSimTime();
-//            emit(handoverSignalID, true);
-//            scheduleAt(simTime(),handoverTimer);
-//        }else
-//            this->restart();
-//    }
-//}
+void MgmtApSF::receiveSignal(cComponent *source, simsignal_t signalID, bool b,cObject *details) {
+    Enter_Method_Silent();
+    if (signalID == turnOnOffSignalID) {
+        if (b == true){
+            this->handoverDelayTime = this->getSimulation()->getSimTime();
+            emit(handoverSignalID, true);
+            scheduleAt(simTime(),handoverTimer);
+        }else
+            this->restart();
+    }
+}
 

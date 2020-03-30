@@ -29,7 +29,7 @@ module myAccesspoint extends AccessPoint
     parameters:
         @networkNode();
         @labels(node,ethernet-node,wireless-node);
-        wlan[*].mgmt.typename = default("MgmtAp");
+        wlan[*].mgmt.typename = default("MgmtApSF");
         mobility.subjectModule = default("^");
         *.mobilityModule = default(exists(mobility) ? absPath(".mobility") : "");
         *.energySourceModule = default(exists(energyStorage) ? absPath(".energyStorage") : "");
@@ -56,7 +56,7 @@ module Sensor extends WirelessHost
 {
     parameters:
         string sinkAddress;
-        wlan[*].mgmt.typename = default("MgmtSensorSF");
+        wlan[*].mgmt.typename = default("MgmtSensorSH");
         wlan[*].agent.typename = default("AgentSensor");
 }
 
@@ -73,6 +73,8 @@ network wsn
         @figure[title](type=label; pos=0,-1; anchor=sw; color=darkblue);
         @signal[packetReceived](type=inet::Packet);
         @signal[packetSent](type=inet::Packet);
+        @signal[handoverDelay](type=simtime_t);
+        @statistic[handoverTime](title="handoverTime"; source=handoverDelay; unit=s; record=mean; interpolationmode=none);
         @statistic[packetReceived](title="packets received"; source=(packetReceived); record=count,"sum(packetBytes)","vector(packetBytes)"; interpolationmode=none);
         @statistic[packetSent](title="packets sent"; source=(packetSent); record=count,"sum(packetBytes)","vector(packetBytes)"; interpolationmode=none);
         @statistic[packetLoss](title="packet loss"; source=(count(packetSent)-count(packetReceived)); record=last; interpolationmode=none);
