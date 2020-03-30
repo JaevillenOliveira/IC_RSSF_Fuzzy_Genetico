@@ -18,6 +18,14 @@ Register_Class(ControllerInterface::ApInfo);
 
 ControllerInterface::~ControllerInterface() {
     cancelAndDelete(apSortingTimer);
+    std::string s = "endingPacket";
+    int n = s.length();
+    char char_array[n + 1];
+    strcpy(char_array, s.c_str());
+    char *packetName = char_array;
+
+    OMNeTPk* pk = new OMNeTPk(packetName);
+    p->sendPk(*pk);
 }
 
 void ControllerInterface::initialize()

@@ -40,6 +40,7 @@ public:
 
 protected:
     virtual void handleTimer(cMessage *msg) override;
+//    virtual void receiveSignal(cComponent *source, simsignal_t signalID, bool b,cObject *details) override;
 };
 
 

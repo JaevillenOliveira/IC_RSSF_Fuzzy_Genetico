@@ -24,6 +24,7 @@ Define_Module(MgmtApSF);
 MgmtApSF::~MgmtApSF() {
     cancelAndDelete(beaconTimer);
     cancelAndDelete(reportTimer); //ADDED BY JAEVILLEN
+//  recordScalar("#handover", handoverDelayTime);
 }
 
 void MgmtApSF::handleTimer(cMessage *msg) {
@@ -43,10 +44,23 @@ void MgmtApSF::handleTimer(cMessage *msg) {
             cout << "   ";
             cout << "handover: ";
             cout << handoverDelayTime;
-            emit(handoverDelay, handoverDelayTime);
+            emit(handoverDelay, handoverDelayTime.dbl());
         }else
             scheduleAt(simTime() + 0.05, handoverTimer);
     } else {
         throw cRuntimeError("internal error: unrecognized timer '%s'", msg->getName());
     }
 }
+//listens for the signal to turn off --from the controller
+//void MgmtApSF::receiveSignal(cComponent *source, simsignal_t signalID, bool b,cObject *details) {
+//    Enter_Method_Silent();
+//    if (signalID == turnOnOffSignalID) {
+//        if (b == true){
+//            this->handoverDelayTime = this->getSimulation()->getSimTime();
+//            emit(handoverSignalID, true);
+//            scheduleAt(simTime(),handoverTimer);
+//        }else
+//            this->restart();
+//    }
+//}
+

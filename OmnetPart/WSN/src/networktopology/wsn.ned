@@ -73,14 +73,10 @@ network wsn
         @figure[title](type=label; pos=0,-1; anchor=sw; color=darkblue);
         @signal[packetReceived](type=inet::Packet);
         @signal[packetSent](type=inet::Packet);
-        @signal[handoverDelay](type=simtime_t);
         @statistic[packetReceived](title="packets received"; source=(packetReceived); record=count,"sum(packetBytes)","vector(packetBytes)"; interpolationmode=none);
         @statistic[packetSent](title="packets sent"; source=(packetSent); record=count,"sum(packetBytes)","vector(packetBytes)"; interpolationmode=none);
         @statistic[packetLoss](title="packet loss"; source=(count(packetSent)-count(packetReceived)); record=last; interpolationmode=none);
         @statistic[throughput](title="throughput"; unit=bps; source="throughput(packetReceived)"; record=vector);
-        //        @statistic[endToEndDelay](title="end-to-end delay"; source="dataAge(packetReceived)"; unit=s; record=histogram,vector; interpolationmode=none);
-        //       @statistic[jitter](title="jitter"; source="jitter(packetReceived)"; unit=s; record=histogram,vector; interpolationmode=none);
-        @statistic[handoverTime](title="handover time"; source=handoverDelay; unit=s; record=histogram,vector; interpolationmode=none);
 
     submodules:
         interface: ControllerInterface {
