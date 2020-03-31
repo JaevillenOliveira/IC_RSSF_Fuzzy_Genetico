@@ -37,10 +37,10 @@ void UdpSinkAdap::receiveSignal(cComponent *source, simsignal_t signalID, bool b
     Enter_Method_Silent();
     if (signalID == resetSignalID) {
         if (b == true){
+            cancelEvent(selfMsg);
             selfMsg->setKind(STOP);
             scheduleAt(this->getSimulation()->getSimTime(), selfMsg);
         }else{
-            selfMsg = new cMessage("UDPSinkTimer");
             selfMsg->setKind(START);
             scheduleAt(this->getSimulation()->getSimTime(), selfMsg);
         }
@@ -99,7 +99,7 @@ void UdpSinkAdap::handleMessageWhenUp(cMessage *msg)
             case STOP:
                 processStop();
                 rcvdThCount = 0;// ADDED BY JAEVILLEN; counts the received packets to calculate the throughput
-//                cancelAndDelete(selfMsg);
+                cancelEvent(selfMsg);
                 break;
 
             case SEND:

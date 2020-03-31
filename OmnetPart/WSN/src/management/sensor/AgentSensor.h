@@ -30,6 +30,7 @@ protected:
     virtual void receiveSignal(cComponent *source, simsignal_t signalID, cObject *obj, cObject *details) override;
     simsignal_t concatRegister(std::string s, std::string s1);
     virtual void lprocessAssociateConfirm(Ieee80211Prim_AssociateConfirm *resp, cMessage *msg);
+    virtual void processDisassociateConfirm(Ieee80211PrimConfirm *resp);
 };
 
 

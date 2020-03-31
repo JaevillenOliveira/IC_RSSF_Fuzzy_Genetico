@@ -45,6 +45,8 @@ void AgentSensor::handleResponse(cMessage *msg)
         lprocessAssociateConfirm(ptr, msg);
     else if (auto ptr = dynamic_cast<Ieee80211Prim_ReassociateConfirm *>(ctrl))
         processReassociateConfirm(ptr);
+    else if (auto ptr = dynamic_cast<Ieee80211PrimConfirm *>(ctrl))
+        processDisassociateConfirm(ptr);
     else if (ctrl)
         throw cRuntimeError("handleResponse(): unrecognized control info class `%s'", ctrl->getClassName());
     else
@@ -63,7 +65,6 @@ void AgentSensor::receiveSignal(cComponent *source, simsignal_t signalID, cObjec
         EV << "beacon lost, starting scanning again\n";
         getContainingNode(this)->bubble("Beacon lost!");
         sendDisassociateRequest(this->prevAP,RC_UNSPECIFIED);
-        sendScanRequest();
         emit(l2DisassociatedSignal, myIface);
     }
 }
@@ -81,6 +82,7 @@ void AgentSensor::receiveSignal(cComponent *source, simsignal_t signalID, bool b
         sendScanRequest();
     }
 }
+
 
 //WROTE BY JAEVILLEN
 //makes signal IDs based on its names
@@ -125,5 +127,10 @@ void AgentSensor::lprocessAssociateConfirm(Ieee80211Prim_AssociateConfirm *resp,
         else
             emit(l2AssociatedOldApSignal, myIface);
     }
+}
+
+void AgentSensor::processDisassociateConfirm(Ieee80211PrimConfirm *resp)
+{
+    sendScanRequest();
 }
 

@@ -144,7 +144,7 @@ void ControllerInterface::shutdownAp (const int id, ApInfo *ap){
 
 void ControllerInterface::restartAp (const int id, ApInfo *ap){
     printf("\n %s %i", "Restarting AP", id);
-    //this->emit(ap->getControlSignalID(),false, nullptr);
+    this->emit(ap->getControlSignalID(),false, nullptr);
 }
 
 

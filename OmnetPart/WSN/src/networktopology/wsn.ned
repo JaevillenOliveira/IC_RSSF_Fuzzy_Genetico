@@ -29,7 +29,7 @@ module myAccesspoint extends AccessPoint
     parameters:
         @networkNode();
         @labels(node,ethernet-node,wireless-node);
-        wlan[*].mgmt.typename = default("MgmtApSF");
+        wlan[*].mgmt.typename = default("MgmtAp");
         mobility.subjectModule = default("^");
         *.mobilityModule = default(exists(mobility) ? absPath(".mobility") : "");
         *.energySourceModule = default(exists(energyStorage) ? absPath(".energyStorage") : "");
@@ -53,7 +53,7 @@ module Sensor extends WirelessHost
 {
     parameters:
         string sinkAddress;
-        wlan[*].mgmt.typename = default("MgmtSensorSH");
+        wlan[*].mgmt.typename = default("MgmtSensorHH");
         wlan[*].agent.typename = default("AgentSensor");
 }
 

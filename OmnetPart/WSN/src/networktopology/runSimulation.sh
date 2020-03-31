@@ -2,21 +2,25 @@
 
 #Starting Matlab Server
 
-for i in $(seq 1 10)
-do	
+for j in $(seq 2 2)
+do
+	for i in $(seq 5 10)
+	do	
 
-gnome-terminal --working-directory=IC/MatlabPart/Matlab_Bridge/ -- /usr/local/MATLAB/R2018b/bin/matlab -nodisplay -nosplash -nodesktop -r "run('Server.m')" &
+	.././WSN -u Cmdenv -f wsnSc${j}.ini -n ../../simulations:..:../../../../inet4/src:../../../../inet4/examples:../../../../inet4/tutorials:../../../../inet4/showcases -c wsnSc${j}T${i} -r '$fuzzyCtrl=false' --vector-recording=false
 
-sleep 20
+	done
 
-.././WSN -u Cmdenv -f wsnSc1.ini -n ../../simulations:..:../../../../inet4/src:../../../../inet4/examples:../../../../inet4/tutorials:../../../../inet4/showcases -c wsnSc1T${i} -r '$numHosts>10 && $mean<2' --vector-recording=false
+	for i in $(seq 5 10)
+	do	
 
-done
+	gnome-terminal --working-directory=IC/MatlabPart/Matlab_Bridge/ -- /usr/local/MATLAB/R2018b/bin/matlab -nodisplay -nosplash -nodesktop -r "run('Server.m')" &
 
-for i in $(seq 1 10)
-do	
+	sleep 20
 
-.././WSN -u Cmdenv -f wsnSc1.ini -n ../../simulations:..:../../../../inet4/src:../../../../inet4/examples:../../../../inet4/tutorials:../../../../inet4/showcases -c wsnSc1T${i} -r '$fuzzyCtrl=false' --vector-recording=false
+	.././WSN -u Cmdenv -f wsnSc${j}.ini -n ../../simulations:..:../../../../inet4/src:../../../../inet4/examples:../../../../inet4/tutorials:../../../../inet4/showcases -c wsnSc${j}T${i} -r '$fuzzyCtrl=true' --vector-recording=false
+
+	done
 
 done
 

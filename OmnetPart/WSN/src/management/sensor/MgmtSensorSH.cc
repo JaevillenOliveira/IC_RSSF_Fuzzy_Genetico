@@ -35,6 +35,26 @@ Define_Module(MgmtSensorSH);
 #define MAX_BEACONS_MISSED        3.5  // beacon lost timeout, in beacon intervals (doesn't need to be integer)
 #define MK_ASSOC_TIMEOUT          2
 
+void MgmtSensorSH::handleCommand(int msgkind, cObject *ctrl)
+{
+    if (auto cmd = dynamic_cast<Ieee80211Prim_ScanRequest *>(ctrl))
+        processScanCommand(cmd);
+    else if (auto cmd = dynamic_cast<Ieee80211Prim_AuthenticateRequest *>(ctrl))
+        processAuthenticateCommand(cmd);
+    else if (auto cmd = dynamic_cast<Ieee80211Prim_DeauthenticateRequest *>(ctrl))
+        processDeauthenticateCommand(cmd);
+    else if (auto cmd = dynamic_cast<Ieee80211Prim_AssociateRequest *>(ctrl))
+        processAssociateCommand(cmd);
+    else if (auto cmd = dynamic_cast<Ieee80211Prim_ReassociateRequest *>(ctrl))
+        processReassociateCommand(cmd);
+    else if (auto cmd = dynamic_cast<Ieee80211Prim_DisassociateRequest *>(ctrl))
+        processDisassociateCommand(cmd);
+    else if (ctrl)
+        throw cRuntimeError("handleCommand(): unrecognized control info class `%s'", ctrl->getClassName());
+    else
+        throw cRuntimeError("handleCommand(): control info is nullptr");
+    delete ctrl;
+}
 
 void MgmtSensorSH::processScanCommand(Ieee80211Prim_ScanRequest *ctrl)
 {
@@ -43,7 +63,6 @@ void MgmtSensorSH::processScanCommand(Ieee80211Prim_ScanRequest *ctrl)
     if (!isScanning){
 //            throw cRuntimeError("processScanCommand: scanning already in progress");
 
-        //COMMENTED BY JAEVILLEN
 //        if (mib->bssStationData.isAssociated)
 //            disassociate();
 
@@ -182,6 +201,29 @@ void MgmtSensorSH::handleAssociationResponseFrame(Packet *packet, const Ptr<cons
     sendAssociationConfirm(ap, statusCodeToPrimResultCode(statusCode));
 }
 
+void MgmtSensorSH::processDisassociateCommand(Ieee80211Prim_DisassociateRequest *ctrl)
+{
+    const MacAddress& address = ctrl->getAddress();
+
+    if (mib->bssStationData.isAssociated && address == assocAP.address) {
+        disassociate();
+    }
+    else if (assocTimeoutMsg) {
+        // pending association
+        delete cancelEvent(assocTimeoutMsg);
+        assocTimeoutMsg = nullptr;
+    }
+    sendDisassociationConfirm();
+    // create and send disassociation request
+    const auto& body = makeShared<Ieee80211DisassociationFrame>();
+    body->setReasonCode(ctrl->getReasonCode());
+    sendManagementFrame("Disass", body, ST_DISASSOCIATION, address);
+}
+
+void MgmtSensorSH::sendDisassociationConfirm()
+{
+    sendConfirm(new Ieee80211PrimConfirm(), PRC_SUCCESS);
+}
 
 
 
