@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for WSN
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -KINET_PROJ=/home/jaevillen/IC/inet4 -KWSN_PROJ=.. -DINET_IMPORT -I/home/jaevillen/IC/MatlabPart/Matlab_Bridge -I$$\(INET_PROJ\)/src -L$$\(INET_PROJ\)/src -L$$\(INET_PROJ\)/src -lINET$$\(D\)
+#  opp_makemake -f --deep -KINET_PROJ=/home/jaevillen/IC/inet4 -KWSN_PROJ=.. -DINET_IMPORT -I/home/jaevillen/IC/MatlabPart/Matlab_Bridge -I$$\(INET_PROJ\)/src -L$$\(INET_PROJ\)/src -L$$\(INET_PROJ\)/bin -L$$\(INET_PROJ\)/src -lINET$$\(D\)
 #
 
 # Name of target to be created (-o option)
@@ -22,7 +22,7 @@ INCLUDE_PATH = -I/home/jaevillen/IC/MatlabPart/Matlab_Bridge -I$(INET_PROJ)/src
 EXTRA_OBJS =
 
 # Additional libraries (-L, -l options)
-LIBS = $(LDFLAG_LIBPATH)$(INET_PROJ)/src $(LDFLAG_LIBPATH)$(INET_PROJ)/src  -lINET$(D)
+LIBS = $(LDFLAG_LIBPATH)$(INET_PROJ)/src $(LDFLAG_LIBPATH)$(INET_PROJ)/bin $(LDFLAG_LIBPATH)$(INET_PROJ)/src  -lINET$(D)
 
 # Output directory
 PROJECT_OUTPUT_DIR = ../out
@@ -78,7 +78,7 @@ include $(CONFIGFILE)
 # Simulation kernel and user interface libraries
 OMNETPP_LIBS = $(OPPMAIN_LIB) $(USERIF_LIBS) $(KERNEL_LIBS) $(SYS_LIBS)
 ifneq ($(TOOLCHAIN_NAME),clangc2)
-LIBS += -Wl,-rpath,$(abspath $(INET_PROJ)/src) -Wl,-rpath,$(abspath $(INET_PROJ)/src)
+LIBS += -Wl,-rpath,$(abspath $(INET_PROJ)/src) -Wl,-rpath,$(abspath $(INET_PROJ)/bin) -Wl,-rpath,$(abspath $(INET_PROJ)/src)
 endif
 
 COPTS = $(CFLAGS) $(IMPORT_DEFINES) -DINET_IMPORT $(INCLUDE_PATH) -I$(OMNETPP_INCL_DIR)

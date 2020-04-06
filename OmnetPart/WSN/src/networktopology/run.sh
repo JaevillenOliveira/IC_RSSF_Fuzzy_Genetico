@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./runSc1.sh
+#./runSc1.sh
 ./runSc2.sh
 
 
