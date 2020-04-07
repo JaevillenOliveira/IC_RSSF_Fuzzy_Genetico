@@ -8,6 +8,7 @@
 #include <string.h>
 #include <omnetpp.h>
 #include <stdio.h>
+#include <random>
 #include <iostream>
 #include "ControllerInterface.h"
 #include "../management/ap/ApReport.h"
@@ -32,29 +33,72 @@ void ControllerInterface::initialize()
 {
     this->getSimulation()->getSystemModule()->subscribe("reportReadySignal", this);
     fuzzyControlled = par("fuzzyControlled");
+    randomOff = par("randomOff");
     if(fuzzyControlled){
         apSortingTimer = new cMessage("apSortingTimer");
         scheduleAt(simTime() +  2, apSortingTimer);
         p = new OMNeTPipe("localhost", 18638);
+    }else if(randomOff){
+        randomOffTimer = new cMessage("randomOffTimer");
+        scheduleAt(simTime() +  2, randomOffTimer);
     }
 };
+
+void ControllerInterface::chooseRandomAp(){
+    if(!aplist.empty()){
+        vec.clear();
+        std::copy(aplist.begin(),aplist.end(),std::back_inserter<std::vector<pair>>(vec)); //copies items from map to vector
+    }
+    std::random_device rd;  //Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+    std::uniform_int_distribution<> dis(0, vec.size() - 1);
+
+    int apToTurnOff = dis(gen);
+
+    cout << "Vec size" << vec.size() << endl;
+    cout << "apToTurnOff" << apToTurnOff << endl;
+
+    auto ap = vec.at(apToTurnOff);
+    int id = ap.first;
+    ApInfo apinfo = ap.second;
+
+    int numberApsOff = 0;
+    for (auto it = aplist.begin(); it != aplist.end(); ++it) {
+        if(it->second.isOff())
+            numberApsOff++;
+    }
+    cout << "APs OFF:  " << numberApsOff << endl;
+    if (!apinfo.isOff() && numberApsOff < (aplist.size()/2)){
+        shutdownAp(id, &apinfo);
+        scheduleAt(simTime() +  2, randomOffTimer);
+
+    }else if(apinfo.isOff() && numberApsOff < (aplist.size()/2)){
+        scheduleAt(simTime() +  2, randomOffTimer);
+    }
+}
+
+void ControllerInterface::sortApByThroughput(){
+    if(!aplist.empty()){
+         vec.clear();
+         std::copy(aplist.begin(),aplist.end(),std::back_inserter<std::vector<pair>>(vec)); //copies items from map to vector
+
+         std::sort(vec.begin(), vec.end(), [](const pair& l, const pair& r) { //sorts vector by throughput averages
+             if (l.second.getCurrentReport().getThroughput() != r.second.getCurrentReport().getThroughput())
+                 return l.second.getCurrentReport().getThroughput() < r.second.getCurrentReport().getThroughput();
+         });
+         for (auto it = vec.begin(); it != vec.end(); ++it) {
+             apAnalisys(it->first, it->second);
+         }
+    }
+}
 
 void ControllerInterface::handleMessage(cMessage *msg)
 {
     if (msg == apSortingTimer) {
-        if(!aplist.empty()){
-            vec.clear();
-            std::copy(aplist.begin(),aplist.end(),std::back_inserter<std::vector<pair>>(vec)); //copies items from map to vector
-
-            std::sort(vec.begin(), vec.end(), [](const pair& l, const pair& r) { //sorts vector by throughput averages
-                if (l.second.getCurrentReport().getThroughput() != r.second.getCurrentReport().getThroughput())
-                    return l.second.getCurrentReport().getThroughput() < r.second.getCurrentReport().getThroughput();
-            });
-            for (auto it = vec.begin(); it != vec.end(); ++it) {
-                apAnalisys(it->first, it->second);
-            }
-            scheduleAt(simTime() + 10, apSortingTimer);
-        }
+        sortApByThroughput();
+        scheduleAt(simTime() + 10, apSortingTimer);
+    }else if(msg == randomOffTimer){
+        chooseRandomAp();
     }
 }
 
@@ -124,26 +168,23 @@ void ControllerInterface::apAnalisys (const int id, ApInfo &ap){
     }
     cout << "numberOff " << numberApsOff;
     if(resp <= 50 && ap.isOff()){
-        ApInfo *apinfo = lookupAp(id);
-        apinfo->setOff(false);
         restartAp(id, &ap);
-
     } else if (resp > 50 && !ap.isOff() && numberApsOff < (aplist.size()/2)){
-        ApInfo *apinfo = lookupAp(id);
-        apinfo->setOff(true);
         shutdownAp(id, &ap);
-        cout << "Shutting down ap" << id << endl ;
-
     }
 }
 
 void ControllerInterface::shutdownAp (const int id, ApInfo *ap){
     printf("\n %s %i ", "Shutting Down AP", id);
+    ApInfo *apinfo = lookupAp(id);
+    apinfo->setOff(true);
     this->emit(ap->getControlSignalID(),true, nullptr);
 }
 
 void ControllerInterface::restartAp (const int id, ApInfo *ap){
     printf("\n %s %i", "Restarting AP", id);
+    ApInfo *apinfo = lookupAp(id);
+    apinfo->setOff(false);
     this->emit(ap->getControlSignalID(),false, nullptr);
 }
 

@@ -41,6 +41,7 @@ class ControllerInterface : public cSimpleModule,  protected cListener{
 
     protected:
         cMessage *apSortingTimer = nullptr;
+        cMessage *randomOffTimer = nullptr;
         cMessage *stopTimer = nullptr;
         ApList aplist;
         std::vector<pair> vec;
@@ -48,12 +49,15 @@ class ControllerInterface : public cSimpleModule,  protected cListener{
         OMNeTPipe* p;
         int packetsCount = 1;
         bool fuzzyControlled;
+        bool randomOff;
 
     public:
         ControllerInterface() {}
         virtual ~ControllerInterface();
     protected:
         virtual void initialize() override;
+        virtual void chooseRandomAp();
+        virtual void sortApByThroughput();
         virtual void receiveSignal (cComponent *source, simsignal_t signalID, cObject *obj, cObject *details) override;
         virtual void handleMessage(cMessage *msg)override;
         virtual simsignal_t concatRegister(std::string s, std::string s1);

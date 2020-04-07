@@ -61,6 +61,7 @@ module ControllerInterface
 {
     parameters:
         bool fuzzyControlled = default(true);
+        bool randomOff = default(false);
         @class(ControllerInterface);
 }
 
