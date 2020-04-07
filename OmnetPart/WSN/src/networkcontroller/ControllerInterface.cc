@@ -32,13 +32,12 @@ ControllerInterface::~ControllerInterface() {
 void ControllerInterface::initialize()
 {
     this->getSimulation()->getSystemModule()->subscribe("reportReadySignal", this);
-    fuzzyControlled = par("fuzzyControlled");
-    randomOff = par("randomOff");
-    if(fuzzyControlled){
+    opMode = par("opMode").stdstringValue();
+    if(opMode == "fuzzyControlled"){
         apSortingTimer = new cMessage("apSortingTimer");
         scheduleAt(simTime() +  2, apSortingTimer);
         p = new OMNeTPipe("localhost", 18638);
-    }else if(randomOff){
+    }else if(opMode == "randomOFF"){
         randomOffTimer = new cMessage("randomOffTimer");
         scheduleAt(simTime() +  2, randomOffTimer);
     }

@@ -60,8 +60,7 @@ module Sensor extends WirelessHost
 module ControllerInterface
 {
     parameters:
-        bool fuzzyControlled = default(true);
-        bool randomOff = default(false);
+        string opMode = default("AlwaysON");
         @class(ControllerInterface);
 }
 
