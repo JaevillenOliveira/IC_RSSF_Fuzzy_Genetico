@@ -84,6 +84,8 @@ void MgmtAp::initialize(int stage) {
         this->getSimulation()->getSystemModule()->subscribe(thReportSignalID, this);
 
         handoverSignalID = concatRegister(s_handover, par("sinkAddress").stdstringValue());
+
+        on = true;
         //ADDED BY JAEVILLEN:END
 
         // start beacon timer (randomize startup time)
@@ -149,14 +151,17 @@ void MgmtAp::sendManagementFrame(const char *name,const Ptr<Ieee80211MgmtFrame>&
 }
 
 void MgmtAp::sendBeacon() {
-    EV << "Sending beacon\n";
-    const auto& body = makeShared<Ieee80211BeaconFrame>();
-    body->setSSID(ssid.c_str());
-    body->setSupportedRates(supportedRates);
-    body->setBeaconInterval(beaconInterval);
-    body->setChannelNumber(channelNumber);
-    body->setChunkLength(B(8 + 2 + 2 + (2 + ssid.length()) + (2 + supportedRates.numRates)));
-    sendManagementFrame("Beacon", body, ST_BEACON, MacAddress::BROADCAST_ADDRESS);
+    if (on){
+        EV << "Sending beacon\n";
+        const auto& body = makeShared<Ieee80211BeaconFrame>();
+        body->setSSID(ssid.c_str());
+        body->setSupportedRates(supportedRates);
+        body->setBeaconInterval(beaconInterval);
+        body->setChannelNumber(channelNumber);
+        body->setChunkLength(B(8 + 2 + 2 + (2 + ssid.length()) + (2 + supportedRates.numRates)));
+        sendManagementFrame("Beacon", body, ST_BEACON, MacAddress::BROADCAST_ADDRESS);
+    }
+
 }
 
 //ADDED BY JAEVILLEN: BEGIN
@@ -184,11 +189,14 @@ void MgmtAp::receiveSignal(cComponent *source, simsignal_t signalID, bool b,cObj
     Enter_Method_Silent();
     if (signalID == turnOnOffSignalID) {
         if (b == true){
+            this->on = false;
             this->handoverDelayTime = this->getSimulation()->getSimTime();
             emit(handoverSignalID, true);
             scheduleAt(simTime(),handoverTimer);
-        }else
+        }else{
             this->restart();
+            this->on = true;
+        }
     }
 }
 

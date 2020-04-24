@@ -27,6 +27,8 @@ public:
     virtual ~MgmtApSF();
 
 protected:
+    virtual void handleAssociationResponseFrame(Packet *packet,const Ptr<const Ieee80211MgmtHeader>& header) override;
+    virtual void handleAssociationRequestFrame(Packet *packet,const Ptr<const Ieee80211MgmtHeader>& header) override;
     virtual void handleTimer(cMessage *msg) override;
     virtual void receiveSignal(cComponent *source, simsignal_t signalID, bool b,cObject *details) override;
 };

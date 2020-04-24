@@ -62,7 +62,6 @@ void MgmtSensorSH::processScanCommand(Ieee80211Prim_ScanRequest *ctrl)
 
     if (!isScanning){
 //            throw cRuntimeError("processScanCommand: scanning already in progress");
-
 //        if (mib->bssStationData.isAssociated)
 //            disassociate();
 
@@ -105,8 +104,16 @@ void MgmtSensorSH::processScanCommand(Ieee80211Prim_ScanRequest *ctrl)
 void MgmtSensorSH::startAssociation(ApInfo *ap, simtime_t timeout)
 {
 //Commented by Jaevillen
-//    if (mib->bssStationData.isAssociated || assocTimeoutMsg)
+    if (mib->bssStationData.isAssociated){
 //        throw cRuntimeError("startAssociation: already associated or association currently in progress");
+//ADDED BY JAEVILLEN: BEGIN
+        EV << "Breaking existing association with AP address=" << assocAP.address << "\n";
+        Ieee80211Prim_DisassociateRequest *req = new Ieee80211Prim_DisassociateRequest();
+        req->setAddress(assocAP.address);
+        req->setReasonCode(RC_UNSPECIFIED);
+        processDisassociateCommand(req);
+//ADDED BY JAEVILLEN: END
+    }
     if (assocTimeoutMsg)
         throw cRuntimeError("startAssociation: association currently in progress");
     if (!ap->isAuthenticated)
@@ -165,15 +172,6 @@ void MgmtSensorSH::handleAssociationResponseFrame(Packet *packet, const Ptr<cons
 //        assocAP = AssociatedApInfo();
 //    }
 
-        //ADDED BY JAEVILLEN: BEGIN
-    if (mib->bssStationData.isAssociated) {
-        EV << "Breaking existing association with AP address=" << assocAP.address << "\n";
-        Ieee80211Prim_DisassociateRequest *req = new Ieee80211Prim_DisassociateRequest();
-        req->setAddress(assocAP.address);
-        req->setReasonCode(RC_UNSPECIFIED);
-        processDisassociateCommand(req);
-    }
-        //ADDED BY JAEVILLEN: END
     delete cancelEvent(assocTimeoutMsg);
     assocTimeoutMsg = nullptr;
 

@@ -99,6 +99,7 @@ protected:
     cMessage *beaconTimer = nullptr;
 
     //ADDED BY JAEVILLEN:BEGIN
+    bool on;
     NeighborsAPsList apList;
     cMessage *reportTimer = nullptr;
     cMessage *handoverTimer = nullptr;

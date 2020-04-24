@@ -51,8 +51,10 @@ void ControllerInterface::chooseRandomAp(){
     std::random_device rd;  //Will be used to obtain a seed for the random number engine
     std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
     std::uniform_int_distribution<> dis(0, vec.size() - 1);
+    std::uniform_int_distribution<> d(0, 10);
 
     int apToTurnOff = dis(gen);
+    int delay = d(gen);
 
     cout << "Vec size" << vec.size() << endl;
     cout << "apToTurnOff" << apToTurnOff << endl;
@@ -69,10 +71,10 @@ void ControllerInterface::chooseRandomAp(){
     cout << "APs OFF:  " << numberApsOff << endl;
     if (!apinfo.isOff() && numberApsOff < (aplist.size()/2)){
         shutdownAp(id, &apinfo);
-        scheduleAt(simTime() +  2, randomOffTimer);
+        scheduleAt(simTime() +  delay, randomOffTimer);
 
     }else if(apinfo.isOff() && numberApsOff < (aplist.size()/2)){
-        scheduleAt(simTime() +  2, randomOffTimer);
+        scheduleAt(simTime() +  delay, randomOffTimer);
     }
 }
 
