@@ -1,14 +1,14 @@
 version 2
-run wsnSc1T4-1-20200407-10:54:18-12947
+run wsnSc1T4-1-20200423-18:26:40-15685
 attr configname wsnSc1T4
-attr datetime 20200407-10:54:18
+attr datetime 20200423-18:26:40
 attr experiment wsnSc1T4
 attr inifile wsnSc1.ini
 attr iterationvars "$opMode=\"randomOFF\""
 attr iterationvarsf opMode=randomOFF-
 attr measurement "$opMode=\"randomOFF\""
 attr network Sc1
-attr processid 12947
+attr processid 15685
 attr repetition 0
 attr replication #0
 attr resultdir results

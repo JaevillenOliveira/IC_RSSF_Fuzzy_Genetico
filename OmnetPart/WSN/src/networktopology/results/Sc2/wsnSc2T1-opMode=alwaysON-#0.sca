@@ -1,14 +1,14 @@
 version 2
-run wsnSc2T1-2-20200407-10:00:46-11989
+run wsnSc2T1-2-20200423-13:16:25-11366
 attr configname wsnSc2T1
-attr datetime 20200407-10:00:46
+attr datetime 20200423-13:16:25
 attr experiment wsnSc2T1
 attr inifile wsnSc2.ini
 attr iterationvars "$opMode=\"alwaysON\""
 attr iterationvarsf opMode=alwaysON-
 attr measurement "$opMode=\"alwaysON\""
 attr network Sc2
-attr processid 11989
+attr processid 11366
 attr repetition 0
 attr replication #0
 attr resultdir results
