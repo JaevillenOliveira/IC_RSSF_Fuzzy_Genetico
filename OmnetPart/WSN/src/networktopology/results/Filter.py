@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import json
 
 from Filters import ao_simulation_filter as fao
 from Filters import ro_simulation_filter as fro
@@ -36,6 +37,11 @@ for i in range(1, 3):
 	results.insert(15, "PowerConsumed(W)", fresult_fao[5])  
 	results.insert(16, "PowerConsumedFLC(W)", fresult_fflc[5])  
 	results.insert(17, "PowerConsumedRO(W)", fresult_fro[5])  
+
+	power_consumption_dict = {'T'+str(i+1) : (fresult_fflc[5])[i] for i in range(0, len(fresult_fflc[5])) }
+	y = json.dumps(power_consumption_dict)
+	with open('power_consumption_sc'+str(i)+'.txt', 'w') as outfile:
+		json.dump(y, outfile)
 
 	results.to_csv('outSc'+str(i)+'.csv')
 
