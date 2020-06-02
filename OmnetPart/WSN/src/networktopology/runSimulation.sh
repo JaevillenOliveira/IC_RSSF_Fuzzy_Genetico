@@ -9,4 +9,7 @@
 #./runSc1FLC.sh
 #./runSc2FLC.sh
 
+cd results
+#./scave.sh
 
+python Filter.py
