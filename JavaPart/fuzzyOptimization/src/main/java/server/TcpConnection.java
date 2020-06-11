@@ -24,8 +24,8 @@ public class TcpConnection {
         this.server = new ServerSocket(3322);
         System.out.println("Server started at 3322");
     }
-    
-    /**
+     
+   /**
      *
      */
     public void waitCon() throws IOException{
