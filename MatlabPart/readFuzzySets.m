@@ -8,8 +8,7 @@ function readFuzzySets
     
     for k = 0:6 %% The first insividuo is already evaluated
        fgetl(fid);
-    end
-       
+    end       
     for k = 0:8 %% The 9 new individuos
         name = fscanf(fid,'%s', [1, 2]); %% Reads the subject's name
         fis = mamfis;
