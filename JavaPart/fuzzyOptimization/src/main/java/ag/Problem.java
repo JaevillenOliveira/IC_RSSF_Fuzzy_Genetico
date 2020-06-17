@@ -5,8 +5,6 @@
  */
 package ag;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import org.uma.jmetal.problem.impl.AbstractGenericProblem;
 
@@ -16,10 +14,8 @@ import org.uma.jmetal.problem.impl.AbstractGenericProblem;
  */
 public final class Problem extends AbstractGenericProblem{
 
-    private ArrayList <Solution> solutions;
     private Integer [] lowerLimits;
     private Integer [] upperLimits;
-    private int numberOfIndividuos;
     private Random rdm;
     
     /**
@@ -27,19 +23,17 @@ public final class Problem extends AbstractGenericProblem{
      * @param name the name of the problem
      * @param numberOfObjectives   
      * @param numberOfVariables
-     * @param numberOfIndividuos
      * @param upperLimits
      * @param lowerLimits
      */
-    public Problem(String name, int numberOfObjectives, int numberOfVariables, int numberOfIndividuos, Integer [] upperLimits, Integer [] lowerLimits) {
+    public Problem(String name, int numberOfObjectives, int numberOfVariables, Integer [] upperLimits, Integer [] lowerLimits) {
         this.setName(name);
         this.setNumberOfObjectives(numberOfObjectives);
         this.setNumberOfVariables(numberOfVariables);
-        this.setNumberOfIndividuos(numberOfIndividuos);
         this.setUpperLimits(upperLimits);
         this.setLowerLimits(lowerLimits);
         this.rdm = new Random();
-        this.solutions = new ArrayList <Solution> ();
+        
     }
     
     /**
@@ -126,38 +120,6 @@ public final class Problem extends AbstractGenericProblem{
      */
     public void setUpperLimits(Integer [] upperLimits) {
         this.upperLimits = upperLimits;
-    }
-    
-    /**
-     *
-     * @return
-     */
-    public List<Solution> getSolutions() {
-        return solutions;
-    }
-
-    /**
-     *
-     * @param solutions
-     */
-    public void setSolutions(ArrayList<Solution> solutions) {
-        this.solutions = solutions;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public int getNumberOfIndividuoss() {
-        return numberOfIndividuos;
-    }
-
-    /**
-     *
-     * @param numberOfIndividuos
-     */
-    public void setNumberOfIndividuos(int numberOfIndividuos) {
-        this.numberOfIndividuos = numberOfIndividuos;
     }
     
 }

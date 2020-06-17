@@ -21,10 +21,11 @@ public class main {
      */
     public static void main(String[] args) {
         try {
-            GA ga = new GA();
-            ga.readProblem();
-            ga.readSubject();
-            ga.writePopulation(ga.createPopulation());
+            Controller ctr = new Controller();
+            ctr.readProblem();
+            ctr.readSubject();
+            ctr.writePopulation(ctr.getGa().createPopulation());
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

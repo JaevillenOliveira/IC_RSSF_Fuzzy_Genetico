@@ -6,7 +6,6 @@
 package ag;
 
 import java.util.Map;
-import java.util.Random;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.impl.AbstractGenericSolution;
 
