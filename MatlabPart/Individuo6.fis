@@ -1,0 +1,54 @@
+[System]
+Name='Individuo6'
+Type='mamdani'
+Version=2.0
+NumInputs=4
+NumOutputs=1
+NumRules=0
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='rssi'
+Range=[-80 -40]
+NumMFs=3
+MF1='mf1':'trimf',[-80 -80 -75]
+MF2='mf2':'trimf',[-80 -63 -54]
+MF3='mf3':'trimf',[-54 -40 -40]
+
+[Input2]
+Name='neighbors'
+Range=[0 4]
+NumMFs=3
+MF1='mf1':'trimf',[0 0 0]
+MF2='mf2':'trimf',[1 2 3]
+MF3='mf3':'trimf',[2 4 4]
+
+[Input3]
+Name='sources'
+Range=[0 12]
+NumMFs=3
+MF1='mf1':'trimf',[0 0 3]
+MF2='mf2':'trimf',[2 4 7]
+MF3='mf3':'trimf',[11 12 12]
+
+[Input4]
+Name='throughput'
+Range=[0 100]
+NumMFs=3
+MF1='mf1':'trimf',[0 0 43]
+MF2='mf2':'trimf',[7 12 95]
+MF3='mf3':'trimf',[57 100 100]
+
+[Output1]
+Name='switch_perc'
+Range=[0 100]
+NumMFs=3
+MF1='mf1':'trimf',[0 0 44]
+MF2='mf2':'trimf',[19 50 69]
+MF3='mf3':'trimf',[59 100 100]
+
+[Rules]

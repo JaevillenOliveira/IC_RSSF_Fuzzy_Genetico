@@ -1,0 +1,47 @@
+[System]
+Name='pratica5'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=9
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='Temperatura'
+Range=[800 1200]
+NumMFs=3
+MF1='Baixa':'trapmf',[800 800 900 1000]
+MF2='Média':'trimf',[900 1000 1100]
+MF3='Alta':'trapmf',[1000 1100 1200 1200]
+
+[Input2]
+Name='Volume'
+Range=[2 12]
+NumMFs=3
+MF1='Pequeno':'trapmf',[2 2 4.5 7]
+MF2='Médio':'trimf',[4.5 7 9.5]
+MF3='Grande':'trapmf',[7 9.5 12 12]
+
+[Output1]
+Name='Pressão'
+Range=[4 12]
+NumMFs=3
+MF1='Baixa':'trapmf',[4 4 5 8]
+MF2='Média':'trimf',[6 8 10]
+MF3='Alta':'trapmf',[8 11 12 12]
+
+[Rules]
+1 1, 1 (1) : 1
+2 1, 1 (1) : 1
+3 1, 2 (1) : 1
+1 2, 1 (1) : 1
+2 2, 2 (1) : 1
+3 2, 3 (1) : 1
+1 3, 2 (1) : 1
+2 3, 3 (1) : 1
+3 3, 3 (1) : 1

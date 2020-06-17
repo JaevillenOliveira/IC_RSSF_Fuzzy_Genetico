@@ -23,8 +23,8 @@ public class main {
         try {
             GA ga = new GA();
             ga.readProblem();
-            ga.readIndividuo();
-            ga.createPopulation();
+            ga.readSubject();
+            ga.writePopulation(ga.createPopulation());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

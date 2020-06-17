@@ -21,7 +21,7 @@ MF3='HIGH':'trimf',[-60 -40 -40]
 
 [Input2]
 Name='Number_AP'
-Range=[0 8]
+Range=[0 4]
 NumMFs=3
 MF1='LOW':'trimf',[0 0 2]
 MF2='MEDIUM':'trimf',[0 2 4]

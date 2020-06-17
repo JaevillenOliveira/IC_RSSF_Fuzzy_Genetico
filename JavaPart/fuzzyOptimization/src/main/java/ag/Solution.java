@@ -6,6 +6,7 @@
 package ag;
 
 import java.util.Map;
+import java.util.Random;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.impl.AbstractGenericSolution;
 
@@ -14,7 +15,7 @@ import org.uma.jmetal.solution.impl.AbstractGenericSolution;
  * @author jaevillen
  */
 public class Solution extends AbstractGenericSolution{
-
+    
     public Solution(Problem problem) {
         super(problem);
     }
@@ -33,7 +34,5 @@ public class Solution extends AbstractGenericSolution{
     public Map getAttributes() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-
-
+   
 }

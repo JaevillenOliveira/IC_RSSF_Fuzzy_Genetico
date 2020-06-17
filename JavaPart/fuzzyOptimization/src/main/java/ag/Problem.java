@@ -66,7 +66,6 @@ public final class Problem extends AbstractGenericProblem{
     
     /**
      *
-     * @param numberOfSets
      * @param variableIndex
      * @return
      */
@@ -160,7 +159,5 @@ public final class Problem extends AbstractGenericProblem{
     public void setNumberOfIndividuos(int numberOfIndividuos) {
         this.numberOfIndividuos = numberOfIndividuos;
     }
-    
-
     
 }
