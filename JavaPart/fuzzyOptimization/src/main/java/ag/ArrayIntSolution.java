@@ -6,19 +6,18 @@
 package ag;
 
 import java.util.Map;
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.impl.AbstractGenericSolution;
 
 /**
  *
  * @author jaevillen
  */
-public class Solution extends AbstractGenericSolution{
-    
-    public Solution(Problem problem) {
+public class ArrayIntSolution extends AbstractGenericSolution{
+
+    public ArrayIntSolution(Problem problem) {
         super(problem);
     }
-
+    
     @Override
     public String getVariableValueString(int i) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

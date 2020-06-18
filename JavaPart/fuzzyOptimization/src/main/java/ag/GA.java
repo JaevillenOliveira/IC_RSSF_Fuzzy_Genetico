@@ -21,7 +21,7 @@ public class GA extends AbstractGeneticAlgorithm{
 
     private int sizeOfIntinialPopulation;
     private int subjectCount;
-    private ArrayList <Solution> solutions;
+    private ArrayList <ArrayIntSolution> solutions;
 
     public GA(Problem problem, int sizeOfIntinialPopulation) throws FileNotFoundException, IOException {
         super(problem);         
@@ -34,21 +34,21 @@ public class GA extends AbstractGeneticAlgorithm{
      *
      * @return
      */
-    public List<Solution> createPopulation(){
-        ArrayList <Solution> newList = new ArrayList <> ();
+    public List<ArrayIntSolution> createPopulation(){
+        ArrayList <ArrayIntSolution> newList = new ArrayList <> ();
         for (int i = 1; i < this.getSizeOfIntinialPopulation(); i++){
-            Solution sol = (Solution) this.problem.createSolution();
+            ArrayIntSolution sol = (ArrayIntSolution) this.problem.createSolution();
             newList.add(sol);
         }
         this.getSolutions().addAll(newList);
         return newList;
     }
    
-    public List<Solution> getSolutions() {
+    public List<ArrayIntSolution> getSolutions() {
         return solutions;
     }
 
-    public void setSolutions(ArrayList<Solution> solutions) {
+    public void setSolutions(ArrayList<ArrayIntSolution> solutions) {
         this.solutions = solutions;
     }
     

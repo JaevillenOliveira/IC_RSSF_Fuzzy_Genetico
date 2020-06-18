@@ -85,7 +85,7 @@ public class Controller {
      * @throws IOException
      */
     public void readSubject() throws IOException{     
-        Solution sol = new Solution(this.ga.getProblem());
+        ArrayIntSolution sol = new ArrayIntSolution((Problem) this.ga.getProblem());
         String subjectId = br.readLine(); //Is the name of the subject ("Individuo" + index)
         for(int i = 0; i < 5; i++){ // Reads the five variables of the subject (including the output)         
             this.st = new StringTokenizer(br.readLine());
@@ -96,7 +96,8 @@ public class Controller {
                    sets[j][k] = Integer.parseInt(st.nextToken());
                 } 
             }
-            sol.setVariableValue(i, sets);
+            sol.
+                    setVariableValue(i, sets);
         }      
         this.ga.getSolutions().add(sol);
         this.ga.setSubjectCount((ga.getSubjectCount()) + 1);
@@ -108,10 +109,10 @@ public class Controller {
      * @param solutionList
      * @throws IOException
      */
-    public void writePopulation(List <Solution> solutionList) throws IOException{          
-        Iterator<Solution> it = solutionList.iterator();
+    public void writePopulation(List <ArrayIntSolution> solutionList) throws IOException{          
+        Iterator<ArrayIntSolution> it = solutionList.iterator();
         while(it.hasNext()){
-            Solution sol = it.next();
+            ArrayIntSolution sol = it.next();
             this.ga.setSubjectCount((ga.getSubjectCount()) + 1);
             this.bw.write("Individuo" + " " + ga.getSubjectCount());
             for(int i = 0; i < sol.getNumberOfVariables(); i++){

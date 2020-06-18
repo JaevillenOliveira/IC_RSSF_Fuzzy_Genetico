@@ -36,14 +36,11 @@ public final class Problem extends AbstractGenericProblem{
         
     }
     
-    /**
-     *
-     * @param s
-     */
     @Override
     public void evaluate(Object s) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 
     /**
      *
@@ -51,7 +48,7 @@ public final class Problem extends AbstractGenericProblem{
      */
     @Override
     public Object createSolution() {
-        Solution sol = new Solution(this);
+        ArrayIntSolution sol = new ArrayIntSolution(this);
         for(int i = 0; i < this.getNumberOfVariables(); i++){
             sol.setVariableValue(i, this.createSets(i));
         } 
@@ -64,33 +61,52 @@ public final class Problem extends AbstractGenericProblem{
      * @return
      */
     public int [][] createSets(int variableIndex){
-        int [][] sets = new int [3][3];
-        int min = this.getLowerLimits()[variableIndex];
-        int max = this.getUpperLimits()[variableIndex];
-        int mean = (min+max)/2;
+        int [][] sets = new int [3][3]; //For this problem is already known that the variables have three triangular shaped sets
+        int min = this.getLowerLimits()[variableIndex]; //Variable's Lower limit
+        int max = this.getUpperLimits()[variableIndex]; //Variable's Upper limit
+        int middle = (min+max)/2; //Variable's middle value
+        int middleOfFirstHalf = (min+middle)/2; 
+        int middleOfSecondHalf = (middle+max)/2; 
         
-        int tempLimit = this.calculateLimitToSeed((min+max)/2, max);
+        /*
+            SET 1
+        */
+        
+        int tempLimit = this.calculateLimitToSeed(middleOfFirstHalf, middle); //With this limit the generator will bring a value between the lowest and the middle limit 
         
         sets[0][0] = min;
         sets[0][1] = min;
-        sets[0][2] = this.rdm.nextInt(tempLimit) + min;
+        sets[0][2] = this.rdm.nextInt(tempLimit) + middleOfFirstHalf;
+
+        /*
+            SET 3
+        */
+        tempLimit = this.calculateLimitToSeed(middle, middleOfSecondHalf); //With this limit the generator will bring a value between the lowest and the middle limit 
         
-        sets[1][0] = this.rdm.nextInt(tempLimit) + min;
-        sets[1][2] = this.rdm.nextInt(tempLimit) + mean;
-        int tempInBetween = this.calculateLimitToSeed(sets[1][0], sets[1][2]);
-        sets[1][1] = this.rdm.nextInt(tempInBetween) + sets[1][0];
-        
-        sets[2][0] = this.rdm.nextInt(tempLimit) + mean;
+        sets[2][0] = this.rdm.nextInt(tempLimit) + middle;
         sets[2][1] = max;
-        sets[2][2] =  max;
-       
+        sets[2][2] = max;
+
+        /*
+            SET 2
+        */
+
+        int pointALimit = (sets[0][2] + min)/2;
+        tempLimit = this.calculateLimitToSeed(min, pointALimit-1);                
+        sets[1][0] = this.rdm.nextInt(tempLimit) + min;
+        
+        int pointCLimit = (max + sets[2][0])/2;    
+        tempLimit = this.calculateLimitToSeed(pointCLimit, max);
+        sets[1][2] = this.rdm.nextInt(tempLimit) + pointCLimit;
+        
+        tempLimit = this.calculateLimitToSeed(sets[1][0] + 1, sets[1][2] - 1);
+        sets[1][1] = this.rdm.nextInt(tempLimit) + sets[1][0] + 1;
+
         return sets;
     }
     
+    // Calculates a number to pass to the random generator as a way to generate a value between two limits
     private int calculateLimitToSeed(int min, int max){
-        if (min < 0 && max < 0){
-            return ((max - min) - 1);
-        }
         return ((max - min) + 1);
     }
     
@@ -121,5 +137,4 @@ public final class Problem extends AbstractGenericProblem{
     public void setUpperLimits(Integer [] upperLimits) {
         this.upperLimits = upperLimits;
     }
-    
 }
