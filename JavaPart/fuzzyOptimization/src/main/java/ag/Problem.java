@@ -60,8 +60,8 @@ public final class Problem extends AbstractGenericProblem{
      * @param variableIndex
      * @return
      */
-    public int [][] createSets(int variableIndex){
-        int [][] sets = new int [3][3]; //For this problem is already known that the variables have three triangular shaped sets
+    public double [][] createSets(int variableIndex){
+        double [][] sets = new double [3][3]; //For this problem is already known that the variables have three triangular shaped sets
         int min = this.getLowerLimits()[variableIndex]; //Variable's Lower limit
         int max = this.getUpperLimits()[variableIndex]; //Variable's Upper limit
         int middle = (min+max)/2; //Variable's middle value
@@ -72,18 +72,18 @@ public final class Problem extends AbstractGenericProblem{
             SET 1
         */
         
-        int tempLimit = this.calculateLimitToSeed(middleOfFirstHalf, middle); //With this limit the generator will bring a value between the lowest and the middle limit 
+        double tempLimit = this.calculateLimitToSeed(middleOfFirstHalf, middle); //With this limit the generator will bring a value between the lowest and the middle limit 
         
         sets[0][0] = min;
         sets[0][1] = min;
-        sets[0][2] = this.rdm.nextInt(tempLimit) + middleOfFirstHalf;
+        sets[0][2] = this.rdm.nextDouble()*tempLimit + middleOfFirstHalf;
 
         /*
             SET 3
         */
         tempLimit = this.calculateLimitToSeed(middle, middleOfSecondHalf); //With this limit the generator will bring a value between the lowest and the middle limit 
         
-        sets[2][0] = this.rdm.nextInt(tempLimit) + middle;
+        sets[2][0] = this.rdm.nextDouble()*tempLimit + middle;
         sets[2][1] = max;
         sets[2][2] = max;
 
@@ -91,23 +91,23 @@ public final class Problem extends AbstractGenericProblem{
             SET 2
         */
 
-        int pointALimit = (sets[0][2] + min)/2;
-        tempLimit = this.calculateLimitToSeed(min, pointALimit-1);                
-        sets[1][0] = this.rdm.nextInt(tempLimit) + min;
+        double pointALimit = (sets[0][2] + min)/2;
+        tempLimit = this.calculateLimitToSeed(min, pointALimit);                
+        sets[1][0] = this.rdm.nextDouble()*tempLimit + min;
         
-        int pointCLimit = (max + sets[2][0])/2;    
+        double pointCLimit = (max + sets[2][0])/2;    
         tempLimit = this.calculateLimitToSeed(pointCLimit, max);
-        sets[1][2] = this.rdm.nextInt(tempLimit) + pointCLimit;
+        sets[1][2] = this.rdm.nextDouble()*tempLimit + pointCLimit;
         
         tempLimit = this.calculateLimitToSeed(sets[1][0] + 1, sets[1][2] - 1);
-        sets[1][1] = this.rdm.nextInt(tempLimit) + sets[1][0] + 1;
+        sets[1][1] = this.rdm.nextDouble()*tempLimit + sets[1][0] + 1;
 
         return sets;
     }
     
     // Calculates a number to pass to the random generator as a way to generate a value between two limits
-    private int calculateLimitToSeed(int min, int max){
-        return ((max - min) + 1);
+    private double calculateLimitToSeed(double min, double max){
+        return (max - min);
     }
     
     /**

@@ -117,7 +117,7 @@ public class Controller {
             this.bw.write("Individuo" + " " + ga.getSubjectCount());
             for(int i = 0; i < sol.getNumberOfVariables(); i++){
                 this.bw.newLine();
-                int [][] sets = (int[][]) sol.getVariableValue(i);
+                double [][] sets = (double[][]) sol.getVariableValue(i);
                 for(int j = 0; j < 3; j++){
                     for (int k = 0; k < 3; k++){
                         this.bw.write(sets[j][k] + " ");
