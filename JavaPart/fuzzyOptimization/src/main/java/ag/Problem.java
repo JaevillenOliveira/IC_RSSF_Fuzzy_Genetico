@@ -73,7 +73,7 @@ public final class Problem extends AbstractGenericProblem{
             SET 1
         */
         
-        double tempLimit = this.calculateLimitToSeed(middleOfFirstHalf, middle); //With this limit the generator will bring a value between the lowest and the middle limit 
+        double tempLimit = this.calculateLimitToSeed(middleOfFirstHalf, middle);
         
         sets[0][0] = min;
         sets[0][1] = min;
@@ -82,7 +82,7 @@ public final class Problem extends AbstractGenericProblem{
         /*
             SET 3
         */
-        tempLimit = this.calculateLimitToSeed(middle, middleOfSecondHalf); //With this limit the generator will bring a value between the lowest and the middle limit 
+        tempLimit = this.calculateLimitToSeed(middle, middleOfSecondHalf); 
         
         sets[2][0] = this.rdm.nextDouble()*tempLimit + middle;
         sets[2][1] = max;

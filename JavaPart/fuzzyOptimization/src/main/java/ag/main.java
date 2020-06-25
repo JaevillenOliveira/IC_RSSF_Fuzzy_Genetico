@@ -24,7 +24,7 @@ public class main {
             Controller ctr = new Controller();
             ctr.readProblem();
             ctr.readSubject();
-            ctr.writePopulation(ctr.getGa().createPopulation());
+            ctr.writePopulation(ctr.getGa().getPopulation());
 
             
         } catch (FileNotFoundException ex) {

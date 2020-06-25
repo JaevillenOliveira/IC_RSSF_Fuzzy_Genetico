@@ -88,18 +88,16 @@ public class Controller {
         String subjectId = br.readLine(); //Is the name of the subject ("Individuo" + index)
         for(int i = 0; i < 5; i++){ // Reads the five variables of the subject (including the output)         
             this.st = new StringTokenizer(br.readLine());
-            int [][] sets = new int [st.countTokens()/3][3]; // The sets are triangular, therefore contains three nodes 
+            double [][] sets = new double [st.countTokens()/3][3]; // The sets are triangular, therefore contains three nodes 
            
             for(int j = 0; st.hasMoreTokens(); j++){
                 for (int k = 0; k < 3; k++){
-                   sets[j][k] = Integer.parseInt(st.nextToken());
+                   sets[j][k] = Double.parseDouble(st.nextToken());
                 } 
             }
-            sol.
-                    setVariableValue(i, sets);
+            sol.setVariableValue(i, sets);
         }      
-        this.ga.getPopulation().add(sol);
-        this.ga.setSubjectCount((ga.getSubjectCount()) + 1);
+        this.ga.getPopulation().add(0, sol);    
         this.br.close();
     }
     
@@ -108,12 +106,13 @@ public class Controller {
      * @param solutionList
      * @throws IOException
      */
-    public void writePopulation(List <ThreeDArrayDoubleSolution> solutionList) throws IOException{          
-        Iterator<ThreeDArrayDoubleSolution> it = solutionList.iterator();
+    public void writePopulation(List solutionList) throws IOException{          
+        Iterator it = solutionList.iterator();
+        int subjectCounter = 1;
+        it.next(); //First subject is already in the file
         while(it.hasNext()){
-            ThreeDArrayDoubleSolution sol = it.next();
-            this.ga.setSubjectCount((ga.getSubjectCount()) + 1);
-            this.bw.write("Individuo" + " " + ga.getSubjectCount());
+            ThreeDArrayDoubleSolution sol = (ThreeDArrayDoubleSolution) it.next();
+            this.bw.write("Individuo" + " " + ++subjectCounter);
             for(int i = 0; i < sol.getNumberOfVariables(); i++){
                 this.bw.newLine();
                 double [][] sets = (double[][]) sol.getVariableValue(i);

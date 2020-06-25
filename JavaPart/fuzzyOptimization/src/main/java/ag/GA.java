@@ -5,6 +5,7 @@
  */
 package ag;
 
+import Operators.Crossover;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,46 +19,13 @@ import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
  */
 public class GA extends AbstractGeneticAlgorithm{
       
-    private int sizeOfIntinialPopulation;
-    private int subjectCount;
 
-    public GA(Problem problem, int sizeOfIntinialPopulation) throws FileNotFoundException, IOException {
+    public GA(Problem problem, int maxPopulationSize) throws FileNotFoundException, IOException {
         super(problem);         
-        this.subjectCount = 0; 
-        this.setSzeOfIntinialPopulation(sizeOfIntinialPopulation);
+        this.setMaxPopulationSize(maxPopulationSize);
+        this.setPopulation(this.createInitialPopulation());
     }
     
-    /**
-     *
-     * @return
-     */
-    public List<ThreeDArrayDoubleSolution> createPopulation(){
-        ArrayList <ThreeDArrayDoubleSolution> newList = new ArrayList <> ();
-        for (int i = 1; i < this.getSizeOfIntinialPopulation(); i++){
-            ThreeDArrayDoubleSolution sol = (ThreeDArrayDoubleSolution) this.problem.createSolution();
-            newList.add(sol);
-        }
-        this.getPopulation().addAll(newList);
-        return newList;
-    }
-   
-    
-    public int getSizeOfIntinialPopulation() {
-        return sizeOfIntinialPopulation;
-    }
-
-    public void setSzeOfIntinialPopulation(int sizeOfIntinialPopulation) {
-        this.sizeOfIntinialPopulation = sizeOfIntinialPopulation;
-    }
-    
-    public int getSubjectCount() {
-        return subjectCount;
-    }
-
-    public void setSubjectCount(int subjectCount) {
-        this.subjectCount = subjectCount;
-    }
-
     @Override
     protected void initProgress() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
