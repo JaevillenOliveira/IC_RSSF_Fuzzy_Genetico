@@ -5,16 +5,18 @@
  */
 package Operators;
 
+import org.uma.jmetal.operator.impl.mutation.NullMutation;
 import org.uma.jmetal.operator.impl.mutation.SimpleRandomMutation;
 
 /**
  *
  * @author jaevillen
  */
-public class Mutation extends SimpleRandomMutation{
-    
-    public Mutation(double probability) {
-        super(probability);
+public class Mutation extends NullMutation{
+
+    public Mutation() {
     }
+    
+   
     
 }

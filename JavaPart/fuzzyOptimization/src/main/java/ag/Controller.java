@@ -26,7 +26,7 @@ public class Controller {
     private BufferedReader br;
     private BufferedWriter bw;
     private StringTokenizer st;
-    private GA ga;
+    private Algorithm ga;
 
     public Controller() throws FileNotFoundException, IOException {
         this.br = this.br = new BufferedReader(new FileReader("/home/jaevillen/IC/Buffer/ConfigFile.txt"));
@@ -76,7 +76,7 @@ public class Controller {
         
          
         //Creates a Problem object with the information read
-        this.ga = new GA(new Problem(name, objectives, numberOfVariables, upperLimits, lowerLimits), sizeOfPopulation);
+        this.ga = new Algorithm(new Problem(name, objectives, numberOfVariables, upperLimits, lowerLimits), sizeOfPopulation);
     }
     
         /**
@@ -127,7 +127,7 @@ public class Controller {
         this.bw.close();
     }
     
-    public GA getGa() {
+    public Algorithm getGa() {
         return ga;
     }
     

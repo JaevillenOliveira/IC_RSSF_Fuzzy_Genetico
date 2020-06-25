@@ -6,13 +6,16 @@
 package ag;
 
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.impl.AbstractGenericSolution;
 
 /**
  *
  * @author jaevillen
  */
-public class ThreeDArrayDoubleSolution extends AbstractGenericSolution{
+public class ThreeDArrayDoubleSolution extends AbstractGenericSolution implements Cloneable{
 
     public ThreeDArrayDoubleSolution(Problem problem) {
         super(problem);
@@ -25,7 +28,13 @@ public class ThreeDArrayDoubleSolution extends AbstractGenericSolution{
 
     @Override
     public org.uma.jmetal.solution.Solution copy() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return (Solution) super.clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(ThreeDArrayDoubleSolution.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
     }
 
     @Override

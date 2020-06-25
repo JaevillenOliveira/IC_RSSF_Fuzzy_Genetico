@@ -25,7 +25,7 @@ public class main {
             ctr.readProblem();
             ctr.readSubject();
             ctr.writePopulation(ctr.getGa().getPopulation());
-
+            ctr.getGa().initProgress();
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
