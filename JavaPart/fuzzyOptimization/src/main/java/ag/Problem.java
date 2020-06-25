@@ -7,6 +7,7 @@ package ag;
 
 import java.util.Random;
 import org.uma.jmetal.problem.impl.AbstractGenericProblem;
+import org.uma.jmetal.solution.impl.AbstractGenericSolution;
 
 /**
  * 
@@ -48,7 +49,7 @@ public final class Problem extends AbstractGenericProblem{
      */
     @Override
     public Object createSolution() {
-        ArrayIntSolution sol = new ArrayIntSolution(this);
+        ThreeDArrayDoubleSolution sol = new ThreeDArrayDoubleSolution(this);
         for(int i = 0; i < this.getNumberOfVariables(); i++){
             sol.setVariableValue(i, this.createSets(i));
         } 
@@ -99,8 +100,8 @@ public final class Problem extends AbstractGenericProblem{
         tempLimit = this.calculateLimitToSeed(pointCLimit, max);
         sets[1][2] = this.rdm.nextDouble()*tempLimit + pointCLimit;
         
-        tempLimit = this.calculateLimitToSeed(sets[1][0] + 1, sets[1][2] - 1);
-        sets[1][1] = this.rdm.nextDouble()*tempLimit + sets[1][0] + 1;
+        tempLimit = this.calculateLimitToSeed(pointALimit, pointCLimit);
+        sets[1][1] = this.rdm.nextDouble()*tempLimit + pointALimit;
 
         return sets;
     }

@@ -18,15 +18,12 @@ import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
  */
 public class GA extends AbstractGeneticAlgorithm{
       
-
     private int sizeOfIntinialPopulation;
     private int subjectCount;
-    private ArrayList <ArrayIntSolution> solutions;
 
     public GA(Problem problem, int sizeOfIntinialPopulation) throws FileNotFoundException, IOException {
         super(problem);         
         this.subjectCount = 0; 
-        this.solutions = new ArrayList <> ();
         this.setSzeOfIntinialPopulation(sizeOfIntinialPopulation);
     }
     
@@ -34,23 +31,16 @@ public class GA extends AbstractGeneticAlgorithm{
      *
      * @return
      */
-    public List<ArrayIntSolution> createPopulation(){
-        ArrayList <ArrayIntSolution> newList = new ArrayList <> ();
+    public List<ThreeDArrayDoubleSolution> createPopulation(){
+        ArrayList <ThreeDArrayDoubleSolution> newList = new ArrayList <> ();
         for (int i = 1; i < this.getSizeOfIntinialPopulation(); i++){
-            ArrayIntSolution sol = (ArrayIntSolution) this.problem.createSolution();
+            ThreeDArrayDoubleSolution sol = (ThreeDArrayDoubleSolution) this.problem.createSolution();
             newList.add(sol);
         }
-        this.getSolutions().addAll(newList);
+        this.getPopulation().addAll(newList);
         return newList;
     }
    
-    public List<ArrayIntSolution> getSolutions() {
-        return solutions;
-    }
-
-    public void setSolutions(ArrayList<ArrayIntSolution> solutions) {
-        this.solutions = solutions;
-    }
     
     public int getSizeOfIntinialPopulation() {
         return sizeOfIntinialPopulation;

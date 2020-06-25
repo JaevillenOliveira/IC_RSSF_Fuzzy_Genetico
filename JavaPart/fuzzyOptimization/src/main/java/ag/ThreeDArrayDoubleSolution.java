@@ -12,9 +12,9 @@ import org.uma.jmetal.solution.impl.AbstractGenericSolution;
  *
  * @author jaevillen
  */
-public class ArrayIntSolution extends AbstractGenericSolution{
+public class ThreeDArrayDoubleSolution extends AbstractGenericSolution{
 
-    public ArrayIntSolution(Problem problem) {
+    public ThreeDArrayDoubleSolution(Problem problem) {
         super(problem);
     }
     

@@ -1,7 +1,6 @@
 package ag;
 
 
-import ag.Problem;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -85,7 +84,7 @@ public class Controller {
      * @throws IOException
      */
     public void readSubject() throws IOException{     
-        ArrayIntSolution sol = new ArrayIntSolution((Problem) this.ga.getProblem());
+        ThreeDArrayDoubleSolution sol = new ThreeDArrayDoubleSolution((Problem) this.ga.getProblem());
         String subjectId = br.readLine(); //Is the name of the subject ("Individuo" + index)
         for(int i = 0; i < 5; i++){ // Reads the five variables of the subject (including the output)         
             this.st = new StringTokenizer(br.readLine());
@@ -99,7 +98,7 @@ public class Controller {
             sol.
                     setVariableValue(i, sets);
         }      
-        this.ga.getSolutions().add(sol);
+        this.ga.getPopulation().add(sol);
         this.ga.setSubjectCount((ga.getSubjectCount()) + 1);
         this.br.close();
     }
@@ -109,10 +108,10 @@ public class Controller {
      * @param solutionList
      * @throws IOException
      */
-    public void writePopulation(List <ArrayIntSolution> solutionList) throws IOException{          
-        Iterator<ArrayIntSolution> it = solutionList.iterator();
+    public void writePopulation(List <ThreeDArrayDoubleSolution> solutionList) throws IOException{          
+        Iterator<ThreeDArrayDoubleSolution> it = solutionList.iterator();
         while(it.hasNext()){
-            ArrayIntSolution sol = it.next();
+            ThreeDArrayDoubleSolution sol = it.next();
             this.ga.setSubjectCount((ga.getSubjectCount()) + 1);
             this.bw.write("Individuo" + " " + ga.getSubjectCount());
             for(int i = 0; i < sol.getNumberOfVariables(); i++){
