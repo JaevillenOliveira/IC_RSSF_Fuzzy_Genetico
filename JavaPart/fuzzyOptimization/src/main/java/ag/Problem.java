@@ -5,6 +5,10 @@
  */
 package ag;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import org.uma.jmetal.problem.impl.AbstractGenericProblem;
 
@@ -50,7 +54,10 @@ public final class Problem extends AbstractGenericProblem{
     public Object createSolution() {
         ThreeDArrayDoubleSolution sol = new ThreeDArrayDoubleSolution(this);
         for(int i = 0; i < this.getNumberOfVariables(); i++){
-            sol.setVariableValue(i, this.createSets(i));
+            List list = this.createSets(i);
+            sol.setVariableValue(i, list.get(0));
+            sol.getAttributes().putAll((Map) list.get(1));
+            
         } 
         return sol;
     }
@@ -58,57 +65,70 @@ public final class Problem extends AbstractGenericProblem{
     /**
      *
      * @param variableIndex
+     * @param map
      * @return
      */
-    public double [][] createSets(int variableIndex){
+    public List createSets(int variableIndex){
         double [][] sets = new double [3][3]; //For this problem is already known that the variables have three triangular shaped sets
         int min = this.getLowerLimits()[variableIndex]; //Variable's Lower limit
         int max = this.getUpperLimits()[variableIndex]; //Variable's Upper limit
         int middle = (min+max)/2; //Variable's middle value
         int middleOfFirstHalf = (min+middle)/2; 
         int middleOfSecondHalf = (middle+max)/2; 
+        Map map = new HashMap();
         
         /*
             SET 1
         */
-        
-        double tempLimit = this.calculateLimitToSeed(middleOfFirstHalf, middle);
-        
+        //Variable index, set, point (A, B, or C)
+        map.put(String.valueOf(variableIndex)+"0"+"2",this.limitsToStr(middleOfFirstHalf, middle));
+      
         sets[0][0] = min;
         sets[0][1] = min;
-        sets[0][2] = this.rdm.nextDouble()*tempLimit + middleOfFirstHalf;
+        sets[0][2] = this.generateRdmPoint(middleOfFirstHalf, middle);
+       
 
         /*
             SET 3
         */
-        tempLimit = this.calculateLimitToSeed(middle, middleOfSecondHalf); 
-        
-        sets[2][0] = this.rdm.nextDouble()*tempLimit + middle;
+        map.put(String.valueOf(variableIndex)+"2"+"0", this.limitsToStr(middle, middleOfSecondHalf));
+
+        sets[2][0] = this.generateRdmPoint(middle, middleOfSecondHalf); 
         sets[2][1] = max;
         sets[2][2] = max;
 
         /*
             SET 2
         */
-
+              
         double pointALimit = (sets[0][2] + min)/2;
-        tempLimit = this.calculateLimitToSeed(min, pointALimit);                
-        sets[1][0] = this.rdm.nextDouble()*tempLimit + min;
+        map.put(String.valueOf(variableIndex)+"1"+"0", this.limitsToStr(min, pointALimit));               
+        sets[1][0] = this.generateRdmPoint(min, pointALimit);
         
         double pointCLimit = (max + sets[2][0])/2;    
-        tempLimit = this.calculateLimitToSeed(pointCLimit, max);
-        sets[1][2] = this.rdm.nextDouble()*tempLimit + pointCLimit;
+        map.put(String.valueOf(variableIndex)+"1"+"2", this.limitsToStr(pointCLimit, max));
+        sets[1][2] = this.generateRdmPoint(pointCLimit, max);
         
-        tempLimit = this.calculateLimitToSeed(pointALimit, pointCLimit);
-        sets[1][1] = this.rdm.nextDouble()*tempLimit + pointALimit;
+        map.put(String.valueOf(variableIndex)+"1"+"1", this.limitsToStr(pointALimit, pointCLimit));
+        sets[1][1] = this.generateRdmPoint(pointALimit, pointCLimit);
 
-        return sets;
+        //System.out.println((String) map.get(String.valueOf(variableIndex)+String.valueOf(1)+String.valueOf(2)));
+        List list = new ArrayList();
+        
+        list.add(sets);
+        list.add(map);
+        return list;
     }
     
     // Calculates a number to pass to the random generator as a way to generate a value between two limits
-    private double calculateLimitToSeed(double min, double max){
-        return (max - min);
+    private double generateRdmPoint(double min, double max){
+        return (min + this.rdm.nextDouble()*(max - min));
     }
+    
+    private String limitsToStr(double inferiorLimit, double superiorLimit){
+        return (String.valueOf(inferiorLimit)+" "+String.valueOf(superiorLimit));
+    }
+        
     
     /**
      *

@@ -6,11 +6,14 @@
 package ag;
 
 import Operators.Crossover;
-import Operators.Mutation;
+import Operators.SimpleRandomFzSetsMutation;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 
 /**
@@ -29,7 +32,7 @@ public class Algorithm extends AbstractGeneticAlgorithm{
     @Override
     protected void initProgress() {
         this.crossoverOperator = new Crossover(0.7, 5);
-        this.mutationOperator = new Mutation();
+        this.mutationOperator = new SimpleRandomFzSetsMutation(0.7, new Random());
         this.reproduction(this.getPopulation());
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

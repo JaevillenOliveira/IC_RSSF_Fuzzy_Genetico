@@ -5,6 +5,7 @@
  */
 package ag;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +40,7 @@ public class ThreeDArrayDoubleSolution extends AbstractGenericSolution implement
 
     @Override
     public Map getAttributes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.attributes;
     }
    
 }
