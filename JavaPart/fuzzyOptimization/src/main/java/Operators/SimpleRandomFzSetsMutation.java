@@ -50,7 +50,10 @@ public class SimpleRandomFzSetsMutation implements MutationOperator<ThreeDArrayD
   }
 
   /** Execute() method
-     * @param solution */
+     * @param solution
+     * @return  
+     */
+  @Override
   public ThreeDArrayDoubleSolution execute(ThreeDArrayDoubleSolution solution) throws JMetalException {
     if (null == solution) {
       throw new JMetalException("Null parameter");
@@ -74,7 +77,7 @@ public class SimpleRandomFzSetsMutation implements MutationOperator<ThreeDArrayD
                         case 0:
                             {
                                 id = String.valueOf(i)+String.valueOf(j)+String.valueOf(2);
-                                System.out.println(solution);
+                                System.out.println(solution.getAttributes());
                                 this.st = new StringTokenizer((String) solution.getAttribute(id));
                                 inf = Double.parseDouble(st.nextToken());
                                 sup = Double.parseDouble(st.nextToken());

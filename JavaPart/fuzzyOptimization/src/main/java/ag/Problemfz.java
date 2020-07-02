@@ -16,7 +16,7 @@ import org.uma.jmetal.problem.impl.AbstractGenericProblem;
  * 
  * @author jaevillen
  */
-public final class Problem extends AbstractGenericProblem{
+public final class Problemfz extends AbstractGenericProblem{
 
     private Integer [] lowerLimits;
     private Integer [] upperLimits;
@@ -30,7 +30,7 @@ public final class Problem extends AbstractGenericProblem{
      * @param upperLimits
      * @param lowerLimits
      */
-    public Problem(String name, int numberOfObjectives, int numberOfVariables, Integer [] upperLimits, Integer [] lowerLimits) {
+    public Problemfz(String name, int numberOfObjectives, int numberOfVariables, Integer [] upperLimits, Integer [] lowerLimits) {
         this.setName(name);
         this.setNumberOfObjectives(numberOfObjectives);
         this.setNumberOfVariables(numberOfVariables);
@@ -54,10 +54,8 @@ public final class Problem extends AbstractGenericProblem{
     public Object createSolution() {
         ThreeDArrayDoubleSolution sol = new ThreeDArrayDoubleSolution(this);
         for(int i = 0; i < this.getNumberOfVariables(); i++){
-            List list = this.createSets(i);
-            sol.setVariableValue(i, list.get(0));
-            sol.getAttributes().putAll((Map) list.get(1));
-            
+            sol.setVariableValue(i, this.createSets(i, sol));
+            //System.out.println(sol.getAttribute(String.valueOf(i)+String.valueOf(0)+String.valueOf(2))); 
         } 
         return sol;
     }
@@ -65,59 +63,50 @@ public final class Problem extends AbstractGenericProblem{
     /**
      *
      * @param variableIndex
-     * @param map
+     * @param sol
      * @return
      */
-    public List createSets(int variableIndex){
+    public double [][] createSets(int variableIndex, ThreeDArrayDoubleSolution sol){
         double [][] sets = new double [3][3]; //For this problem is already known that the variables have three triangular shaped sets
-        int min = this.getLowerLimits()[variableIndex]; //Variable's Lower limit
-        int max = this.getUpperLimits()[variableIndex]; //Variable's Upper limit
-        int middle = (min+max)/2; //Variable's middle value
-        int middleOfFirstHalf = (min+middle)/2; 
-        int middleOfSecondHalf = (middle+max)/2; 
-        Map map = new HashMap();
+        Map<String,Double> limits = this.getVariablesLimits(variableIndex);
         
         /*
             SET 1
         */
         //Variable index, set, point (A, B, or C)
-        map.put(String.valueOf(variableIndex)+"0"+"2",this.limitsToStr(middleOfFirstHalf, middle));
+        sol.setAttribute(String.valueOf(variableIndex)+"0"+"2",this.constraintsToStr(limits.get("MiddleOfFirstHalf"), limits.get("Middle")));
       
-        sets[0][0] = min;
-        sets[0][1] = min;
-        sets[0][2] = this.generateRdmPoint(middleOfFirstHalf, middle);
+        sets[0][0] = limits.get("Min");
+        sets[0][1] = limits.get("Min");
+        sets[0][2] = this.generateRdmPoint(limits.get("MiddleOfFirstHalf"), limits.get("Middle"));
        
 
         /*
             SET 3
         */
-        map.put(String.valueOf(variableIndex)+"2"+"0", this.limitsToStr(middle, middleOfSecondHalf));
+        sol.setAttribute(String.valueOf(variableIndex)+"2"+"0", this.constraintsToStr(limits.get("Middle"), limits.get("MiddleOfSecondHalf")));
 
-        sets[2][0] = this.generateRdmPoint(middle, middleOfSecondHalf); 
-        sets[2][1] = max;
-        sets[2][2] = max;
+        sets[2][0] = this.generateRdmPoint(limits.get("Middle"), limits.get("MiddleOfSecondHalf")); 
+        sets[2][1] = limits.get("Max");
+        sets[2][2] = limits.get("Max");
 
         /*
             SET 2
         */
               
-        double pointALimit = (sets[0][2] + min)/2;
-        map.put(String.valueOf(variableIndex)+"1"+"0", this.limitsToStr(min, pointALimit));               
-        sets[1][0] = this.generateRdmPoint(min, pointALimit);
+        double pointALimit = (sets[0][2] + limits.get("Min"))/2;
+        sol.setAttribute(String.valueOf(variableIndex)+"1"+"0", this.constraintsToStr(limits.get("Min"), pointALimit));               
+        sets[1][0] = this.generateRdmPoint(limits.get("Min"), pointALimit);
         
-        double pointCLimit = (max + sets[2][0])/2;    
-        map.put(String.valueOf(variableIndex)+"1"+"2", this.limitsToStr(pointCLimit, max));
-        sets[1][2] = this.generateRdmPoint(pointCLimit, max);
+        double pointCLimit = (limits.get("Max") + sets[2][0])/2;    
+        sol.setAttribute(String.valueOf(variableIndex)+"1"+"2", this.constraintsToStr(pointCLimit, limits.get("Max")));
+        sets[1][2] = this.generateRdmPoint(pointCLimit, limits.get("Max"));
         
-        map.put(String.valueOf(variableIndex)+"1"+"1", this.limitsToStr(pointALimit, pointCLimit));
+        sol.setAttribute(String.valueOf(variableIndex)+"1"+"1", this.constraintsToStr(pointALimit, pointCLimit));
         sets[1][1] = this.generateRdmPoint(pointALimit, pointCLimit);
 
         //System.out.println((String) map.get(String.valueOf(variableIndex)+String.valueOf(1)+String.valueOf(2)));
-        List list = new ArrayList();
-        
-        list.add(sets);
-        list.add(map);
-        return list;
+        return sets;
     }
     
     // Calculates a number to pass to the random generator as a way to generate a value between two limits
@@ -125,8 +114,26 @@ public final class Problem extends AbstractGenericProblem{
         return (min + this.rdm.nextDouble()*(max - min));
     }
     
-    private String limitsToStr(double inferiorLimit, double superiorLimit){
+    
+    public String constraintsToStr(double inferiorLimit, double superiorLimit){
         return (String.valueOf(inferiorLimit)+" "+String.valueOf(superiorLimit));
+    }
+    
+    public Map getVariablesLimits(int variableIndex){
+        Map <String,Double> limits = new HashMap<String,Double>();
+        double min = this.getLowerLimits()[variableIndex]; //Variable's Lower limit (min)
+        double max = this.getUpperLimits()[variableIndex]; //Variable's Upper limit
+        double middle = (min+max)/2; //Variable's middle value
+        double middleOfFirstHalf = (min+middle)/2; 
+        double middleOfSecondHalf = (middle+max)/2; 
+        
+        limits.put("Min", min);
+        limits.put("Max", max);
+        limits.put("Middle",middle);
+        limits.put("MiddleOfFirstHalf",middleOfFirstHalf);
+        limits.put("MiddleOfSecondHalf",middleOfSecondHalf);
+        
+        return limits;
     }
         
     

@@ -1,6 +1,8 @@
 package ag;
 
 
+import Operators.Crossover;
+import Operators.SimpleRandomFzSetsMutation;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -9,6 +11,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 /*
@@ -27,6 +31,7 @@ public class Controller {
     private BufferedWriter bw;
     private StringTokenizer st;
     private Algorithm ga;
+    private Problemfz pfz;
 
     public Controller() throws FileNotFoundException, IOException {
         this.br = this.br = new BufferedReader(new FileReader("/home/jaevillen/IC/Buffer/ConfigFile.txt"));
@@ -73,10 +78,10 @@ public class Controller {
         for(int i = 0; st.hasMoreTokens(); i++){
             lowerLimits[i] = Integer.parseInt(st.nextToken());
         }
-        
-         
+
         //Creates a Problem object with the information read
-        this.ga = new Algorithm(new Problem(name, objectives, numberOfVariables, upperLimits, lowerLimits), sizeOfPopulation);
+        this.pfz = new Problemfz(name, objectives, numberOfVariables, upperLimits, lowerLimits);
+        this.ga = new Algorithm(this.pfz, sizeOfPopulation);
     }
     
         /**
@@ -84,9 +89,10 @@ public class Controller {
      * @throws IOException
      */
     public void readSubject() throws IOException{     
-        ThreeDArrayDoubleSolution sol = new ThreeDArrayDoubleSolution((Problem) this.ga.getProblem());
+        ThreeDArrayDoubleSolution sol = new ThreeDArrayDoubleSolution((Problemfz) this.ga.getProblem());
         String subjectId = br.readLine(); //Is the name of the subject ("Individuo" + index)
         for(int i = 0; i < 5; i++){ // Reads the five variables of the subject (including the output)         
+            Map<String,Double> limits = this.pfz.getVariablesLimits(i);
             this.st = new StringTokenizer(br.readLine());
             double [][] sets = new double [st.countTokens()/3][3]; // The sets are triangular, therefore contains three nodes 
            
@@ -96,6 +102,24 @@ public class Controller {
                 } 
             }
             sol.setVariableValue(i, sets);
+            
+            for(int j = 0; j < 3; j++){
+                switch(j){
+                    case 0:
+                        sol.setAttribute(String.valueOf(i)+"0"+"2",this.pfz.constraintsToStr(limits.get("MiddleOfFirstHalf"), limits.get("Middle")));
+                        break;
+                    case 1:
+                        double pointALimit = (sets[0][2] + limits.get("Min"))/2;
+                        double pointCLimit = (limits.get("Max") + sets[2][0])/2;    
+                        sol.setAttribute(String.valueOf(i)+"1"+"0", this.pfz.constraintsToStr(limits.get("Min"), pointALimit));
+                        sol.setAttribute(String.valueOf(i)+"1"+"2", this.pfz.constraintsToStr(pointCLimit, limits.get("Max")));
+                        sol.setAttribute(String.valueOf(i)+"1"+"1", this.pfz.constraintsToStr(pointALimit, pointCLimit));
+                        break;
+                    case 2:
+                        sol.setAttribute(String.valueOf(i)+"2"+"0", this.pfz.constraintsToStr(limits.get("Middle"), limits.get("MiddleOfSecondHalf")));
+                        break;
+                }
+            }
         }      
         this.ga.getPopulation().add(0, sol);    
         this.br.close();
@@ -109,7 +133,7 @@ public class Controller {
     public void writePopulation(List solutionList) throws IOException{          
         Iterator it = solutionList.iterator();
         int subjectCounter = 1;
-        it.next(); //First subject is already in the file
+       //it.next(); //First subject is already in the file
         while(it.hasNext()){
             ThreeDArrayDoubleSolution sol = (ThreeDArrayDoubleSolution) it.next();
             this.bw.write("Individuo" + " " + ++subjectCounter);
@@ -129,6 +153,5 @@ public class Controller {
     
     public Algorithm getGa() {
         return ga;
-    }
-    
+    }   
 }

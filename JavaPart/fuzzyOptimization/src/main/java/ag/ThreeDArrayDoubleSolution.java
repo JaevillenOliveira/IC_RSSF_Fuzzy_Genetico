@@ -18,10 +18,10 @@ import org.uma.jmetal.solution.impl.AbstractGenericSolution;
  */
 public class ThreeDArrayDoubleSolution extends AbstractGenericSolution implements Cloneable{
 
-    public ThreeDArrayDoubleSolution(Problem problem) {
+    public ThreeDArrayDoubleSolution(Problemfz problem) {
         super(problem);
     }
-    
+
     @Override
     public String getVariableValueString(int i) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -35,7 +35,6 @@ public class ThreeDArrayDoubleSolution extends AbstractGenericSolution implement
             Logger.getLogger(ThreeDArrayDoubleSolution.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-
     }
 
     @Override

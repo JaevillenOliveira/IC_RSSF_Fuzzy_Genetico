@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
-import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 
 /**
@@ -21,25 +20,30 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  * @author jaevillen
  */
 public class Algorithm extends AbstractGeneticAlgorithm{
+    
+    private int iterations;
       
-    public Algorithm(Problem problem, int maxPopulationSize) throws FileNotFoundException, IOException {
+    public Algorithm(Problemfz problem, int maxPopulationSize) throws FileNotFoundException, IOException {
         super(problem);         
-        this.setMaxPopulationSize(maxPopulationSize - 1);
-        this.setPopulation(this.createInitialPopulation());
-        //this.setMaxPopulationSize(maxPopulationSize); //It's declared two times beacause one subject is already created and saved in the file
+        this.setMaxPopulationSize(maxPopulationSize-1);
+        this.setPopulation(this.createInitialPopulation());//This inherited method creates 'maxPopulationSize' new subjects
+        //It's declared twice because one subject is already saved in the file, therefore it just needs to create maxPopulationSize -1 new subjects
+        this.setMaxPopulationSize(maxPopulationSize); 
+        this.iterations = 0;
+        this.crossoverOperator = new Crossover(0.7, 5);
+        this.mutationOperator = new SimpleRandomFzSetsMutation(0.7, new Random());
+        
     }
     
     @Override
     protected void initProgress() {
-        this.crossoverOperator = new Crossover(0.7, 5);
-        this.mutationOperator = new SimpleRandomFzSetsMutation(0.7, new Random());
+        this.iterations = 1; 
         this.reproduction(this.getPopulation());
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     protected void updateProgress() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.iterations++;
     }
 
     @Override
