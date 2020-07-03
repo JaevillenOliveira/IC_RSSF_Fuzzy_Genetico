@@ -6,13 +6,14 @@
 package ag;
 
 import Operators.Crossover;
-import Operators.SimpleRandomFzSetsMutation;
+import Operators.FzSetsMutation;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
+import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
 
 
 /**
@@ -22,17 +23,18 @@ import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 public class Algorithm extends AbstractGeneticAlgorithm{
     
     private int iterations;
+    private MultithreadedSolutionListEvaluator evaluator;
       
     public Algorithm(Problemfz problem, int maxPopulationSize) throws FileNotFoundException, IOException {
         super(problem);         
         this.setMaxPopulationSize(maxPopulationSize-1);
         this.setPopulation(this.createInitialPopulation());//This inherited method creates 'maxPopulationSize' new subjects
         //It's declared twice because one subject is already saved in the file, therefore it just needs to create maxPopulationSize -1 new subjects
-        this.setMaxPopulationSize(maxPopulationSize); 
+        this.setMaxPopulationSize(maxPopulationSize);  
         this.iterations = 0;
         this.crossoverOperator = new Crossover(0.7, 5);
-        this.mutationOperator = new SimpleRandomFzSetsMutation(0.7, new Random());
-        
+        this.mutationOperator = new FzSetsMutation(0.7, new Random());
+        this.evaluator = new MultithreadedSolutionListEvaluator(4, problem);
     }
     
     @Override
@@ -53,7 +55,7 @@ public class Algorithm extends AbstractGeneticAlgorithm{
 
     @Override
     protected List evaluatePopulation(List list) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.evaluator.evaluate(list, problem);
     }
 
     @Override

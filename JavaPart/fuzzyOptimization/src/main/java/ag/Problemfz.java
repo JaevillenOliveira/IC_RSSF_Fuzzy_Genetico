@@ -39,7 +39,11 @@ public final class Problemfz extends AbstractGenericProblem{
         this.rdm = new Random();
         
     }
-    
+ 
+    /**
+     *
+     * @param s
+     */
     @Override
     public void evaluate(Object s) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -47,8 +51,8 @@ public final class Problemfz extends AbstractGenericProblem{
 
 
     /**
-     *
-     * @return
+     * Create a solution with the specified number of variables, and respecting the problem's parameters 
+     * @return the new solution
      */
     @Override
     public Object createSolution() {
@@ -59,21 +63,27 @@ public final class Problemfz extends AbstractGenericProblem{
         } 
         return sol;
     }
+
+    /*
     
-    /**
-     *
-     * @param variableIndex
-     * @param sol
-     * @return
-     */
-    public double [][] createSets(int variableIndex, ThreeDArrayDoubleSolution sol){
+    * This method is specific for a problem with fuzzy variables with three triangular sets.
+    
+    * Creates sets dinamically, respecting the range permitted for each point of each set, so that
+    * the sets keep their interpretability.
+    
+    * This also put the limits for each point of each set into a hash map, and its keys are 
+    * strings specifying the 'variableIndex' (0, 1, 2, 3 or 4), 'set' (0, 1 or 2), 'pointOfSet' (0, 1 or 2). 
+    
+    */
+    
+    private double [][] createSets(int variableIndex, ThreeDArrayDoubleSolution sol){
         double [][] sets = new double [3][3]; //For this problem is already known that the variables have three triangular shaped sets
         Map<String,Double> limits = this.getVariablesLimits(variableIndex);
         
         /*
             SET 1
         */
-        //Variable index, set, point (A, B, or C)
+        //Key: VariableIndex, set, point; Value: InferiorLimit, SuperiorLimit
         sol.setAttribute(String.valueOf(variableIndex)+"0"+"2",this.constraintsToStr(limits.get("MiddleOfFirstHalf"), limits.get("Middle")));
       
         sets[0][0] = limits.get("Min");
@@ -105,7 +115,6 @@ public final class Problemfz extends AbstractGenericProblem{
         sol.setAttribute(String.valueOf(variableIndex)+"1"+"1", this.constraintsToStr(pointALimit, pointCLimit));
         sets[1][1] = this.generateRdmPoint(pointALimit, pointCLimit);
 
-        //System.out.println((String) map.get(String.valueOf(variableIndex)+String.valueOf(1)+String.valueOf(2)));
         return sets;
     }
     
@@ -114,13 +123,32 @@ public final class Problemfz extends AbstractGenericProblem{
         return (min + this.rdm.nextDouble()*(max - min));
     }
     
-    
+    /**
+     * Makes a String specifying the constraints of one set's point: the xtreme values of the range
+     * @param inferiorLimit
+     * @param superiorLimit
+     * @return the string  specifying the constraints
+     */
     public String constraintsToStr(double inferiorLimit, double superiorLimit){
         return (String.valueOf(inferiorLimit)+" "+String.valueOf(superiorLimit));
     }
     
+    /**
+     * Calculates values (as the middle point, and others) from the variables's universe and puts them 
+     * into a hash map
+     * @param variableIndex the variable's index
+     * @return a hash map with the calculated values
+     * 
+     * @see Keys of the hash map: 
+     *  @Min the lower limit of the universe
+     *  @Max the higher limit of the universe
+     *  @Middle the middle of the universe
+     *  @MiddleOfFirstHalf the middle value between the @Min and the @Middle
+     *  @MiddleOfSecondHalf the middle value between the @Middle and the @Max
+     * 
+     */
     public Map getVariablesLimits(int variableIndex){
-        Map <String,Double> limits = new HashMap<String,Double>();
+        Map <String,Double> limits = new HashMap<>();
         double min = this.getLowerLimits()[variableIndex]; //Variable's Lower limit (min)
         double max = this.getUpperLimits()[variableIndex]; //Variable's Upper limit
         double middle = (min+max)/2; //Variable's middle value
@@ -135,33 +163,20 @@ public final class Problemfz extends AbstractGenericProblem{
         
         return limits;
     }
-        
-    
-    /**
-     *
-     * @return
-     */
+
     public Integer [] getLowerLimits() {
         return lowerLimits;
     }
 
-    private void setLowerLimits(Integer [] lowerLimits) {
-        this.lowerLimits = lowerLimits;
-    }
-
-    /**
-     *
-     * @return
-     */
     public Integer [] getUpperLimits() {
         return upperLimits;
     }
+    
+    public void setLowerLimits(Integer[] lowerLimits) {
+        this.lowerLimits = lowerLimits;
+    }
 
-    /**
-     *
-     * @param upperLimits
-     */
-    public void setUpperLimits(Integer [] upperLimits) {
+    public void setUpperLimits(Integer[] upperLimits) {
         this.upperLimits = upperLimits;
     }
 }

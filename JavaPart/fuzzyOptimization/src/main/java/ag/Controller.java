@@ -1,8 +1,6 @@
 package ag;
 
 
-import Operators.Crossover;
-import Operators.SimpleRandomFzSetsMutation;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -12,7 +10,6 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.StringTokenizer;
 
 /*
@@ -39,7 +36,7 @@ public class Controller {
     }
     
      /**
-     *
+     * Reads the problem's parameters from the file
      * @throws IOException
      */
     public void readProblem() throws IOException{
@@ -84,8 +81,8 @@ public class Controller {
         this.ga = new Algorithm(this.pfz, sizeOfPopulation);
     }
     
-        /**
-     * Reads the first subject of the file (the original one)
+    /**
+     * Reads the first subject of the file (the original one) the puts in the list of solutions
      * @throws IOException
      */
     public void readSubject() throws IOException{     
@@ -125,15 +122,14 @@ public class Controller {
         this.br.close();
     }
     
-        /**
-     *
-     * @param solutionList
+    /**
+     * Writes the new population in the file   
+     * @param solutionList the new population to write
      * @throws IOException
      */
     public void writePopulation(List solutionList) throws IOException{          
         Iterator it = solutionList.iterator();
         int subjectCounter = 1;
-       //it.next(); //First subject is already in the file
         while(it.hasNext()){
             ThreeDArrayDoubleSolution sol = (ThreeDArrayDoubleSolution) it.next();
             this.bw.write("Individuo" + " " + ++subjectCounter);
