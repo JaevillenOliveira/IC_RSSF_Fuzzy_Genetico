@@ -23,7 +23,6 @@ public class main {
         try {
             Controller ctr = new Controller();
             ctr.readProblem();
-            ctr.readSubject();
             ctr.writePopulation(ctr.getGa().getPopulation().subList(1, ctr.getGa().getMaxPopulationSize()));
             ctr.getGa().initProgress();
             

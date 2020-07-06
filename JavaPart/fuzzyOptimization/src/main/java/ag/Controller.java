@@ -7,10 +7,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import org.uma.jmetal.solution.DoubleSolution;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -41,10 +43,9 @@ public class Controller {
      */
     public void readProblem() throws IOException{
         String name = br.readLine(); 
-        int objectives = 0;
-        int numberOfVariables = 0;
-        int sizeOfPopulation = 0;
-        
+        int objectives = 0, numberOfVariables = 0, numberofSets = 0, sizeOfPopulation = 0;
+        String setsType = null;
+
         this.st = new StringTokenizer(br.readLine());
         /*The first line contains the number of objectives, the number of variables, and the size of the population
           that must be created
@@ -52,74 +53,99 @@ public class Controller {
         while(st.hasMoreTokens()){
             objectives = Integer.parseInt(st.nextToken());
             numberOfVariables = Integer.parseInt(st.nextToken());
+            numberofSets = Integer.parseInt(st.nextToken());
+            setsType = st.nextToken();
             sizeOfPopulation = Integer.parseInt(st.nextToken());
         }
 
-        Integer [] upperLimits = new Integer [numberOfVariables];
-        Integer [] lowerLimits = new Integer [numberOfVariables];
-        
-        this.st = new StringTokenizer(br.readLine());
-        /* 
-        The next line contains the upper limits of all the variables in the following order: RSSI, 
-        number of neighbors, number of sources, throughput and the output.
-        These limits will be stored in an array, in which, each index will correspond to one variable.
-        */
-        for(int i = 0; st.hasMoreTokens(); i++){
-            upperLimits[i] = Integer.parseInt(st.nextToken());
-        }
-        
-        /*
-        This line contains the lower limits of the variables in the same order as the upper limits
-        */
-        this.st = new StringTokenizer(br.readLine());
-        for(int i = 0; st.hasMoreTokens(); i++){
-            lowerLimits[i] = Integer.parseInt(st.nextToken());
-        }
+        ArrayList <Double> upperLimits = new ArrayList ();
+        ArrayList <Double> lowerLimits = new ArrayList ();
 
-        //Creates a Problem object with the information read
-        this.pfz = new Problemfz(name, objectives, numberOfVariables, upperLimits, lowerLimits);
+        double [] model = null;
+        switch(setsType){
+            case "triangular":
+                model = this.readSubject(numberOfVariables, numberofSets, 3);
+                for(int i = 0; i < model.length; i+=3){  
+                    double [] constraints = this.calculatelimitsTriangularSetsConstraints(model [i], model [i+1], model [i+2]);
+                    lowerLimits.add(constraints[0]);
+                    upperLimits.add(constraints[1]);
+                    
+                    lowerLimits.add(constraints[2]);
+                    upperLimits.add(constraints[3]);
+                    
+                    lowerLimits.add(constraints[4]);
+                    upperLimits.add(constraints[5]);
+                }
+                //Creates a Problem object with the information read
+                this.pfz = new Problemfz(name, objectives, numberOfVariables*numberofSets*3, upperLimits, lowerLimits, numberofSets, setsType, model);
+                break;
+            default:
+                break;
+        }
+        
+        
         this.ga = new Algorithm(this.pfz, sizeOfPopulation);
+        this.ga.getPopulation().add(0, model); 
+    }
+    
+    private double [] calculatelimitsTriangularSetsConstraints(double A, double B, double C){
+        double [] limitPoints = new double [6]; 
+        if(A == B){
+            limitPoints[0] = A;  //AL
+            limitPoints[1] = A; //AR
+
+            limitPoints[2] = B; //BL
+            limitPoints[3] = B; //BR
+            
+            limitPoints[4] = C - ((C-B)/2); //CL
+            limitPoints[5] = C + ((C-B)/2); //CR
+        }else if(B == C){
+            limitPoints[0] = A - ((B-A)/2); //AL
+            limitPoints[1] = A + ((B-A)/2); //AR
+
+            limitPoints[2] = B; //BL
+            limitPoints[3] = B; //BR
+
+            limitPoints[4] = C; //CL
+            limitPoints[5] = C; //CR
+        }else{
+            limitPoints[0] = A - ((B-A)/2); //AL
+            if(limitPoints[0] < A)
+                limitPoints[0] = A;
+            limitPoints[1] = A + ((B-A)/2); //AR
+
+            limitPoints[2] = B - ((B-A)/2); //BL
+            limitPoints[3] = B + ((C-B)/2); //BR
+
+            limitPoints[4] = C - ((C-B)/2); //CL
+            limitPoints[5] = C + ((C-B)/2); //CR
+            if(limitPoints[5] > C)
+                limitPoints[5] = C;
+            
+            
+        }
+        return limitPoints;
     }
     
     /**
      * Reads the first subject of the file (the original one) the puts in the list of solutions
      * @throws IOException
      */
-    public void readSubject() throws IOException{     
-        ThreeDArrayDoubleSolution sol = new ThreeDArrayDoubleSolution((Problemfz) this.ga.getProblem());
-        String subjectId = br.readLine(); //Is the name of the subject ("Individuo" + index)
-        for(int i = 0; i < 5; i++){ // Reads the five variables of the subject (including the output)         
-            Map<String,Double> limits = this.pfz.getVariablesLimits(i);
-            this.st = new StringTokenizer(br.readLine());
-            double [][] sets = new double [st.countTokens()/3][3]; // The sets are triangular, therefore contains three nodes 
-           
-            for(int j = 0; st.hasMoreTokens(); j++){
-                for (int k = 0; k < 3; k++){
-                   sets[j][k] = Double.parseDouble(st.nextToken());
-                } 
+    public double [] readSubject(int numberOfVariables, int numberofSets, int numberOfPoints) throws IOException{     
+        double [] model = new double [numberOfVariables*numberofSets*numberOfPoints];
+        br.readLine();
+        br.readLine();
+        br.readLine(); //Is the name of the subject ("Individuo" + index)
+        
+        int index = 0;
+        for(int i = 0; i < numberOfVariables; i++){ // Reads the five variables of the subject (including the output)         
+            this.st = new StringTokenizer(br.readLine());    
+            while(st.hasMoreTokens()){
+                model[index++] = Double.parseDouble(st.nextToken());
             }
-            sol.setVariableValue(i, sets);
-            
-            for(int j = 0; j < 3; j++){
-                switch(j){
-                    case 0:
-                        sol.setAttribute(String.valueOf(i)+"0"+"2",this.pfz.constraintsToStr(limits.get("MiddleOfFirstHalf"), limits.get("Middle")));
-                        break;
-                    case 1:
-                        double pointALimit = (sets[0][2] + limits.get("Min"))/2;
-                        double pointCLimit = (limits.get("Max") + sets[2][0])/2;    
-                        sol.setAttribute(String.valueOf(i)+"1"+"0", this.pfz.constraintsToStr(limits.get("Min"), pointALimit));
-                        sol.setAttribute(String.valueOf(i)+"1"+"2", this.pfz.constraintsToStr(pointCLimit, limits.get("Max")));
-                        sol.setAttribute(String.valueOf(i)+"1"+"1", this.pfz.constraintsToStr(pointALimit, pointCLimit));
-                        break;
-                    case 2:
-                        sol.setAttribute(String.valueOf(i)+"2"+"0", this.pfz.constraintsToStr(limits.get("Middle"), limits.get("MiddleOfSecondHalf")));
-                        break;
-                }
-            }
-        }      
-        this.ga.getPopulation().add(0, sol);    
+        }         
         this.br.close();
+        return model;
     }
     
     /**
@@ -131,15 +157,15 @@ public class Controller {
         Iterator it = solutionList.iterator();
         int subjectCounter = 1;
         while(it.hasNext()){
-            ThreeDArrayDoubleSolution sol = (ThreeDArrayDoubleSolution) it.next();
+            FzArrayDoubleSolution sol = (FzArrayDoubleSolution) it.next();
             this.bw.write("Individuo" + " " + ++subjectCounter);
-            for(int i = 0; i < sol.getNumberOfVariables(); i++){
+            int v = this.pfz.getNumberOfSets() * 3;
+            int index = 0;
+            for(int i = 0; i < sol.getNumberOfVariables(); i+=v){
                 this.bw.newLine();
-                double [][] sets = (double[][]) sol.getVariableValue(i);
-                for(int j = 0; j < 3; j++){
-                    for (int k = 0; k < 3; k++){
-                        this.bw.write(sets[j][k] + " ");
-                    }
+                for (int j = 0; j < v; j++){
+                    double point = sol.getVariableValue(index++);
+                    this.bw.write(point + " ");
                 }
             }
             this.bw.newLine();

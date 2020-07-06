@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,7 +6,7 @@
 package Operators;
 
 
-import ag.ThreeDArrayDoubleSolution;
+import ag.FzArrayDoubleSolution;
 import java.util.Random;
 import java.util.StringTokenizer;
 import org.uma.jmetal.operator.MutationOperator;
@@ -23,7 +23,7 @@ import org.uma.jmetal.util.JMetalException;
  */
 
 @SuppressWarnings("serial")
-public class FzSetsMutation implements MutationOperator<ThreeDArrayDoubleSolution> {
+public class FzSetsMutation implements MutationOperator<FzArrayDoubleSolution> {
     private double mutationProbability;
     private Random randomGenerator;
     private StringTokenizer st;
@@ -68,7 +68,7 @@ public class FzSetsMutation implements MutationOperator<ThreeDArrayDoubleSolutio
      * @return the solution mutated
      */
     @Override
-    public ThreeDArrayDoubleSolution execute(ThreeDArrayDoubleSolution solution) throws JMetalException {
+    public FzArrayDoubleSolution execute(FzArrayDoubleSolution solution) throws JMetalException {
         if (null == solution) {
             throw new JMetalException("Null parameter");
         }
@@ -79,7 +79,7 @@ public class FzSetsMutation implements MutationOperator<ThreeDArrayDoubleSolutio
     }
 
     /** Implements the mutation operation for fuzzy variables with three triangular sets*/
-    private void doMutation(double probability, ThreeDArrayDoubleSolution solution) {
+    private void doMutation(double probability, FzArrayDoubleSolution solution) {
         for (int i = 0; i < solution.getNumberOfVariables(); i++) { 
             if (randomGenerator.nextDouble() <= probability) {
                 for(int j = 0; j < 3; j++){ //Number of sets in each variable

@@ -10,17 +10,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractGenericProblem;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.impl.ArrayDoubleSolution;
 
 /**
  * 
  * @author jaevillen
  */
-public final class Problemfz extends AbstractGenericProblem{
+public final class Problemfz extends AbstractDoubleProblem{
 
-    private Integer [] lowerLimits;
-    private Integer [] upperLimits;
+//    private Integer [] lowerLimits;
+//    private Integer [] upperLimits;
+    private int numberOfSets;
+    private String setType;
     private Random rdm;
+    private double [] model;
+
     
     /**
      *
@@ -29,23 +36,25 @@ public final class Problemfz extends AbstractGenericProblem{
      * @param numberOfVariables
      * @param upperLimits
      * @param lowerLimits
+     * @param numberOfSets
+     * @param setType
      */
-    public Problemfz(String name, int numberOfObjectives, int numberOfVariables, Integer [] upperLimits, Integer [] lowerLimits) {
+    public Problemfz(String name, int numberOfObjectives, int numberOfVariables, ArrayList<Double> upperLimits, ArrayList<Double> lowerLimits, int numberOfSets, String setType, double [] model) {
         this.setName(name);
         this.setNumberOfObjectives(numberOfObjectives);
         this.setNumberOfVariables(numberOfVariables);
-        this.setUpperLimits(upperLimits);
-        this.setLowerLimits(lowerLimits);
+        this.setLowerLimit(lowerLimits);
+        this.setUpperLimit(upperLimits);
+        this.setNumberOfSets(numberOfSets);
+        this.setSetType(setType);
+        this.setModel(model);
         this.rdm = new Random();
         
     }
  
-    /**
-     *
-     * @param s
-     */
+
     @Override
-    public void evaluate(Object s) {
+    public void evaluate(DoubleSolution s) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -54,15 +63,29 @@ public final class Problemfz extends AbstractGenericProblem{
      * Create a solution with the specified number of variables, and respecting the problem's parameters 
      * @return the new solution
      */
+
     @Override
-    public Object createSolution() {
-        ThreeDArrayDoubleSolution sol = new ThreeDArrayDoubleSolution(this);
-        for(int i = 0; i < this.getNumberOfVariables(); i++){
-            sol.setVariableValue(i, this.createSets(i, sol));
-            //System.out.println(sol.getAttribute(String.valueOf(i)+String.valueOf(0)+String.valueOf(2))); 
-        } 
-        return sol;
+    public DoubleSolution createSolution() {
+        FzArrayDoubleSolution sol = new FzArrayDoubleSolution(this);
+        int j = 0;
+        switch(this.setType){
+            case "triangular":
+                int arraySize = this.numberOfSets * 3;
+                for(int i = 0; i < this.getNumberOfVariables(); i+=arraySize){
+                    double [] setsPoints = this.createTriangularSets(arraySize, i);
+                    for(double d : setsPoints){
+                        sol.setVariableValue(j, d);
+                        j++;
+                    }
+                    //System.out.println(sol.getAttribute(String.valueOf(i)+String.valueOf(0)+String.valueOf(2))); 
+                } 
+                return sol; 
+            default:
+                break;
+        }
+        return null;
     }
+    
 
     /*
     
@@ -76,45 +99,14 @@ public final class Problemfz extends AbstractGenericProblem{
     
     */
     
-    private double [][] createSets(int variableIndex, ThreeDArrayDoubleSolution sol){
-        double [][] sets = new double [3][3]; //For this problem is already known that the variables have three triangular shaped sets
-        Map<String,Double> limits = this.getVariablesLimits(variableIndex);
+    private double [] createTriangularSets(int arraySize, int index){
+        double [] sets = new double [arraySize];
         
-        /*
-            SET 1
-        */
-        //Key: VariableIndex, set, point; Value: InferiorLimit, SuperiorLimit
-        sol.setAttribute(String.valueOf(variableIndex)+"0"+"2",this.constraintsToStr(limits.get("MiddleOfFirstHalf"), limits.get("Middle")));
-      
-        sets[0][0] = limits.get("Min");
-        sets[0][1] = limits.get("Min");
-        sets[0][2] = this.generateRdmPoint(limits.get("MiddleOfFirstHalf"), limits.get("Middle"));
-       
-
-        /*
-            SET 3
-        */
-        sol.setAttribute(String.valueOf(variableIndex)+"2"+"0", this.constraintsToStr(limits.get("Middle"), limits.get("MiddleOfSecondHalf")));
-
-        sets[2][0] = this.generateRdmPoint(limits.get("Middle"), limits.get("MiddleOfSecondHalf")); 
-        sets[2][1] = limits.get("Max");
-        sets[2][2] = limits.get("Max");
-
-        /*
-            SET 2
-        */
-              
-        double pointALimit = (sets[0][2] + limits.get("Min"))/2;
-        sol.setAttribute(String.valueOf(variableIndex)+"1"+"0", this.constraintsToStr(limits.get("Min"), pointALimit));               
-        sets[1][0] = this.generateRdmPoint(limits.get("Min"), pointALimit);
-        
-        double pointCLimit = (limits.get("Max") + sets[2][0])/2;    
-        sol.setAttribute(String.valueOf(variableIndex)+"1"+"2", this.constraintsToStr(pointCLimit, limits.get("Max")));
-        sets[1][2] = this.generateRdmPoint(pointCLimit, limits.get("Max"));
-        
-        sol.setAttribute(String.valueOf(variableIndex)+"1"+"1", this.constraintsToStr(pointALimit, pointCLimit));
-        sets[1][1] = this.generateRdmPoint(pointALimit, pointCLimit);
-
+        for(int i = 0; i < arraySize; i+=3){  
+            sets [i] = this.generateRdmPoint(this.getLowerBound(index+i), this.getUpperBound(index+i));
+            sets [i+1] = this.generateRdmPoint(this.getLowerBound(index+i+1), this.getUpperBound(index+i+1));
+            sets [i+2] = this.generateRdmPoint(this.getLowerBound(index+i+2), this.getUpperBound(index+i+2));
+        }
         return sets;
     }
     
@@ -124,7 +116,7 @@ public final class Problemfz extends AbstractGenericProblem{
     }
     
     /**
-     * Makes a String specifying the constraints of one set's point: the xtreme values of the range
+     * Makes a String specifying the constraints of one set's point: the extreme values of the range
      * @param inferiorLimit
      * @param superiorLimit
      * @return the string  specifying the constraints
@@ -133,50 +125,58 @@ public final class Problemfz extends AbstractGenericProblem{
         return (String.valueOf(inferiorLimit)+" "+String.valueOf(superiorLimit));
     }
     
-    /**
-     * Calculates values (as the middle point, and others) from the variables's universe and puts them 
-     * into a hash map
-     * @param variableIndex the variable's index
-     * @return a hash map with the calculated values
-     * 
-     * @see Keys of the hash map: 
-     *  @Min the lower limit of the universe
-     *  @Max the higher limit of the universe
-     *  @Middle the middle of the universe
-     *  @MiddleOfFirstHalf the middle value between the @Min and the @Middle
-     *  @MiddleOfSecondHalf the middle value between the @Middle and the @Max
-     * 
-     */
-    public Map getVariablesLimits(int variableIndex){
-        Map <String,Double> limits = new HashMap<>();
-        double min = this.getLowerLimits()[variableIndex]; //Variable's Lower limit (min)
-        double max = this.getUpperLimits()[variableIndex]; //Variable's Upper limit
-        double middle = (min+max)/2; //Variable's middle value
-        double middleOfFirstHalf = (min+middle)/2; 
-        double middleOfSecondHalf = (middle+max)/2; 
-        
-        limits.put("Min", min);
-        limits.put("Max", max);
-        limits.put("Middle",middle);
-        limits.put("MiddleOfFirstHalf",middleOfFirstHalf);
-        limits.put("MiddleOfSecondHalf",middleOfSecondHalf);
-        
-        return limits;
+//    /**
+//     * Calculates values (as the middle point, and others) from the variables' universe and puts them 
+//     * into a hash map
+//     * @param variableIndex the variable's index
+//     * @return a hash map with the calculated values
+//     * 
+//     * @see Keys of the hash map: 
+//     *  @Min the lower limit of the universe
+//     *  @Max the higher limit of the universe
+//     *  @Middle the middle of the universe
+//     *  @MiddleOfFirstHalf the middle value between the @Min and the @Middle
+//     *  @MiddleOfSecondHalf the middle value between the @Middle and the @Max
+//     * 
+//     */
+//    public Map getVariablesLimits(int variableIndex){
+//        Map <String,Double> limits = new HashMap<>();
+//        double min = this.getLowerLimits()[variableIndex]; //Variable's Lower limit (min)
+//        double max = this.getUpperLimits()[variableIndex]; //Variable's Upper limit
+//        double middle = (min+max)/2; //Variable's middle value
+//        double middleOfFirstHalf = (min+middle)/2; 
+//        double middleOfSecondHalf = (middle+max)/2; 
+//        
+//        limits.put("Min", min);
+//        limits.put("Max", max);
+//        limits.put("Middle",middle);
+//        limits.put("MiddleOfFirstHalf",middleOfFirstHalf);
+//        limits.put("MiddleOfSecondHalf",middleOfSecondHalf);
+//        
+//        return limits;
+//    }
+    
+    public int getNumberOfSets() {
+        return numberOfSets;
     }
 
-    public Integer [] getLowerLimits() {
-        return lowerLimits;
+    public void setNumberOfSets(int numberOfSets) {
+        this.numberOfSets = numberOfSets;
     }
 
-    public Integer [] getUpperLimits() {
-        return upperLimits;
+    public String getSetType() {
+        return setType;
+    }
+
+    public void setSetType(String setType) {
+        this.setType = setType;
     }
     
-    public void setLowerLimits(Integer[] lowerLimits) {
-        this.lowerLimits = lowerLimits;
+    public double [] getModel() {
+        return model;
     }
 
-    public void setUpperLimits(Integer[] upperLimits) {
-        this.upperLimits = upperLimits;
+    public void setModel(double [] model) {
+        this.model = model;
     }
 }

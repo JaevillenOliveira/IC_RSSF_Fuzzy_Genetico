@@ -40,7 +40,7 @@ public class Algorithm extends AbstractGeneticAlgorithm{
     @Override
     protected void initProgress() {
         this.iterations = 1; 
-        this.reproduction(this.getPopulation());
+        //this.reproduction(this.getPopulation());
     }
 
     @Override

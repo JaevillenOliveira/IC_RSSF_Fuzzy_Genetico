@@ -8,18 +8,20 @@ package ag;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.impl.AbstractGenericSolution;
+import org.uma.jmetal.solution.impl.ArrayDoubleSolution;
 
 /**
  *
  * @author jaevillen
  */
-public class ThreeDArrayDoubleSolution extends AbstractGenericSolution implements Cloneable{
+public class FzArrayDoubleSolution extends ArrayDoubleSolution implements Cloneable{
 
-    public ThreeDArrayDoubleSolution(Problemfz problem) {
+    public FzArrayDoubleSolution(DoubleProblem problem) {
         super(problem);
     }
+
 
     @Override
     public String getVariableValueString(int i) {
@@ -31,7 +33,7 @@ public class ThreeDArrayDoubleSolution extends AbstractGenericSolution implement
         try {
             return (Solution) super.clone();
         } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(ThreeDArrayDoubleSolution.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FzArrayDoubleSolution.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
