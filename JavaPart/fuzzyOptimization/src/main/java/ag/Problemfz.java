@@ -20,7 +20,6 @@ public final class Problemfz extends AbstractDoubleProblem{
     private int numberOfSets;
     private String setType;
     private Random rdm;
-    private double [] model;
 
     
     /**
@@ -32,9 +31,8 @@ public final class Problemfz extends AbstractDoubleProblem{
      * @param lowerLimits
      * @param numberOfSets
      * @param setType
-     * @param model
      */
-    public Problemfz(String name, int numberOfObjectives, int numberOfVariables, ArrayList<Double> upperLimits, ArrayList<Double> lowerLimits, int numberOfSets, String setType, double [] model) {
+    public Problemfz(String name, int numberOfObjectives, int numberOfVariables, ArrayList<Double> upperLimits, ArrayList<Double> lowerLimits, int numberOfSets, String setType) {
         this.setName(name);
         this.setNumberOfObjectives(numberOfObjectives);
         this.setNumberOfVariables(numberOfVariables);
@@ -42,7 +40,6 @@ public final class Problemfz extends AbstractDoubleProblem{
         this.setUpperLimit(upperLimits);
         this.setNumberOfSets(numberOfSets);
         this.setSetType(setType);
-        this.setModel(model);
         this.rdm = new Random();
         
     }
@@ -170,13 +167,5 @@ public final class Problemfz extends AbstractDoubleProblem{
 
     public void setSetType(String setType) {
         this.setType = setType;
-    }
-    
-    public double [] getModel() {
-        return model;
-    }
-
-    public void setModel(double [] model) {
-        this.model = model;
     }
 }

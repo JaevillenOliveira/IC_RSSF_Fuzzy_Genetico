@@ -75,15 +75,19 @@ public class Controller {
                     upperLimits.add(constraints[5]);
                 }
                 //Creates a Problem object with the information read
-                this.pfz = new Problemfz(name, objectives, numberOfVariables*numberofSets*3, upperLimits, lowerLimits, numberofSets, setsType, model);
+                this.pfz = new Problemfz(name, objectives, numberOfVariables*numberofSets*3, upperLimits, lowerLimits, numberofSets, setsType);
                 break;
             default:
                 break;
         }
         
-        
+        FzArrayDoubleSolution fzs = new FzArrayDoubleSolution(this.pfz);
+        int cnt = 0;
+        for(double d : model){
+            fzs.setVariableValue(cnt++, d);
+        }
         this.ga = new Algorithm(this.pfz, sizeOfPopulation);
-        this.ga.getPopulation().add(0, model); 
+        this.ga.getPopulation().add(0, fzs); 
     }
     
     private double [] calculatelimitsTriangularSetsConstraints(double A, double B, double C){

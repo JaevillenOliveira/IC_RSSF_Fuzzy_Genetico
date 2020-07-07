@@ -2,9 +2,9 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2020-07-07T15:58:27.606018Z</date>
-  <millis>1594137507606</millis>
-  <nanos>18000</nanos>
+  <date>2020-07-07T18:36:45.523554Z</date>
+  <millis>1594147005523</millis>
+  <nanos>554000</nanos>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -14,9 +14,9 @@
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2020-07-07T15:58:27.686713Z</date>
-  <millis>1594137507686</millis>
-  <nanos>713000</nanos>
+  <date>2020-07-07T18:36:45.588309Z</date>
+  <millis>1594147005588</millis>
+  <nanos>309000</nanos>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>

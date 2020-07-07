@@ -39,8 +39,9 @@ public class Algorithm extends AbstractGeneticAlgorithm{
     
     @Override
     protected void initProgress() {
+        List l = this.reproduction(this.getPopulation());
         this.iterations = 1; 
-        //this.reproduction(this.getPopulation());
+        this.replacement(this.getPopulation(), l);
     }
 
     @Override
