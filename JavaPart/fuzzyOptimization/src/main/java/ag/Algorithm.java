@@ -33,7 +33,7 @@ public class Algorithm extends AbstractGeneticAlgorithm{
         this.setMaxPopulationSize(maxPopulationSize);  
         this.iterations = 0;
         this.crossoverOperator = new Crossover(0.7, 5);
-        this.mutationOperator = new FzSetsMutation(0.7, new Random());
+        this.mutationOperator = new FzSetsMutation(0.7, new Random(), problem);
         this.evaluator = new MultithreadedSolutionListEvaluator(4, problem);
     }
     

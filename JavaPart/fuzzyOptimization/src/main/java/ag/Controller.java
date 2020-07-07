@@ -10,9 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.StringTokenizer;
-import org.uma.jmetal.solution.DoubleSolution;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -129,6 +127,10 @@ public class Controller {
     
     /**
      * Reads the first subject of the file (the original one) the puts in the list of solutions
+     * @param numberOfVariables
+     * @param numberofSets
+     * @param numberOfPoints
+     * @return 
      * @throws IOException
      */
     public double [] readSubject(int numberOfVariables, int numberofSets, int numberOfPoints) throws IOException{     

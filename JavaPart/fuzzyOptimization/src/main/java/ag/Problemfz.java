@@ -6,14 +6,9 @@
 package ag;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.problem.impl.AbstractGenericProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.ArrayDoubleSolution;
 
 /**
  * 
@@ -21,8 +16,7 @@ import org.uma.jmetal.solution.impl.ArrayDoubleSolution;
  */
 public final class Problemfz extends AbstractDoubleProblem{
 
-//    private Integer [] lowerLimits;
-//    private Integer [] upperLimits;
+    
     private int numberOfSets;
     private String setType;
     private Random rdm;
@@ -38,6 +32,7 @@ public final class Problemfz extends AbstractDoubleProblem{
      * @param lowerLimits
      * @param numberOfSets
      * @param setType
+     * @param model
      */
     public Problemfz(String name, int numberOfObjectives, int numberOfVariables, ArrayList<Double> upperLimits, ArrayList<Double> lowerLimits, int numberOfSets, String setType, double [] model) {
         this.setName(name);
@@ -72,7 +67,7 @@ public final class Problemfz extends AbstractDoubleProblem{
             case "triangular":
                 int arraySize = this.numberOfSets * 3;
                 for(int i = 0; i < this.getNumberOfVariables(); i+=arraySize){
-                    double [] setsPoints = this.createTriangularSets(arraySize, i);
+                    double [] setsPoints = this.createTriangularSets(arraySize,3, i);
                     for(double d : setsPoints){
                         sol.setVariableValue(j, d);
                         j++;
@@ -99,19 +94,24 @@ public final class Problemfz extends AbstractDoubleProblem{
     
     */
     
-    private double [] createTriangularSets(int arraySize, int index){
+    private double [] createTriangularSets(int arraySize, int numFcnPoints, int index){
         double [] sets = new double [arraySize];
         
-        for(int i = 0; i < arraySize; i+=3){  
-            sets [i] = this.generateRdmPoint(this.getLowerBound(index+i), this.getUpperBound(index+i));
-            sets [i+1] = this.generateRdmPoint(this.getLowerBound(index+i+1), this.getUpperBound(index+i+1));
-            sets [i+2] = this.generateRdmPoint(this.getLowerBound(index+i+2), this.getUpperBound(index+i+2));
+        for(int i = 0; i < arraySize; i+=numFcnPoints){  
+            for(int j = 0; j < numFcnPoints; j++){
+                if(i >= (numFcnPoints*2) && this.getLowerBound(index+i+j) < sets[i-numFcnPoints-1]){
+                    double lowerBound = sets[i-numFcnPoints-1];
+                    sets [i+j] = this.generateRdmPoint(lowerBound, this.getUpperBound(index+i+j));
+                }else{
+                    sets [i+j] = this.generateRdmPoint(this.getLowerBound(index+i+j), this.getUpperBound(index+i+j));
+                }
+            }
         }
         return sets;
     }
     
     // Calculates a number to pass to the random generator as a way to generate a value between two limits
-    private double generateRdmPoint(double min, double max){
+    public double generateRdmPoint(double min, double max){
         return (min + this.rdm.nextDouble()*(max - min));
     }
     
