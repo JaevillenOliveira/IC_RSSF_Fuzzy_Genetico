@@ -10,10 +10,13 @@ import Operators.FzSetsMutation;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.solutionattribute.Ranking;
 
 
 /**
@@ -23,25 +26,38 @@ import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
 public class Algorithm extends AbstractGeneticAlgorithm{
     
     private int iterations;
-    private MultithreadedSolutionListEvaluator evaluator;
+    private SequentialSolutionListEvaluator evaluator;
       
     public Algorithm(Problemfz problem, int maxPopulationSize) throws FileNotFoundException, IOException {
         super(problem);         
         this.setMaxPopulationSize(maxPopulationSize-1);
-        this.setPopulation(this.createInitialPopulation());//This inherited method creates 'maxPopulationSize' new subjects
-        //It's declared twice because one subject is already saved in the file, therefore it just needs to create maxPopulationSize -1 new subjects
-        this.setMaxPopulationSize(maxPopulationSize);  
-        this.iterations = 0;
+        this.iterations = 0; 
         this.crossoverOperator = new Crossover(0.7, 5);
         this.mutationOperator = new FzSetsMutation(0.7, new Random(), problem);
-        this.evaluator = new MultithreadedSolutionListEvaluator(4, problem);
+        this.evaluator = new SequentialSolutionListEvaluator();
+    }
+    
+    public void execute(FzArrayDoubleSolution modelSolution){
+        List p = this.createInitialPopulation();//This inherited method creates 'maxPopulationSize' new subjects
+        p.add(0, modelSolution);
+        this.setPopulation(p);
+        //It's declared twice because one subject is already saved in the file, therefore it just needs to create maxPopulationSize -1 new subjects
+        this.setMaxPopulationSize(this.maxPopulationSize+1);  
+        this.evaluatePopulation(this.getPopulation());
+        this.initProgress();
+        while(!this.isStoppingConditionReached()){
+            this.updateProgress();
+            p = this.selection(this.getPopulation());
+            p = this.reproduction(p);
+            p = this.evaluatePopulation(p);
+            //this.replacement(this.getPopulation(), p);
+
+        }
     }
     
     @Override
     protected void initProgress() {
-        List l = this.reproduction(this.getPopulation());
-        this.iterations = 1; 
-        this.replacement(this.getPopulation(), l);
+        this.iterations = 1;
     }
 
     @Override
@@ -60,8 +76,15 @@ public class Algorithm extends AbstractGeneticAlgorithm{
     }
 
     @Override
-    protected List replacement(List list, List list1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected List replacement(List population, List offspringPopulation) {
+        List jointPopulation = new ArrayList<>();
+        jointPopulation.addAll(population);
+        jointPopulation.addAll(offspringPopulation);
+
+//    Ranking ranking = computeRanking(jointPopulation);
+//
+//    return crowdingDistanceSelection(ranking);
+        return jointPopulation;
     }
 
     @Override

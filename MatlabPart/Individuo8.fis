@@ -15,40 +15,40 @@ DefuzzMethod='centroid'
 Name='rssi'
 Range=[-80 -40]
 NumMFs=3
-MF1='mf1':'trimf',[-80 -80 -78]
-MF2='mf2':'trimf',[-68 -53 -48]
-MF3='mf3':'trimf',[-43 -40 -40]
+MF1='mf1':'trimf',[-80 -80 -59.3460057828243]
+MF2='mf2':'trimf',[-72.7426738376259 -62.87207988943 -42.0920259380599]
+MF3='mf3':'trimf',[-56.4729865135399 -40 -40]
 
 [Input2]
 Name='neighbors'
 Range=[0 4]
 NumMFs=3
-MF1='mf1':'trimf',[0 0 2]
-MF2='mf2':'trimf',[1 2 3]
-MF3='mf3':'trimf',[4 4 4]
+MF1='mf1':'trimf',[0 0 2.1992370054281]
+MF2='mf2':'trimf',[0.716511252655258 1.69277338725815 3.26891856769679]
+MF3='mf3':'trimf',[2.99694126904652 4 4]
 
 [Input3]
 Name='sources'
 Range=[0 12]
 NumMFs=3
-MF1='mf1':'trimf',[0 0 5]
-MF2='mf2':'trimf',[5 9 12]
-MF3='mf3':'trimf',[7 12 12]
+MF1='mf1':'trimf',[0 0 5.23280189112374]
+MF2='mf2':'trimf',[1.77881257797434 8.43864838732114 11.328403255675]
+MF3='mf3':'trimf',[5.69975411423073 12 12]
 
 [Input4]
 Name='throughput'
 Range=[0 100]
 NumMFs=3
-MF1='mf1':'trimf',[0 0 23]
-MF2='mf2':'trimf',[19 34 53]
-MF3='mf3':'trimf',[95 100 100]
+MF1='mf1':'trimf',[0 0 58.6468202160709]
+MF2='mf2':'trimf',[18.2306605302384 48.6748882478527 98.3338238371985]
+MF3='mf3':'trimf',[66.440281588259 100 100]
 
 [Output1]
 Name='switch_perc'
 Range=[0 100]
 NumMFs=3
-MF1='mf1':'trimf',[0 0 16]
-MF2='mf2':'trimf',[26 26 78]
-MF3='mf3':'trimf',[78 100 100]
+MF1='mf1':'trimf',[0 0 32.1151252469537]
+MF2='mf2':'trimf',[0.474232189551949 37.0129989917385 78.3507847843057]
+MF3='mf3':'trimf',[35.2153964443646 100 100]
 
 [Rules]

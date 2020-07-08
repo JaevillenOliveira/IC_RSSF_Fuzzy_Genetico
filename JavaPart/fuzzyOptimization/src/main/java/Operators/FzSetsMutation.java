@@ -85,8 +85,8 @@ public class FzSetsMutation implements MutationOperator<FzArrayDoubleSolution> {
     /** Implements the mutation operation for fuzzy variables with three triangular sets*/
     private void doMutation(double probability, FzArrayDoubleSolution s) {
         int numFzVarPoints = 0,numSetsPoints = 0;
-        switch(this.problem.getSetType()){
-            case "triangular":
+        switch(this.problem.getSetshape()){
+            case TRIANGULAR:
                 numFzVarPoints = this.problem.getNumberOfSets()*3;
                 numSetsPoints = 3;
                 break;

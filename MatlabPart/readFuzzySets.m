@@ -6,7 +6,7 @@ function readFuzzySets
     lowerLimits = fscanf(fid,'%i', [1, 5]);
     variableNames = ["rssi", "neighbors", "sources", "throughput", "switch_perc"];
     
-    for k = 0:6 %% The first insividuo is already evaluated
+    for k = 0:6 %% The first individuo is already evaluated
        fgetl(fid);
     end       
     for k = 0:8 %% The 9 new individuos
@@ -19,9 +19,9 @@ function readFuzzySets
         fis = addOutput(fis,[lowerLimits(5) upperLimits(5)],"Name","switch_perc");
         
         for variable = variableNames %% The five variables, includind the one output    
-            A = fscanf(fid,'%i', [1, 3]);
-            B = fscanf(fid,'%i', [1, 3]);
-            C = fscanf(fid,'%i', [1, 3]);
+            A = fscanf(fid,'%f', [1, 3]);
+            B = fscanf(fid,'%f', [1, 3]);
+            C = fscanf(fid,'%f', [1, 3]);
             fis = addMF(fis,variable,"trimf",A);
             fis = addMF(fis,variable,"trimf",B);
             fis = addMF(fis,variable,"trimf",C);

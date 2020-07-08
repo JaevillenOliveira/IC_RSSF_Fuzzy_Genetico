@@ -5,8 +5,14 @@
  */
 package ag;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 
@@ -18,8 +24,10 @@ public final class Problemfz extends AbstractDoubleProblem{
 
     
     private int numberOfSets;
-    private String setType;
+    private SetShape setShape;
     private Random rdm;
+    private BufferedWriter bw;
+    private StringTokenizer st;
 
     
     /**
@@ -32,14 +40,14 @@ public final class Problemfz extends AbstractDoubleProblem{
      * @param numberOfSets
      * @param setType
      */
-    public Problemfz(String name, int numberOfObjectives, int numberOfVariables, ArrayList<Double> upperLimits, ArrayList<Double> lowerLimits, int numberOfSets, String setType) {
+    public Problemfz(String name, int numberOfObjectives, int numberOfVariables, ArrayList<Double> upperLimits, ArrayList<Double> lowerLimits, int numberOfSets, SetShape setShape) {
         this.setName(name);
         this.setNumberOfObjectives(numberOfObjectives);
         this.setNumberOfVariables(numberOfVariables);
         this.setLowerLimit(lowerLimits);
         this.setUpperLimit(upperLimits);
         this.setNumberOfSets(numberOfSets);
-        this.setSetType(setType);
+        this.setSetshape(setShape);
         this.rdm = new Random();
         
     }
@@ -47,7 +55,29 @@ public final class Problemfz extends AbstractDoubleProblem{
 
     @Override
     public void evaluate(DoubleSolution s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            System.out.println("It's here");
+            this.writeTriangSolution(s);
+            Runtime.getRuntime().exec("/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/runSimulation.sh");
+        } catch (IOException ex) {
+            Logger.getLogger(Problemfz.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }
+    
+    private void writeTriangSolution(DoubleSolution s) throws IOException{
+        this.bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/TempSolution.txt"));
+        int v = this.getNumberOfSets() * this.getSetshape().getNumPoints();
+        int index = 0;
+        for(int i = 0; i < s.getNumberOfVariables(); i+=v){
+            this.bw.newLine();
+            for (int j = 0; j < v; j++){
+                double point = s.getVariableValue(index++);
+                this.bw.write(point + " ");
+            }
+        }
+        this.bw.close();
+        
     }
 
 
@@ -60,11 +90,11 @@ public final class Problemfz extends AbstractDoubleProblem{
     public DoubleSolution createSolution() {
         FzArrayDoubleSolution sol = new FzArrayDoubleSolution(this);
         int j = 0;
-        switch(this.setType){
-            case "triangular":
-                int arraySize = this.numberOfSets * 3;
+        switch(this.setShape){
+            case TRIANGULAR:
+                int arraySize = this.numberOfSets * this.setShape.getNumPoints();
                 for(int i = 0; i < this.getNumberOfVariables(); i+=arraySize){
-                    double [] setsPoints = this.createTriangularSets(arraySize,3, i);
+                    double [] setsPoints = this.createTriangularSets(arraySize,this.setShape.getNumPoints(), i);
                     for(double d : setsPoints){
                         sol.setVariableValue(j, d);
                         j++;
@@ -161,11 +191,12 @@ public final class Problemfz extends AbstractDoubleProblem{
         this.numberOfSets = numberOfSets;
     }
 
-    public String getSetType() {
-        return setType;
+
+    public SetShape getSetshape() {
+        return setShape;
     }
 
-    public void setSetType(String setType) {
-        this.setType = setType;
+    public void setSetshape(SetShape Setshape) {
+        this.setShape = Setshape;
     }
 }

@@ -29,6 +29,7 @@ public class Controller {
     private StringTokenizer st;
     private Algorithm ga;
     private Problemfz pfz;
+    private double [] modelSubject = null;
 
     public Controller() throws FileNotFoundException, IOException {
         this.br = this.br = new BufferedReader(new FileReader("/home/jaevillen/IC/Buffer/ConfigFile.txt"));
@@ -42,7 +43,7 @@ public class Controller {
     public void readProblem() throws IOException{
         String name = br.readLine(); 
         int objectives = 0, numberOfVariables = 0, numberofSets = 0, sizeOfPopulation = 0;
-        String setsType = null;
+        SetShape setsType = null;
 
         this.st = new StringTokenizer(br.readLine());
         /*The first line contains the number of objectives, the number of variables, and the size of the population
@@ -52,19 +53,25 @@ public class Controller {
             objectives = Integer.parseInt(st.nextToken());
             numberOfVariables = Integer.parseInt(st.nextToken());
             numberofSets = Integer.parseInt(st.nextToken());
-            setsType = st.nextToken();
+            switch(st.nextToken()){
+                case "triangular":
+                    setsType = SetShape.TRIANGULAR;
+                    break;
+                default:
+                    break;
+            }
+            
             sizeOfPopulation = Integer.parseInt(st.nextToken());
         }
 
         ArrayList <Double> upperLimits = new ArrayList ();
         ArrayList <Double> lowerLimits = new ArrayList ();
 
-        double [] model = null;
         switch(setsType){
-            case "triangular":
-                model = this.readSubject(numberOfVariables, numberofSets, 3);
-                for(int i = 0; i < model.length; i+=3){  
-                    double [] constraints = this.calculatelimitsTriangularSetsConstraints(model [i], model [i+1], model [i+2]);
+            case TRIANGULAR:
+                this.modelSubject = this.readModel(numberOfVariables, numberofSets, 3);
+                for(int i = 0; i < modelSubject.length; i+=3){  
+                    double [] constraints = this.calculatelimitsTriangularSetsConstraints(modelSubject [i], modelSubject [i+1], modelSubject [i+2]);
                     lowerLimits.add(constraints[0]);
                     upperLimits.add(constraints[1]);
                     
@@ -79,15 +86,17 @@ public class Controller {
                 break;
             default:
                 break;
-        }
-        
+        }       
+        this.ga = new Algorithm(this.pfz, sizeOfPopulation);
+    }
+    
+    public FzArrayDoubleSolution createModelSolution(){
         FzArrayDoubleSolution fzs = new FzArrayDoubleSolution(this.pfz);
         int cnt = 0;
-        for(double d : model){
+        for(double d : modelSubject){
             fzs.setVariableValue(cnt++, d);
         }
-        this.ga = new Algorithm(this.pfz, sizeOfPopulation);
-        this.ga.getPopulation().add(0, fzs); 
+        return fzs;
     }
     
     private double [] calculatelimitsTriangularSetsConstraints(double A, double B, double C){
@@ -137,7 +146,7 @@ public class Controller {
      * @return 
      * @throws IOException
      */
-    public double [] readSubject(int numberOfVariables, int numberofSets, int numberOfPoints) throws IOException{     
+    public double [] readModel(int numberOfVariables, int numberofSets, int numberOfPoints) throws IOException{     
         double [] model = new double [numberOfVariables*numberofSets*numberOfPoints];
         br.readLine();
         br.readLine();
