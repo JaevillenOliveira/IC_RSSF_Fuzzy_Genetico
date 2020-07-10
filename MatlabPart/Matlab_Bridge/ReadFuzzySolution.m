@@ -23,19 +23,19 @@ function ReadFuzzySolution
         fis = addMF(fis,variable,"trimf",B);
         fis = addMF(fis,variable,"trimf",C);
     end
-    
     for k=0:7
         fgetl(config);
     end
-   
+    fis.Rules = [];
+    rules = [];
     for k=1:27
         rule = fscanf(config,'%f', [1, 7]);
-        rules(k) = fisrule(rule, 4);
+        rules = [rules; rule];
     end
-
+    
     fis = addRule(fis,rules);
-    fis.Rules
     writeFIS(fis,"TempSolution");
     
- 
+    exit
 end
+

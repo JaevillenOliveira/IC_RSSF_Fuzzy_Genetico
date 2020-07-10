@@ -65,7 +65,6 @@ public final class Problemfz extends AbstractDoubleProblem{
             //Process process = Runtime.getRuntime().exec(new String[] {"/bin/sh", "-c", "/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/runSimulation.sh"}, null);
             //process.waitFor();
             System.out.println("It has finished");
-            System.exit(0);
         } catch (IOException ex) {
             Logger.getLogger(Problemfz.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InterruptedException ex) {

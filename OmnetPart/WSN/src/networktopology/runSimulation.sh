@@ -8,6 +8,8 @@
 
 gnome-terminal --working-directory=IC/MatlabPart/Matlab_Bridge/ -- /usr/local/MATLAB/R2019b/bin/matlab -nodisplay -nosplash -nodesktop -r "run('/home/jaevillen/IC/MatlabPart/Matlab_Bridge/ReadFuzzySolution.m')"
 
+sleep 20
+
 cd ~
 cd IC/OmnetPart/WSN/src/networktopology
 ./runSc1FLC.sh
@@ -15,9 +17,9 @@ cd IC/OmnetPart/WSN/src/networktopology
 
 rm /home/jaevillen/IC/MatlabPart/Matlab_Bridge/TempSolution.fis
 
-#cd results
-#./scave.sh
+cd results
+./scave.sh
 
-#python Filter.py
+python Filter.py
 
 # Call GA
