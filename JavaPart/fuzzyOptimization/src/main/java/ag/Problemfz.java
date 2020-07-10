@@ -58,8 +58,17 @@ public final class Problemfz extends AbstractDoubleProblem{
         try {
             System.out.println("It's here");
             this.writeTriangSolution(s);
-            Runtime.getRuntime().exec("/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/runSimulation.sh");
+            ProcessBuilder processBuilder = new ProcessBuilder("/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/runSimulation.sh");
+            processBuilder.inheritIO();
+            Process process = processBuilder.start();
+            int exitValue = process.waitFor();
+            //Process process = Runtime.getRuntime().exec(new String[] {"/bin/sh", "-c", "/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/runSimulation.sh"}, null);
+            //process.waitFor();
+            System.out.println("It has finished");
+            System.exit(0);
         } catch (IOException ex) {
+            Logger.getLogger(Problemfz.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
             Logger.getLogger(Problemfz.class.getName()).log(Level.SEVERE, null, ex);
         }
        
