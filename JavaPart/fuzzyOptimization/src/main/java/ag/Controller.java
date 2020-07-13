@@ -27,10 +27,14 @@ public class Controller {
     private BufferedReader br;
     private BufferedWriter bw;
     private StringTokenizer st;
-    private Algorithm ga;
-    private Problemfz pfz;
+    private int sizeOfPopulation;
     private double [] modelSubject = null;
 
+    /**
+     *
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public Controller() throws FileNotFoundException, IOException {
         this.br = this.br = new BufferedReader(new FileReader("/home/jaevillen/IC/Buffer/ConfigFile.txt"));
         this.bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/ConfigFile.txt", true)); 
@@ -40,20 +44,21 @@ public class Controller {
      * Reads the problem's parameters from the file
      * @throws IOException
      */
-    public void readProblem() throws IOException{
+    public Problemfz readProblem() throws IOException{
         String name = br.readLine(); 
-        int objectives = 0, numberOfVariables = 0, numberofSets = 0, sizeOfPopulation = 0;
+        int objectives = 0, numberOfVariables = 0, numberofSets = 0;
         SetShape setsType = null;
-
-        this.st = new StringTokenizer(br.readLine());
+        
         /*The first line contains the number of objectives, the number of variables, and the size of the population
           that must be created
         */
+        this.st = new StringTokenizer(br.readLine());
+
         while(st.hasMoreTokens()){
-            objectives = Integer.parseInt(st.nextToken());
+            objectives = Integer.parseInt(st.nextToken()); //Reads the number of objectives
             numberOfVariables = Integer.parseInt(st.nextToken());
-            numberofSets = Integer.parseInt(st.nextToken());
-            switch(st.nextToken()){
+            numberofSets = Integer.parseInt(st.nextToken()); //Reads the number of sets that each variable has
+            switch(st.nextToken()){ // Reads the shape of the sets (for now is implemented only for triangular sets)
                 case "triangular":
                     setsType = SetShape.TRIANGULAR;
                     break;
@@ -61,17 +66,24 @@ public class Controller {
                     break;
             }
             
-            sizeOfPopulation = Integer.parseInt(st.nextToken());
+            this.sizeOfPopulation = Integer.parseInt(st.nextToken()); // Reads the size of the initial population
         }
 
         ArrayList <Double> upperLimits = new ArrayList ();
         ArrayList <Double> lowerLimits = new ArrayList ();
 
+        /*
+        * The constraints for each point of each set of the variables will be calculated based on the 
+        * model solution, that must be an uniform distributed configuration
+        */
         switch(setsType){
             case TRIANGULAR:
-                this.modelSubject = this.readModel(numberOfVariables, numberofSets, 3);
+                this.modelSubject = this.readModel(numberOfVariables, numberofSets, 3); // Reads the model from a file
                 for(int i = 0; i < modelSubject.length; i+=3){  
-                    double [] constraints = this.calculatelimitsTriangularSetsConstraints(modelSubject [i], modelSubject [i+1], modelSubject [i+2]);
+                    double [] constraints = this.calculatelimitsTriangularSetsConstraints(modelSubject [i], modelSubject [i+1], modelSubject [i+2]); 
+                    /*
+                    * The lower and upper limits of the variables will be the constraints for each point of each set
+                    */
                     lowerLimits.add(constraints[0]);
                     upperLimits.add(constraints[1]);
                     
@@ -81,17 +93,23 @@ public class Controller {
                     lowerLimits.add(constraints[4]);
                     upperLimits.add(constraints[5]);
                 }
-                //Creates a Problem object with the information read
-                this.pfz = new Problemfz(name, objectives, numberOfVariables*numberofSets*3, upperLimits, lowerLimits, numberofSets, setsType);
-                break;
+                /*Creates a Problem object with the information read
+                 * For this problem the Variables of a Solution will be the points of each set of each fuzzy variable
+                */
+                return new Problemfz(name, objectives, numberOfVariables*numberofSets*3, upperLimits, lowerLimits, numberofSets, setsType);
             default:
                 break;
-        }       
-        this.ga = new Algorithm(this.pfz, sizeOfPopulation);
+        }   
+        return null;
     }
     
-    public FzArrayDoubleSolution createModelSolution(){
-        FzArrayDoubleSolution fzs = new FzArrayDoubleSolution(this.pfz);
+    /**
+     * Gets the array containing the points of the model solution, read from a file, and creates 
+     * a Solution Object with the values.
+     * @return a FzArrayDoubleSolution as the model solution
+     */
+    public FzArrayDoubleSolution createModelSolution(Problemfz pfz){
+        FzArrayDoubleSolution fzs = new FzArrayDoubleSolution(pfz);
         int cnt = 0;
         for(double d : modelSubject){
             fzs.setVariableValue(cnt++, d);
@@ -99,6 +117,10 @@ public class Controller {
         return fzs;
     }
     
+    /*
+    * Calculates contraints for each point of each fuzy set 
+    * based on the formula suggested by Cordón et all (2001). 
+    */
     private double [] calculatelimitsTriangularSetsConstraints(double A, double B, double C){
         double [] limitPoints = new double [6]; 
         if(A == B){
@@ -132,14 +154,12 @@ public class Controller {
             limitPoints[5] = C + ((C-B)/2); //CR
             if(limitPoints[5] > C)
                 limitPoints[5] = C;
-            
-            
         }
         return limitPoints;
     }
     
     /**
-     * Reads the first subject of the file (the original one) the puts in the list of solutions
+     * Reads the first subject of the file (the original one)
      * @param numberOfVariables
      * @param numberofSets
      * @param numberOfPoints
@@ -168,13 +188,13 @@ public class Controller {
      * @param solutionList the new population to write
      * @throws IOException
      */
-    public void writePopulation(List solutionList) throws IOException{          
+    public void writePopulation(List solutionList, Problemfz pfz) throws IOException{          
         Iterator it = solutionList.iterator();
         int subjectCounter = 1;
         while(it.hasNext()){
             FzArrayDoubleSolution sol = (FzArrayDoubleSolution) it.next();
             this.bw.write("Individuo" + " " + ++subjectCounter);
-            int v = this.pfz.getNumberOfSets() * 3;
+            int v = pfz.getNumberOfSets() * 3;
             int index = 0;
             for(int i = 0; i < sol.getNumberOfVariables(); i+=v){
                 this.bw.newLine();
@@ -188,7 +208,8 @@ public class Controller {
         this.bw.close();
     }
     
-    public Algorithm getGa() {
-        return ga;
-    }   
+    public int getSizeOfPopulation() {
+        return sizeOfPopulation;
+    }
+    
 }

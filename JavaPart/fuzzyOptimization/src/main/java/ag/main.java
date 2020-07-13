@@ -15,16 +15,21 @@ import java.util.logging.Logger;
  * @author jaevillen
  */
 public class main {
+    
+    private static Controller ctr;
+    private static Algorithm ga;
+    private static Problemfz pfz;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         try {
-            Controller ctr = new Controller();
-            ctr.readProblem();
-            ctr.getGa().execute(ctr.createModelSolution());
-
+            ctr = new Controller();
+            pfz = ctr.readProblem();
+            ga = new Algorithm(pfz, ctr.getSizeOfPopulation());
+            ga.execute(ctr.createModelSolution(pfz));
+            
             //ctr.writePopulation(ctr.getGa().getPopulation().subList(1, ctr.getGa().getMaxPopulationSize()));
             
             

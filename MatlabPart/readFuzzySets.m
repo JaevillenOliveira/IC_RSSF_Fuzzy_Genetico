@@ -6,10 +6,9 @@ function readFuzzySets
     lowerLimits = fscanf(fid,'%i', [1, 5]);
     variableNames = ["rssi", "neighbors", "sources", "throughput", "switch_perc"];
     
-    for k = 0:6 %% The first individuo is already evaluated
-       fgetl(fid);
-    end       
-    for k = 0:8 %% The 9 new individuos
+    fid = fopen('/home/jaevillen/IC/Buffer/TestingReproduction.txt','r');
+    
+    for k = 0:9 %% The 10 new individuos
         name = fscanf(fid,'%s', [1, 2]); %% Reads the subject's name
         fis = mamfis;
         fis = addInput(fis,[lowerLimits(1) upperLimits(1)],"Name","rssi");

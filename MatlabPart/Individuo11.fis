@@ -1,0 +1,54 @@
+[System]
+Name='Individuo11'
+Type='mamdani'
+Version=2.0
+NumInputs=4
+NumOutputs=1
+NumRules=0
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='rssi'
+Range=[-80 -40]
+NumMFs=3
+MF1='mf1':'trimf',[-80 -80 -55.2617145881877]
+MF2='mf2':'trimf',[-78.686232128284 -64.1846302214025 -47.9051608698453]
+MF3='mf3':'trimf',[-52.4934470507221 -40 -40]
+
+[Input2]
+Name='neighbors'
+Range=[0 4]
+NumMFs=3
+MF1='mf1':'trimf',[0 0 2.55016196750923]
+MF2='mf2':'trimf',[0.94370972932372 1.93230111145133 3.6882846013423]
+MF3='mf3':'trimf',[2.97958019186104 4 4]
+
+[Input3]
+Name='sources'
+Range=[0 12]
+NumMFs=3
+MF1='mf1':'trimf',[0 0 4.48420700831547]
+MF2='mf2':'trimf',[2.60379767087233 4.25519044678404 10.0648630989741]
+MF3='mf3':'trimf',[7.9152851780269 12 12]
+
+[Input4]
+Name='throughput'
+Range=[0 100]
+NumMFs=3
+MF1='mf1':'trimf',[0 0 62.8645974418745]
+MF2='mf2':'trimf',[4.11631052003039 49.2893327973698 78.1292913560999]
+MF3='mf3':'trimf',[63.9550623912057 100 100]
+
+[Output1]
+Name='switch_perc'
+Range=[0 100]
+NumMFs=3
+MF1='mf1':'trimf',[0 0 72.9291848730948]
+MF2='mf2':'trimf',[5.45371715927204 36.4986803658433 87.002337896964]
+MF3='mf3':'trimf',[64.0634219748692 100 100]
+
+[Rules]

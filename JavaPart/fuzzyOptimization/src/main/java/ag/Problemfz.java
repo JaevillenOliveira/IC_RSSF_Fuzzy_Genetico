@@ -5,10 +5,16 @@
  */
 package ag;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
@@ -22,11 +28,11 @@ import org.uma.jmetal.solution.DoubleSolution;
  */
 public final class Problemfz extends AbstractDoubleProblem{
 
-    
     private int numberOfSets;
     private SetShape setShape;
     private Random rdm;
     private BufferedWriter bw;
+    private BufferedReader br;
     private StringTokenizer st;
 
     
@@ -38,7 +44,7 @@ public final class Problemfz extends AbstractDoubleProblem{
      * @param upperLimits
      * @param lowerLimits
      * @param numberOfSets
-     * @param setType
+     * @param setShape
      */
     public Problemfz(String name, int numberOfObjectives, int numberOfVariables, ArrayList<Double> upperLimits, ArrayList<Double> lowerLimits, int numberOfSets, SetShape setShape) {
         this.setName(name);
@@ -52,29 +58,53 @@ public final class Problemfz extends AbstractDoubleProblem{
         
     }
  
-
+    /**
+     *
+     * @param s
+     */
     @Override
     public void evaluate(DoubleSolution s) {
         try {
             System.out.println("It's here");
-            this.writeTriangSolution(s);
+            this.writeTriangSolution(s, "/home/jaevillen/IC/Buffer/TempSolution.txt");
             ProcessBuilder processBuilder = new ProcessBuilder("/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/runSimulation.sh");
             processBuilder.inheritIO();
             Process process = processBuilder.start();
-            int exitValue = process.waitFor();
-            //Process process = Runtime.getRuntime().exec(new String[] {"/bin/sh", "-c", "/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/runSimulation.sh"}, null);
-            //process.waitFor();
+            process.waitFor();
+            
             System.out.println("It has finished");
+            HashMap resultSc1 = this.readSolutionResult("/home/jaevillen/IC/Buffer/power_consumption_sc1.txt");
+            HashMap resultSc2 = this.readSolutionResult("/home/jaevillen/IC/Buffer/power_consumption_sc2.txt");
+            Iterator it = resultSc1.values().iterator();
+            while(it.hasNext()){
+                System.out.println(it.next());
+            }
+            
+            System.exit(0);
         } catch (IOException ex) {
             Logger.getLogger(Problemfz.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InterruptedException ex) {
             Logger.getLogger(Problemfz.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
     }
     
-    private void writeTriangSolution(DoubleSolution s) throws IOException{
-        this.bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/TempSolution.txt"));
+    private HashMap readSolutionResult(String filePath) throws FileNotFoundException, IOException{
+        HashMap <String, Double> energyConsump = new HashMap();
+        this.br = this.br = new BufferedReader(new FileReader(filePath));
+        this.st = new StringTokenizer(br.readLine().replaceAll("[{\\\\:\"}]", ""));
+        while(st.hasMoreTokens()){
+            energyConsump.put(st.nextToken(), Double.parseDouble(st.nextToken()));
+        }
+
+        return energyConsump;
+    }
+    
+    /*
+    * Writes a singular solution into a file that will be read by the fuzzy controller (matlab)
+    * to be used in a simulation (Omnet++)
+    */
+    private void writeTriangSolution(DoubleSolution s, String filePath) throws IOException{
+        this.bw = new BufferedWriter(new FileWriter(filePath));
         int v = this.getNumberOfSets() * this.getSetshape().getNumPoints();
         int index = 0;
         for(int i = 0; i < s.getNumberOfVariables(); i+=v){
@@ -90,7 +120,15 @@ public final class Problemfz extends AbstractDoubleProblem{
 
 
     /**
-     * Create a solution with the specified number of variables, and respecting the problem's parameters 
+     * Creates a solution with the specified number of variables, and respecting the problem's parameters.
+     * Each variable of a Solution is a point of a set of that Fuzzy Variable.
+     * -FuzzyVariables (Three triangular sets in each one - Low, Medium, High)
+     *    -RSSI
+     *    -NumberOfNeighbors
+     *    -NumberOfSources
+     *    -Throughput
+     *    -SwitchPercentual
+     * 
      * @return the new solution
      */
 
@@ -129,11 +167,15 @@ public final class Problemfz extends AbstractDoubleProblem{
     
     */
     
+    /*
+    * Creates Triangular Sets for one Fuzzy Variable
+    */
     private double [] createTriangularSets(int arraySize, int numFcnPoints, int index){
         double [] sets = new double [arraySize];
         
         for(int i = 0; i < arraySize; i+=numFcnPoints){  
             for(int j = 0; j < numFcnPoints; j++){
+                //This conditional treats the case of having three or more variables crossing each other
                 if(i >= (numFcnPoints*2) && this.getLowerBound(index+i+j) < sets[i-numFcnPoints-1]){
                     double lowerBound = sets[i-numFcnPoints-1];
                     sets [i+j] = this.generateRdmPoint(lowerBound, this.getUpperBound(index+i+j));
@@ -144,21 +186,18 @@ public final class Problemfz extends AbstractDoubleProblem{
         }
         return sets;
     }
-    
-    // Calculates a number to pass to the random generator as a way to generate a value between two limits
+
+
+    /**
+     * Calculates a random value in a specific range
+     * @param min
+     * @param max
+     * @return
+     */
     public double generateRdmPoint(double min, double max){
         return (min + this.rdm.nextDouble()*(max - min));
     }
     
-    /**
-     * Makes a String specifying the constraints of one set's point: the extreme values of the range
-     * @param inferiorLimit
-     * @param superiorLimit
-     * @return the string  specifying the constraints
-     */
-    public String constraintsToStr(double inferiorLimit, double superiorLimit){
-        return (String.valueOf(inferiorLimit)+" "+String.valueOf(superiorLimit));
-    }
     
 //    /**
 //     * Calculates values (as the middle point, and others) from the variables' universe and puts them 
@@ -190,20 +229,36 @@ public final class Problemfz extends AbstractDoubleProblem{
 //        
 //        return limits;
 //    }
+
+    /**
+     *
+     * @return
+     */
     
     public int getNumberOfSets() {
         return numberOfSets;
     }
 
+    /**
+     *
+     * @param numberOfSets
+     */
     public void setNumberOfSets(int numberOfSets) {
         this.numberOfSets = numberOfSets;
     }
 
-
+    /**
+     *
+     * @return
+     */
     public SetShape getSetshape() {
         return setShape;
     }
 
+    /**
+     *
+     * @param Setshape
+     */
     public void setSetshape(SetShape Setshape) {
         this.setShape = Setshape;
     }

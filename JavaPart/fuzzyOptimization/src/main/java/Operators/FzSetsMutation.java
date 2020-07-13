@@ -11,7 +11,6 @@ import ag.Problemfz;
 import java.util.Random;
 import java.util.StringTokenizer;
 import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.JMetalException;
 
 
@@ -85,21 +84,17 @@ public class FzSetsMutation implements MutationOperator<FzArrayDoubleSolution> {
     /** Implements the mutation operation for fuzzy variables with three triangular sets*/
     private void doMutation(double probability, FzArrayDoubleSolution s) {
         int numFzVarPoints = 0,numSetsPoints = 0;
-        switch(this.problem.getSetshape()){
-            case TRIANGULAR:
-                numFzVarPoints = this.problem.getNumberOfSets()*3;
-                numSetsPoints = 3;
-                break;
-            default:
-                break;
-        }
-
+        numSetsPoints = this.problem.getSetshape().getNumPoints();
+        numFzVarPoints = this.problem.getNumberOfSets()*numSetsPoints;
+        
+        
+        
         for (int i = 0; i < s.getNumberOfVariables(); i+=numFzVarPoints) { 
             for(int j = 0; j < numFzVarPoints; j+=numSetsPoints){  
                 for(int k = 0; k < numSetsPoints; k++){ 
                     if (this.randomGenerator.nextDouble() <= probability) {
-                        if(j >= 6 && s.getLowerBound(i+j+k) < s.getVariableValue(i+j+k-4)){
-                            double lowerBound = s.getVariableValue(i+j+k-4);
+                        if(j >= (numSetsPoints*2) && s.getLowerBound(i+j+k) < s.getVariableValue(i+j+k-numSetsPoints-1)){
+                            double lowerBound = s.getVariableValue(i+j+k-numSetsPoints-1);
                             s.setVariableValue(i+j+k, this.problem.generateRdmPoint(lowerBound, s.getUpperBound(i+j+k)));
                         }else{
                             s.setVariableValue(i+j+k, this.problem.generateRdmPoint(s.getLowerBound(i+j+k), s.getUpperBound(i+j+k)));
@@ -108,6 +103,7 @@ public class FzSetsMutation implements MutationOperator<FzArrayDoubleSolution> {
                 }
             }
         }
+       
     }
                     
 //                double mutatedSets = (double) s.getVariableValue(i);
