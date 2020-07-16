@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Operators;
+package operators;
 
 
-import ag.FzArrayDoubleSolution;
-import ag.Problemfz;
+import ag.solution.FzArrayDoubleSolution;
+import ag.problem.Problemfz;
 import java.util.Random;
 import java.util.StringTokenizer;
 import org.uma.jmetal.operator.MutationOperator;
@@ -83,19 +83,18 @@ public class FzSetsMutation implements MutationOperator<FzArrayDoubleSolution> {
 
     /** Implements the mutation operation for fuzzy variables with three triangular sets*/
     private void doMutation(double probability, FzArrayDoubleSolution s) {
+
         int numFzVarPoints = 0,numSetsPoints = 0;
         numSetsPoints = this.problem.getSetshape().getNumPoints();
         numFzVarPoints = this.problem.getNumberOfSets()*numSetsPoints;
-        
-        
-        
+
         for (int i = 0; i < s.getNumberOfVariables(); i+=numFzVarPoints) { 
-            for(int j = 0; j < numFzVarPoints; j+=numSetsPoints){  
-                for(int k = 0; k < numSetsPoints; k++){ 
-                    if (this.randomGenerator.nextDouble() <= probability) {
+            if (this.randomGenerator.nextDouble() <= probability) {
+                for(int j = 0; j < numFzVarPoints; j+=numSetsPoints){  
+                    for(int k = 0; k < numSetsPoints; k++){ 
                         if(j >= (numSetsPoints*2) && s.getLowerBound(i+j+k) < s.getVariableValue(i+j+k-numSetsPoints-1)){
                             double lowerBound = s.getVariableValue(i+j+k-numSetsPoints-1);
-                            s.setVariableValue(i+j+k, this.problem.generateRdmPoint(lowerBound, s.getUpperBound(i+j+k)));
+                            s.setVariableValue(i+j+k,this.problem.generateRdmPoint(lowerBound, s.getUpperBound(i+j+k)));
                         }else{
                             s.setVariableValue(i+j+k, this.problem.generateRdmPoint(s.getLowerBound(i+j+k), s.getUpperBound(i+j+k)));
                         }
@@ -105,48 +104,6 @@ public class FzSetsMutation implements MutationOperator<FzArrayDoubleSolution> {
         }
        
     }
-                    
-//                double mutatedSets = (double) s.getVariableValue(i);
-//                    double inf, sup;
-//                    String id;
-//                    switch (j) {
-//                        case 0: // In the first set only the third point can be changed
-//                            {
-//                                id = String.valueOf(i)+String.valueOf(j)+String.valueOf(2);
-//                                System.out.println(s.getAttributes());
-//                                this.st = new StringTokenizer((String) s.getAttribute(id));
-//                                inf = Double.parseDouble(st.nextToken());
-//                                sup = Double.parseDouble(st.nextToken());
-//                                mutatedSets[0][2] = this.generateMutatedValue(inf, sup);
-//                                break;
-//                            }
-//                        case 1:
-//                            for(int k = 0; k < 3; k++){//Number of points in the second set
-//                                if (randomGenerator.nextDouble() <= probability) {
-//                                    id = String.valueOf(i)+String.valueOf(j)+String.valueOf(k);
-//                                    this.st = new StringTokenizer((String) s.getAttribute(id));
-//                                    inf = Double.parseDouble(st.nextToken());
-//                                    sup = Double.parseDouble(st.nextToken());
-//                                    mutatedSets[1][k] = this.generateMutatedValue(inf, sup);
-//                                }
-//                            }   break;
-//                        case 2: // In the third set only the first point can be changed
-//                            {
-//                                id = String.valueOf(i)+String.valueOf(j)+String.valueOf(0);
-//                                this.st = new StringTokenizer((String) s.getAttribute(id));
-//                                inf = Double.parseDouble(st.nextToken());
-//                                sup = Double.parseDouble(st.nextToken());
-//                                mutatedSets[2][0] = this.generateMutatedValue(inf, sup);
-//                                break;
-//                            }
-//                        default:
-//                            break;
-//                    }
-//
-//                    s.setVariableValue(i, mutatedSets);    
-//                }
-//            }
-//        }
 }
 
 

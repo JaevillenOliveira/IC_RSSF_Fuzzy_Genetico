@@ -1,6 +1,9 @@
 package ag;
 
 
+import ag.problem.SetShape;
+import ag.problem.Problemfz;
+import ag.solution.FzArrayDoubleSolution;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;

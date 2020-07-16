@@ -5,10 +5,12 @@
  */
 package ag;
 
-import Operators.FZNPointCrossover;
-import Operators.FzSetsMutation;
+import ag.problem.Problemfz;
+import ag.solution.FzArrayDoubleSolution;
+import operators.FzSetsBLXAlphaCrossover;
+import operators.FzSetsMutation;
+import operators.NullOperator;
 import java.io.BufferedWriter;
-
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,9 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
-import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.solutionattribute.Ranking;
 
 
 /**
@@ -35,7 +35,7 @@ public class Algorithm extends AbstractGeneticAlgorithm{
         super(problem);         
         this.setMaxPopulationSize(maxPopulationSize-1);
         this.iterations = 0; 
-        this.crossoverOperator = new FZNPointCrossover(0.7, 31);
+        this.crossoverOperator = new FzSetsBLXAlphaCrossover(0.7, problem);
         this.mutationOperator = new FzSetsMutation(0.7, new Random(), problem);
         this.evaluator = new SequentialSolutionListEvaluator();
     }

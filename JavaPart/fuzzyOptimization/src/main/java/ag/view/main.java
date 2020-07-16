@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ag;
+package ag.view;
 
+import ag.Algorithm;
+import ag.Controller;
+import ag.problem.Problemfz;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;

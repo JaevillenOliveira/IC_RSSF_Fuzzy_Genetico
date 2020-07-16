@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ag;
+package ag.problem;
 
+import ag.solution.FzArrayDoubleSolution;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -67,15 +68,22 @@ public final class Problemfz extends AbstractDoubleProblem{
         try {
             System.out.println("It's here");
             this.writeTriangSolution(s, "/home/jaevillen/IC/Buffer/TempSolution.txt");
+            
             ProcessBuilder processBuilder = new ProcessBuilder("/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/runSimulation.sh");
             processBuilder.inheritIO();
             Process process = processBuilder.start();
-            process.waitFor();
+            process.waitFor(); //Waits for the simulation to finish
             
             System.out.println("It has finished");
+            
             HashMap resultSc1 = this.readSolutionResult("/home/jaevillen/IC/Buffer/power_consumption_sc1.txt");
             HashMap resultSc2 = this.readSolutionResult("/home/jaevillen/IC/Buffer/power_consumption_sc2.txt");
             Iterator it = resultSc1.values().iterator();
+            while(it.hasNext()){
+                System.out.println(it.next());
+            }
+            
+            it = resultSc2.values().iterator();
             while(it.hasNext()){
                 System.out.println(it.next());
             }
@@ -142,10 +150,8 @@ public final class Problemfz extends AbstractDoubleProblem{
                 for(int i = 0; i < this.getNumberOfVariables(); i+=arraySize){
                     double [] setsPoints = this.createTriangularSets(arraySize,this.setShape.getNumPoints(), i);
                     for(double d : setsPoints){
-                        sol.setVariableValue(j, d);
-                        j++;
+                        sol.setVariableValue(j++, d);
                     }
-                    //System.out.println(sol.getAttribute(String.valueOf(i)+String.valueOf(0)+String.valueOf(2))); 
                 } 
                 return sol; 
             default:
@@ -176,8 +182,8 @@ public final class Problemfz extends AbstractDoubleProblem{
         for(int i = 0; i < arraySize; i+=numFcnPoints){  
             for(int j = 0; j < numFcnPoints; j++){
                 //This conditional treats the case of having three or more variables crossing each other
-                if(i >= (numFcnPoints*2) && this.getLowerBound(index+i+j) < sets[i-numFcnPoints-1]){
-                    double lowerBound = sets[i-numFcnPoints-1];
+                if(i >= (numFcnPoints*2) && this.getLowerBound(index+i+j) < sets[i+j-numFcnPoints-1]){
+                    double lowerBound = sets[i+j-numFcnPoints-1];
                     sets [i+j] = this.generateRdmPoint(lowerBound, this.getUpperBound(index+i+j));
                 }else{
                     sets [i+j] = this.generateRdmPoint(this.getLowerBound(index+i+j), this.getUpperBound(index+i+j));
