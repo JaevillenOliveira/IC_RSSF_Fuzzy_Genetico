@@ -29,11 +29,11 @@ public class FzSetsBLXAlphaCrossover implements CrossoverOperator {
 
     private double crossoverProbability;
     private double alpha;
-    private Problemfz pfz; //Added BY Me
-
+    private Problemfz pfz; //This was added because to 
     private RepairDoubleSolution solutionRepair ;
-
     private RandomGenerator<Double> randomGenerator ;
+    
+    
     /** Constructor
      * @param crossoverProbability
      * @param pfz //Added bY Me

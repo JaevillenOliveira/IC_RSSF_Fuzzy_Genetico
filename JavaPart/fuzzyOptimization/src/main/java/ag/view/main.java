@@ -30,8 +30,8 @@ public class main {
         try {
             ctr = new Controller();
             pfz = ctr.readProblem();
-            ga = new Algorithm(pfz, ctr.getSizeOfPopulation());
-            ga.execute(ctr.createModelSolution(pfz));
+            ga = new Algorithm(pfz, ctr.getSizeOfPopulation(),ctr.getMaxIterations());
+            ga.run(ctr.createModelSolution(pfz));
             
             //ctr.writePopulation(ctr.getGa().getPopulation().subList(1, ctr.getGa().getMaxPopulationSize()));
             

@@ -98,6 +98,7 @@ public class FzSetsMutation implements MutationOperator<FzArrayDoubleSolution> {
                         }else{
                             s.setVariableValue(i+j+k, this.problem.generateRdmPoint(s.getLowerBound(i+j+k), s.getUpperBound(i+j+k)));
                         }
+                        
                     }
                 }
             }

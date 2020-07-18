@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
@@ -67,36 +66,41 @@ public final class Problemfz extends AbstractDoubleProblem{
     public void evaluate(DoubleSolution s) {
         try {
             System.out.println("It's here");
-            this.writeTriangSolution(s, "/home/jaevillen/IC/Buffer/TempSolution.txt");
+            //this.writeTriangSolution(s, "/home/jaevillen/IC/Buffer/TempSolution.txt");
             
-            ProcessBuilder processBuilder = new ProcessBuilder("/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/runSimulation.sh");
-            processBuilder.inheritIO();
-            Process process = processBuilder.start();
-            process.waitFor(); //Waits for the simulation to finish
+            //ProcessBuilder processBuilder = new ProcessBuilder("/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/runSimulation.sh");
+            //processBuilder.inheritIO();
+            //Process process = processBuilder.start();
+            //process.waitFor(); //Waits for the simulation to finish
             
             System.out.println("It has finished");
             
-            HashMap resultSc1 = this.readSolutionResult("/home/jaevillen/IC/Buffer/power_consumption_sc1.txt");
-            HashMap resultSc2 = this.readSolutionResult("/home/jaevillen/IC/Buffer/power_consumption_sc2.txt");
-            Iterator it = resultSc1.values().iterator();
-            while(it.hasNext()){
-                System.out.println(it.next());
-            }
+            double energyConsumed = 0;
+            energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc1.txt");
+            energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc2.txt");
             
-            it = resultSc2.values().iterator();
-            while(it.hasNext()){
-                System.out.println(it.next());
-            }
+            s.setObjective(0, energyConsumed);
             
             System.exit(0);
         } catch (IOException ex) {
             Logger.getLogger(Problemfz.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Problemfz.class.getName()).log(Level.SEVERE, null, ex);
+        //} catch (InterruptedException ex) {
+          //  Logger.getLogger(Problemfz.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    private HashMap readSolutionResult(String filePath) throws FileNotFoundException, IOException{
+    private double getEnergyConsumed(String filePath) throws FileNotFoundException, IOException{
+        this.br = this.br = new BufferedReader(new FileReader(filePath));
+        this.st = new StringTokenizer(br.readLine().replaceAll("[{\\\\:\"}]", ""));
+        double energyConsumed = 0;
+        while(st.hasMoreTokens()){
+            st.nextToken(); //Reads the title
+            energyConsumed += Double.parseDouble(st.nextToken());
+        }
+        return energyConsumed;
+    }
+    
+    private HashMap<String, Double> readSolutionResult(String filePath) throws FileNotFoundException, IOException{
         HashMap <String, Double> energyConsump = new HashMap();
         this.br = this.br = new BufferedReader(new FileReader(filePath));
         this.st = new StringTokenizer(br.readLine().replaceAll("[{\\\\:\"}]", ""));
@@ -203,38 +207,6 @@ public final class Problemfz extends AbstractDoubleProblem{
     public double generateRdmPoint(double min, double max){
         return (min + this.rdm.nextDouble()*(max - min));
     }
-    
-    
-//    /**
-//     * Calculates values (as the middle point, and others) from the variables' universe and puts them 
-//     * into a hash map
-//     * @param variableIndex the variable's index
-//     * @return a hash map with the calculated values
-//     * 
-//     * @see Keys of the hash map: 
-//     *  @Min the lower limit of the universe
-//     *  @Max the higher limit of the universe
-//     *  @Middle the middle of the universe
-//     *  @MiddleOfFirstHalf the middle value between the @Min and the @Middle
-//     *  @MiddleOfSecondHalf the middle value between the @Middle and the @Max
-//     * 
-//     */
-//    public Map getVariablesLimits(int variableIndex){
-//        Map <String,Double> limits = new HashMap<>();
-//        double min = this.getLowerLimits()[variableIndex]; //Variable's Lower limit (min)
-//        double max = this.getUpperLimits()[variableIndex]; //Variable's Upper limit
-//        double middle = (min+max)/2; //Variable's middle value
-//        double middleOfFirstHalf = (min+middle)/2; 
-//        double middleOfSecondHalf = (middle+max)/2; 
-//        
-//        limits.put("Min", min);
-//        limits.put("Max", max);
-//        limits.put("Middle",middle);
-//        limits.put("MiddleOfFirstHalf",middleOfFirstHalf);
-//        limits.put("MiddleOfSecondHalf",middleOfSecondHalf);
-//        
-//        return limits;
-//    }
 
     /**
      *

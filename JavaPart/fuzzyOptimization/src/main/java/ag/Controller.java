@@ -31,6 +31,7 @@ public class Controller {
     private BufferedWriter bw;
     private StringTokenizer st;
     private int sizeOfPopulation;
+    private int maxIterations;
     private double [] modelSubject = null;
 
     /**
@@ -70,6 +71,7 @@ public class Controller {
             }
             
             this.sizeOfPopulation = Integer.parseInt(st.nextToken()); // Reads the size of the initial population
+            this.maxIterations = Integer.parseInt(st.nextToken());
         }
 
         ArrayList <Double> upperLimits = new ArrayList ();
@@ -213,6 +215,11 @@ public class Controller {
     
     public int getSizeOfPopulation() {
         return sizeOfPopulation;
+    }
+    
+    
+    public int getMaxIterations() {
+        return maxIterations;
     }
     
 }
