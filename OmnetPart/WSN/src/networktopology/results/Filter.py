@@ -44,7 +44,7 @@ for i in range(1, 3):
 
 	power_consumption_dict = {'T'+str(i+1) : (fresult_fflc[5])[i] for i in range(0, len(fresult_fflc[5])) }
 	y = json.dumps(power_consumption_dict)
-	with open('power_consumption_sc'+str(i)+'.txt', 'w') as outfile:
+	with open('/home/jaevillen/IC/Buffer/power_consumption_sc'+str(i)+'.txt', 'w') as outfile:
 		json.dump(y, outfile)
 
 	#results.to_csv('outSc'+str(i)+'.csv')

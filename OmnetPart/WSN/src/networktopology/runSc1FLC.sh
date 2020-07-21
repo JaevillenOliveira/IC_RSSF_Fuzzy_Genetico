@@ -1,6 +1,6 @@
 #!/bin/bash
 	
-for i in $(seq 1 2)
+for i in $(seq 1 10)
 do	
 
 gnome-terminal --working-directory=IC/MatlabPart/Matlab_Bridge/ -- /usr/local/MATLAB/R2019b/bin/matlab -nodisplay -nosplash -nodesktop -r "run('/home/jaevillen/IC/MatlabPart/Matlab_Bridge/Server.m')" &

@@ -1,6 +1,5 @@
 package ag;
 
-
 import ag.problem.SetShape;
 import ag.problem.Problemfz;
 import ag.solution.FzArrayDoubleSolution;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
-import org.uma.jmetal.solution.DoubleSolution;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -41,12 +39,13 @@ public class Controller {
      * @throws IOException
      */
     public Controller() throws FileNotFoundException, IOException {
-        this.br = this.br = new BufferedReader(new FileReader("/home/jaevillen/IC/Buffer/ConfigFile.txt"));
+        this.br = new BufferedReader(new FileReader("/home/jaevillen/IC/Buffer/ConfigFile.txt"));
         this.bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/ConfigFile.txt", true)); 
     }
     
      /**
-     * Reads the problem's parameters from the file
+     * Reads the problem's parameters from the configuration file
+     * @return the Problem object 
      * @throws IOException
      */
     public Problemfz readProblem() throws IOException{
@@ -54,8 +53,8 @@ public class Controller {
         int objectives = 0, numberOfVariables = 0, numberofSets = 0;
         SetShape setsType = null;
         
-        /*The first line contains the number of objectives, the number of variables, and the size of the population
-          that must be created
+        /*The first line contains the number of objectives, the number of fuzzy variables, number of sets of each fuzzy variable,
+          the shape of the sets, and the size of the initial population, the number of iterations.
         */
         this.st = new StringTokenizer(br.readLine());
 
@@ -65,7 +64,7 @@ public class Controller {
             numberofSets = Integer.parseInt(st.nextToken()); //Reads the number of sets that each variable has
             switch(st.nextToken()){ // Reads the shape of the sets (for now is implemented only for triangular sets)
                 case "triangular":
-                    setsType = SetShape.TRIANGULAR;
+                    setsType = SetShape.TRIANGULAR; //The set's shape defines, among other things, the number of points of the function
                     break;
                 default:
                     break;
@@ -84,8 +83,8 @@ public class Controller {
         */
         switch(setsType){
             case TRIANGULAR:
-                this.modelSubject = this.readModel(numberOfVariables, numberofSets, 3); // Reads the model from a file
-                for(int i = 0; i < modelSubject.length; i+=3){  
+                this.modelSubject = this.readModel(numberOfVariables, numberofSets, setsType.getNumPoints()); // Reads the model configuration from a file
+                for(int i = 0; i < modelSubject.length; i+=setsType.getNumPoints()){  
                     double [] constraints = this.calculatelimitsTriangularSetsConstraints(modelSubject [i], modelSubject [i+1], modelSubject [i+2]); 
                     /*
                     * The lower and upper limits of the variables will be the constraints for each point of each set
@@ -110,9 +109,10 @@ public class Controller {
     }
     
     /**
-     * Gets the array containing the points of the model solution, read from a file, and creates 
-     * a Solution Object with the values.
-     * @return a FzArrayDoubleSolution as the model solution
+     * Uses the array containing the points of the model solution, read from a file, to create 
+     * a Solution Object.
+     * @param pfz the Problem
+     * @return a FzArrayDoubleSolution as the model Solution
      */
     public FzArrayDoubleSolution createModelSolution(Problemfz pfz){
         FzArrayDoubleSolution fzs = new FzArrayDoubleSolution(pfz);
@@ -165,17 +165,17 @@ public class Controller {
     }
     
     /**
-     * Reads the first subject of the file (the original one)
+     * Reads the first subject from the file (the original one)
      * @param numberOfVariables
      * @param numberofSets
      * @param numberOfPoints
-     * @return 
+     * @return an array containing the points
      * @throws IOException
      */
     public double [] readModel(int numberOfVariables, int numberofSets, int numberOfPoints) throws IOException{     
         double [] model = new double [numberOfVariables*numberofSets*numberOfPoints];
-        br.readLine();
-        br.readLine();
+        br.readLine(); //Is higher limits of the fuzzy variables (this is used only by the matlab script)
+        br.readLine(); //Is lower limits of the fuzzy variables (this is used only by the matlab script)
         br.readLine(); //Is the name of the subject ("Individuo" + index)
         
         int index = 0;
@@ -188,36 +188,10 @@ public class Controller {
         this.br.close();
         return model;
     }
-    
-    /**
-     * Writes the new population in the file   
-     * @param solutionList the new population to write
-     * @throws IOException
-     */
-    public void writePopulation(List solutionList, Problemfz pfz) throws IOException{          
-        Iterator it = solutionList.iterator();
-        int subjectCounter = 0;
-        while(it.hasNext()){
-            FzArrayDoubleSolution sol = (FzArrayDoubleSolution) it.next();
-            this.bw.write("Individuo" + " " + ++subjectCounter);
-            int v = pfz.getNumberOfSets() * pfz.getSetshape().getNumPoints();
-            int index = 0;
-            for(int i = 0; i < sol.getNumberOfVariables(); i+=v){
-                this.bw.newLine();
-                for (int j = 0; j < v; j++){
-                    double point = sol.getVariableValue(index++);
-                    this.bw.write(point + " ");
-                }
-            }
-            this.bw.newLine();
-        }
-        this.bw.close();
-    }
-    
+
     public int getSizeOfPopulation() {
         return sizeOfPopulation;
     }
-    
     
     public int getMaxIterations() {
         return maxIterations;

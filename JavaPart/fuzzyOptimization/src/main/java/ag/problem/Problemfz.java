@@ -50,14 +50,14 @@ public final class Problemfz extends AbstractDoubleProblem{
         this.setNumberOfVariables(numberOfVariables);
         this.setLowerLimit(lowerLimits);
         this.setUpperLimit(upperLimits);
-        this.setNumberOfSets(numberOfSets);
-        this.setSetshape(setShape);
+        this.numberOfSets = numberOfSets;
+        this.setShape = setShape;
         this.rdm = new Random();
     }
  
     /**
-     *
-     * @param s
+     * Evaluates the solutions 
+     * @param s the solution to be evaluated
      */
     @Override
     public void evaluate(DoubleSolution s) {
@@ -73,18 +73,17 @@ public final class Problemfz extends AbstractDoubleProblem{
             energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc1.txt");
             energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc2.txt");
             
-            s.setObjective(0, energyConsumed);           
+            s.setObjective(0, energyConsumed);       
+            System.out.println("smooth");
             //System.exit(0);
-        } catch (IOException ex) {
-            Logger.getLogger(Problemfz.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException ex) {
+        } catch (IOException | InterruptedException ex) {
             Logger.getLogger(Problemfz.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     private double getEnergyConsumed(String filePath) throws FileNotFoundException, IOException{
         this.br = new BufferedReader(new FileReader(filePath));
-        this.st = new StringTokenizer(br.readLine().replaceAll("[{\\\\:\"}]", ""));
+        this.st = new StringTokenizer(br.readLine().replaceAll("[{,\\\\:\"}]", ""));
         double energyConsumed = 0;
         while(st.hasMoreTokens()){
             st.nextToken(); //Reads the title
@@ -92,22 +91,15 @@ public final class Problemfz extends AbstractDoubleProblem{
         }
         return energyConsumed;
     }
-    
-    private HashMap<String, Double> readSolutionResult(String filePath) throws FileNotFoundException, IOException{
-        HashMap <String, Double> energyConsump = new HashMap();
-        this.br = this.br = new BufferedReader(new FileReader(filePath));
-        this.st = new StringTokenizer(br.readLine().replaceAll("[{\\\\:\"}]", ""));
-        while(st.hasMoreTokens()){
-            energyConsump.put(st.nextToken(), Double.parseDouble(st.nextToken()));
-        }
 
-        return energyConsump;
-    }
-    
-    /*
-    * Writes a singular solution into a file that will be read by the fuzzy controller (matlab)
-    * to be used in a simulation (Omnet++)
-    */
+    /**
+     * Writes a singular solution into a file 
+     * 
+     * @param s the solution
+     * @param filePath the file path
+     * @throws IOException
+     */
+
     public void writeSolution(DoubleSolution s, String filePath) throws IOException{
         this.bw = new BufferedWriter(new FileWriter(filePath));
         int v = this.getNumberOfSets() * this.getSetshape().getNumPoints();
@@ -133,6 +125,10 @@ public final class Problemfz extends AbstractDoubleProblem{
      *    -Throughput
      *    -SwitchPercentual
      * 
+     * In this case the Solution Object will have 45 variables, 
+     * as each fuzzy variable has 9 points (3 sets, each one with 3 points) 
+     * So: 5 Fuzzy Variables * 3 Sets * 3 Points
+     * 
      * @return the new solution
      */
 
@@ -144,7 +140,7 @@ public final class Problemfz extends AbstractDoubleProblem{
             case TRIANGULAR:
                 int arraySize = this.numberOfSets * this.setShape.getNumPoints();
                 for(int i = 0; i < this.getNumberOfVariables(); i+=arraySize){
-                    double [] setsPoints = this.createTriangularSets(arraySize,this.setShape.getNumPoints(), i);
+                    double [] setsPoints = this.createSets(arraySize,this.setShape.getNumPoints(), i);
                     for(double d : setsPoints){
                         sol.setVariableValue(j++, d);
                     }
@@ -158,21 +154,9 @@ public final class Problemfz extends AbstractDoubleProblem{
     
 
     /*
-    
-    * This method is specific for a problem with fuzzy variables with three triangular sets.
-    
-    * Creates sets dinamically, respecting the range permitted for each point of each set, so that
-    * the sets keep their interpretability.
-    
-    * This also put the limits for each point of each set into a hash map, and its keys are 
-    * strings specifying the 'variableIndex' (0, 1, 2, 3 or 4), 'set' (0, 1 or 2), 'pointOfSet' (0, 1 or 2). 
-    
+    * Creates Sets for one Fuzzy Variable respecting the limits defined for each point
     */
-    
-    /*
-    * Creates Triangular Sets for one Fuzzy Variable
-    */
-    private double [] createTriangularSets(int arraySize, int numFcnPoints, int index){
+    private double [] createSets(int arraySize, int numFcnPoints, int index){
         double [] sets = new double [arraySize];
         
         for(int i = 0; i < arraySize; i+=numFcnPoints){  
@@ -199,37 +183,12 @@ public final class Problemfz extends AbstractDoubleProblem{
     public double generateRdmPoint(double min, double max){
         return (min + this.rdm.nextDouble()*(max - min));
     }
-
-    /**
-     *
-     * @return
-     */
     
     public int getNumberOfSets() {
         return numberOfSets;
     }
 
-    /**
-     *
-     * @param numberOfSets
-     */
-    public void setNumberOfSets(int numberOfSets) {
-        this.numberOfSets = numberOfSets;
-    }
-
-    /**
-     *
-     * @return
-     */
     public SetShape getSetshape() {
         return setShape;
-    }
-
-    /**
-     *
-     * @param Setshape
-     */
-    public void setSetshape(SetShape Setshape) {
-        this.setShape = Setshape;
     }
 }

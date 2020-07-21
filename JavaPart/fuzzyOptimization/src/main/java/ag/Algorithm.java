@@ -30,25 +30,38 @@ public class Algorithm extends AbstractGeneticAlgorithm{
     private int maxIterations;
     private SequentialSolutionListEvaluator evaluator;
       
+    /**
+     *
+     * @param problem
+     * @param maxPopulationSize
+     * @param maxIterations
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public Algorithm(Problemfz problem, int maxPopulationSize, int maxIterations) throws FileNotFoundException, IOException {
         super(problem);         
         this.setMaxPopulationSize(maxPopulationSize-1);
         this.iterations = 0; 
         this.maxIterations = maxIterations;
+        this.selectionOperator = new Selection(6);
         this.crossoverOperator = new Crossover(0.7);//new FzSetsBLXAlphaCrossover(0.7, problem);
-        this.mutationOperator = new Mutation(0.7);   //new FzSetsMutation(0.7, new Random(), problem);
-        this.selectionOperator = new Selection(10);
+        this.mutationOperator = new Mutation(0.4);   //new FzSetsMutation(0.7, new Random(), problem);
         this.evaluator = new SequentialSolutionListEvaluator();
     }
 
-    public void writePopulation(List solutionList, Problemfz pfz) throws IOException{   
-        BufferedWriter bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/TestingReproduction.txt")); 
-        Iterator it = solutionList.iterator();
+    /**
+     * Writes the entire population into a file
+     * @param filePath
+     * @throws IOException
+     */
+    public void writePopulation(String filePath) throws IOException{   
+        BufferedWriter bw = new BufferedWriter(new FileWriter(filePath)); 
+        Iterator it = this.population.iterator();
         int subjectCounter = 0;
         while(it.hasNext()){
             FzArrayDoubleSolution sol = (FzArrayDoubleSolution) it.next();
             bw.write("Individuo "+ subjectCounter++ + " Energy "+ sol.getObjective(0));
-            int v = pfz.getNumberOfSets() * 3;
+            int v = ((Problemfz) this.problem).getNumberOfSets() * ((Problemfz) this.problem).getSetshape().getNumPoints();
             int index = 0;
             for(int i = 0; i < sol.getNumberOfVariables(); i+=v){
                 bw.newLine();
@@ -77,7 +90,6 @@ public class Algorithm extends AbstractGeneticAlgorithm{
         bw.close();
     }
     
-    
     /*
         This method was overwritten because there were a problem with the original one:
         If the selection operator were to return ONE best solution, this method would return a list
@@ -85,12 +97,21 @@ public class Algorithm extends AbstractGeneticAlgorithm{
         If selection operator were to return a list ranked by the best solutions, this method would 
         return a list (in the size of the total number of solutions) filled with a bunch of lists 
         containing the ranked solutions.
-    */
+    
+     * @param population
+     * @return
+     */
+
     @Override
     protected List selection(List population) {
         return (List) selectionOperator.execute(population);
     }
     
+    /**
+     *
+     * @param modelSolution
+     * @throws IOException
+     */
     public void run(FzArrayDoubleSolution modelSolution) throws IOException{
         List<FzArrayDoubleSolution> offspringPopulation;
         List<FzArrayDoubleSolution> matingPopulation;
@@ -100,13 +121,16 @@ public class Algorithm extends AbstractGeneticAlgorithm{
         setMaxPopulationSize(this.maxPopulationSize+1);  //It's declared twice because one subject is already saved in the file, therefore it just needs to create maxPopulationSize -1 new subjects
         population = evaluatePopulation(this.getPopulation());
         this.logEvolution(population);
+        System.out.println("GENERATION "+this.iterations);
         initProgress();
+        
         while(!this.isStoppingConditionReached()){
             matingPopulation = selection(population);            
             offspringPopulation = this.reproduction(matingPopulation);
             offspringPopulation = evaluatePopulation(offspringPopulation);
-            this.logEvolution(offspringPopulation);
             population = replacement(population, offspringPopulation);
+            this.logEvolution(population);
+            System.out.println("GENERATION "+this.iterations);
             updateProgress();
         }
     }
@@ -131,13 +155,19 @@ public class Algorithm extends AbstractGeneticAlgorithm{
         return this.evaluator.evaluate(list, problem);
     }
 
+    /**
+     *
+     * @param population
+     * @param offspringPopulation
+     * @return
+     */
     @Override
     protected List replacement(List population, List offspringPopulation) {
         List jointPopulation = new ArrayList<>();
         jointPopulation.addAll(population);
         jointPopulation.addAll(offspringPopulation);
 
-        return (new Selection(jointPopulation.size())).execute(jointPopulation);
+        return (new Selection(this.maxPopulationSize)).execute(jointPopulation);
     }
 
     @Override
