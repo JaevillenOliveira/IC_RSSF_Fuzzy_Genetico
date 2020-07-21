@@ -1,5 +1,5 @@
 Power Saving
-1 5 3 triangular 10
+1 5 3 triangular 10 50
 -40 4 12 100 100
 -80 0 0 0 0
 Individuo 1

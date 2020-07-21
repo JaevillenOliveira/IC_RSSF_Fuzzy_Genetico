@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
+import org.uma.jmetal.solution.DoubleSolution;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -195,11 +196,11 @@ public class Controller {
      */
     public void writePopulation(List solutionList, Problemfz pfz) throws IOException{          
         Iterator it = solutionList.iterator();
-        int subjectCounter = 1;
+        int subjectCounter = 0;
         while(it.hasNext()){
             FzArrayDoubleSolution sol = (FzArrayDoubleSolution) it.next();
             this.bw.write("Individuo" + " " + ++subjectCounter);
-            int v = pfz.getNumberOfSets() * 3;
+            int v = pfz.getNumberOfSets() * pfz.getSetshape().getNumPoints();
             int index = 0;
             for(int i = 0; i < sol.getNumberOfVariables(); i+=v){
                 this.bw.newLine();

@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.uma.jmetal.solution.DoubleSolution;
 
 /**
  *
@@ -32,8 +33,8 @@ public class main {
             pfz = ctr.readProblem();
             ga = new Algorithm(pfz, ctr.getSizeOfPopulation(),ctr.getMaxIterations());
             ga.run(ctr.createModelSolution(pfz));
-            
-            //ctr.writePopulation(ctr.getGa().getPopulation().subList(1, ctr.getGa().getMaxPopulationSize()));
+            pfz.writeSolution((DoubleSolution) ga.getResult(), "/home/jaevillen/IC/Buffer/BestSolution.txt");
+            ctr.writePopulation(ga.getPopulation(), pfz);
             
             
         } catch (FileNotFoundException ex) {

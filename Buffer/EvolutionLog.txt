@@ -1,0 +1,88 @@
+GENERATION  0
+Individuo 0   Energy - 3.0
+Individuo 1   Energy - 14.0
+Individuo 2   Energy - 19.0
+Individuo 3   Energy - 5.0
+Individuo 4   Energy - 16.0
+Individuo 5   Energy - 10.0
+Individuo 6   Energy - 12.0
+Individuo 7   Energy - 3.0
+Individuo 8   Energy - 12.0
+Individuo 9   Energy - 13.0
+GENERATION  1
+Individuo 0   Energy - 15.0
+Individuo 1   Energy - 13.0
+Individuo 2   Energy - 16.0
+Individuo 3   Energy - 18.0
+Individuo 4   Energy - 1.0
+Individuo 5   Energy - 9.0
+Individuo 6   Energy - 8.0
+Individuo 7   Energy - 1.0
+Individuo 8   Energy - 11.0
+Individuo 9   Energy - 2.0
+GENERATION 0
+Individuo 0 Energy 6.0
+Individuo 1 Energy 9.0
+Individuo 2 Energy 19.0
+Individuo 3 Energy 8.0
+Individuo 4 Energy 10.0
+Individuo 5 Energy 14.0
+Individuo 6 Energy 16.0
+Individuo 7 Energy 18.0
+Individuo 8 Energy 7.0
+Individuo 9 Energy 4.0
+GENERATION 1
+Individuo 0 Energy 19.0
+Individuo 1 Energy 9.0
+Individuo 2 Energy 12.0
+Individuo 3 Energy 1.0
+Individuo 4 Energy 5.0
+Individuo 5 Energy 7.0
+Individuo 6 Energy 7.0
+Individuo 7 Energy 10.0
+Individuo 8 Energy 0.0
+Individuo 9 Energy 8.0
+GENERATION 0
+Individuo 0 Energy 6.0
+Individuo 1 Energy 18.0
+Individuo 2 Energy 5.0
+Individuo 3 Energy 15.0
+Individuo 4 Energy 9.0
+Individuo 5 Energy 12.0
+Individuo 6 Energy 2.0
+Individuo 7 Energy 8.0
+Individuo 8 Energy 13.0
+Individuo 9 Energy 8.0
+GENERATION 1
+Individuo 0 Energy 9.0
+Individuo 1 Energy 15.0
+Individuo 2 Energy 10.0
+Individuo 3 Energy 6.0
+Individuo 4 Energy 8.0
+Individuo 5 Energy 1.0
+Individuo 6 Energy 2.0
+Individuo 7 Energy 4.0
+Individuo 8 Energy 9.0
+Individuo 9 Energy 17.0
+GENERATION 0
+Individuo 0 Energy 10.0
+Individuo 1 Energy 7.0
+Individuo 2 Energy 3.0
+Individuo 3 Energy 5.0
+Individuo 4 Energy 18.0
+Individuo 5 Energy 7.0
+Individuo 6 Energy 17.0
+Individuo 7 Energy 5.0
+Individuo 8 Energy 15.0
+Individuo 9 Energy 15.0
+GENERATION 1
+Individuo 0 Energy 17.0
+Individuo 1 Energy 0.0
+Individuo 2 Energy 5.0
+Individuo 3 Energy 15.0
+Individuo 4 Energy 7.0
+Individuo 5 Energy 4.0
+Individuo 6 Energy 11.0
+Individuo 7 Energy 5.0
+Individuo 8 Energy 15.0
+Individuo 9 Energy 8.0

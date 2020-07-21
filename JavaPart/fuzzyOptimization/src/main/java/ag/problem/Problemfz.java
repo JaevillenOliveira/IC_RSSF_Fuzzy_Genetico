@@ -14,7 +14,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
@@ -34,7 +33,6 @@ public final class Problemfz extends AbstractDoubleProblem{
     private BufferedWriter bw;
     private BufferedReader br;
     private StringTokenizer st;
-
     
     /**
      *
@@ -55,7 +53,6 @@ public final class Problemfz extends AbstractDoubleProblem{
         this.setNumberOfSets(numberOfSets);
         this.setSetshape(setShape);
         this.rdm = new Random();
-        
     }
  
     /**
@@ -65,32 +62,28 @@ public final class Problemfz extends AbstractDoubleProblem{
     @Override
     public void evaluate(DoubleSolution s) {
         try {
-            System.out.println("It's here");
-            //this.writeTriangSolution(s, "/home/jaevillen/IC/Buffer/TempSolution.txt");
+            this.writeSolution(s, "/home/jaevillen/IC/Buffer/TempSolution.txt");
             
-            //ProcessBuilder processBuilder = new ProcessBuilder("/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/runSimulation.sh");
-            //processBuilder.inheritIO();
-            //Process process = processBuilder.start();
-            //process.waitFor(); //Waits for the simulation to finish
-            
-            System.out.println("It has finished");
+            ProcessBuilder processBuilder = new ProcessBuilder("/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/runSimulation.sh");
+            processBuilder.inheritIO();
+            Process process = processBuilder.start();
+            process.waitFor(); //Waits for the simulation to finish
             
             double energyConsumed = 0;
             energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc1.txt");
             energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc2.txt");
             
-            s.setObjective(0, energyConsumed);
-            
-            System.exit(0);
+            s.setObjective(0, energyConsumed);           
+            //System.exit(0);
         } catch (IOException ex) {
             Logger.getLogger(Problemfz.class.getName()).log(Level.SEVERE, null, ex);
-        //} catch (InterruptedException ex) {
-          //  Logger.getLogger(Problemfz.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Problemfz.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     private double getEnergyConsumed(String filePath) throws FileNotFoundException, IOException{
-        this.br = this.br = new BufferedReader(new FileReader(filePath));
+        this.br = new BufferedReader(new FileReader(filePath));
         this.st = new StringTokenizer(br.readLine().replaceAll("[{\\\\:\"}]", ""));
         double energyConsumed = 0;
         while(st.hasMoreTokens()){
@@ -115,7 +108,7 @@ public final class Problemfz extends AbstractDoubleProblem{
     * Writes a singular solution into a file that will be read by the fuzzy controller (matlab)
     * to be used in a simulation (Omnet++)
     */
-    private void writeTriangSolution(DoubleSolution s, String filePath) throws IOException{
+    public void writeSolution(DoubleSolution s, String filePath) throws IOException{
         this.bw = new BufferedWriter(new FileWriter(filePath));
         int v = this.getNumberOfSets() * this.getSetshape().getNumPoints();
         int index = 0;
@@ -127,7 +120,6 @@ public final class Problemfz extends AbstractDoubleProblem{
             }
         }
         this.bw.close();
-        
     }
 
 
