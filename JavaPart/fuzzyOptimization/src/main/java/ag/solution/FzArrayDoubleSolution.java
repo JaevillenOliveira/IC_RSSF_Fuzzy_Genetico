@@ -21,6 +21,14 @@ public class FzArrayDoubleSolution extends ArrayDoubleSolution implements Clonea
     public FzArrayDoubleSolution(DoubleProblem problem) {
         super(problem);
     }
+    
+    public FzArrayDoubleSolution(FzArrayDoubleSolution fz){
+        super(fz.problem);
+        int index = 0;
+        for(Double d : fz.getVariables()){
+            this.setVariableValue(index++, d);
+        }
+    }
 
 
     @Override
@@ -30,12 +38,12 @@ public class FzArrayDoubleSolution extends ArrayDoubleSolution implements Clonea
 
     @Override
     public org.uma.jmetal.solution.Solution copy() {
-        try {
-            return (Solution) super.clone();
-        } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(FzArrayDoubleSolution.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+//        try {
+//            return (Solution) super.clone();
+//        } catch (CloneNotSupportedException ex) {
+//            Logger.getLogger(FzArrayDoubleSolution.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        return new FzArrayDoubleSolution(this);
     }
 
     @Override

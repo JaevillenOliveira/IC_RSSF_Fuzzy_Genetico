@@ -15,9 +15,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import operators.Crossover;
+import operators.FzTournamentSelection;
 import operators.Mutation;
 import operators.Selection;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 /**
@@ -43,7 +45,7 @@ public class Algorithm extends AbstractGeneticAlgorithm{
         this.setMaxPopulationSize(maxPopulationSize-1);
         this.iterations = 0; 
         this.maxIterations = maxIterations;
-        this.selectionOperator = new Selection(6);
+        this.selectionOperator = new FzTournamentSelection(3);
         this.crossoverOperator = new Crossover(0.7);//new FzSetsBLXAlphaCrossover(0.7, problem);
         this.mutationOperator = new Mutation(0.4);   //new FzSetsMutation(0.7, new Random(), problem);
         this.evaluator = new SequentialSolutionListEvaluator();
@@ -75,36 +77,35 @@ public class Algorithm extends AbstractGeneticAlgorithm{
         bw.close();
     }
     
-    private void logEvolution(List solutionList) throws IOException{   
-        BufferedWriter bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/EvolutionLog.txt", true)); 
-        Iterator it = solutionList.iterator();
-        int subjectCounter = 0;
-        bw.write("GENERATION " + this.iterations);
-        bw.newLine();
-        while(it.hasNext()){
-            FzArrayDoubleSolution sol = (FzArrayDoubleSolution) it.next();
-            System.out.println(sol.getObjective(0));
-            bw.write("Individuo "+ subjectCounter++ + " Energy "+sol.getObjective(0));
+    private void writeBestSolution(String filePath) throws IOException{   
+        BufferedWriter bw = new BufferedWriter(new FileWriter(filePath)); 
+        FzArrayDoubleSolution sol = (FzArrayDoubleSolution) getResult();
+        bw.write("Best Individuo | Energy "+ sol.getObjective(0));
+        int v = ((Problemfz) this.problem).getNumberOfSets() * ((Problemfz) this.problem).getSetshape().getNumPoints();
+        int index = 0;
+        for(int i = 0; i < sol.getNumberOfVariables(); i+=v){
             bw.newLine();
+            for (int j = 0; j < v; j++){
+                double point = sol.getVariableValue(index++);
+                bw.write(point + " ");
+            }
         }
         bw.close();
     }
     
-    /*
-        This method was overwritten because there were a problem with the original one:
-        If the selection operator were to return ONE best solution, this method would return a list
-        (in the size of the total number of solutions) filled with the same assumed best solution;
-        If selection operator were to return a list ranked by the best solutions, this method would 
-        return a list (in the size of the total number of solutions) filled with a bunch of lists 
-        containing the ranked solutions.
-    
-     * @param population
-     * @return
-     */
-
-    @Override
-    protected List selection(List population) {
-        return (List) selectionOperator.execute(population);
+    private void logEvolution(List solutionList) throws IOException{   
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/EvolutionLog.txt", true))) {
+            Iterator it = solutionList.iterator();
+            int subjectCounter = 0;
+            bw.write("GENERATION " + this.iterations);
+            bw.newLine();
+            while(it.hasNext()){
+                FzArrayDoubleSolution sol = (FzArrayDoubleSolution) it.next();
+                System.out.println(sol.getObjective(0));
+                bw.write("Individuo "+ subjectCounter++ + " Energy "+sol.getObjective(0));
+                bw.newLine();
+            }
+        }
     }
     
     /**
@@ -115,22 +116,24 @@ public class Algorithm extends AbstractGeneticAlgorithm{
     public void run(FzArrayDoubleSolution modelSolution) throws IOException{
         List<FzArrayDoubleSolution> offspringPopulation;
         List<FzArrayDoubleSolution> matingPopulation;
+        Iterator it;
 
         population = this.createInitialPopulation();//This inherited method creates 'maxPopulationSize' new subjects
         population.add(0, modelSolution);
         setMaxPopulationSize(this.maxPopulationSize+1);  //It's declared twice because one subject is already saved in the file, therefore it just needs to create maxPopulationSize -1 new subjects
-        population = evaluatePopulation(this.getPopulation());
+        population = evaluatePopulation(population);
         this.logEvolution(population);
         System.out.println("GENERATION "+this.iterations);
         initProgress();
         
         while(!this.isStoppingConditionReached()){
-            matingPopulation = selection(population);            
+            matingPopulation = selection(population); 
             offspringPopulation = this.reproduction(matingPopulation);
             offspringPopulation = evaluatePopulation(offspringPopulation);
             population = replacement(population, offspringPopulation);
             this.logEvolution(population);
             System.out.println("GENERATION "+this.iterations);
+            this.writeBestSolution("/home/jaevillen/IC/Buffer/BestSolution.txt");
             updateProgress();
         }
     }

@@ -74,8 +74,8 @@ public final class Problemfz extends AbstractDoubleProblem{
             energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc2.txt");
             
             s.setObjective(0, energyConsumed);       
-            System.out.println("Evaluated");
-            //System.exit(0);
+            System.out.println("Evaluated " + s.getObjective(0));
+//            System.exit(0);
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(Problemfz.class.getName()).log(Level.SEVERE, null, ex);
         }
