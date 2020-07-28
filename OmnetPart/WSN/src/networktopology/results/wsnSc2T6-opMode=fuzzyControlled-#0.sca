@@ -1,14 +1,14 @@
 version 2
-run wsnSc2T6-0-20200721-17:19:35-54640
+run wsnSc2T6-0-20200728-04:03:13-731160
 attr configname wsnSc2T6
-attr datetime 20200721-17:19:35
+attr datetime 20200728-04:03:13
 attr experiment wsnSc2T6
 attr inifile wsnSc2.ini
 attr iterationvars "$opMode=\"fuzzyControlled\""
 attr iterationvarsf opMode=fuzzyControlled-
 attr measurement "$opMode=\"fuzzyControlled\""
 attr network Sc2
-attr processid 54640
+attr processid 731160
 attr repetition 0
 attr replication #0
 attr resultdir results
