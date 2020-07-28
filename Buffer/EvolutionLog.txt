@@ -1,88 +1,176 @@
-GENERATION  0
-Individuo 0   Energy - 3.0
-Individuo 1   Energy - 14.0
-Individuo 2   Energy - 19.0
-Individuo 3   Energy - 5.0
-Individuo 4   Energy - 16.0
-Individuo 5   Energy - 10.0
-Individuo 6   Energy - 12.0
-Individuo 7   Energy - 3.0
-Individuo 8   Energy - 12.0
-Individuo 9   Energy - 13.0
-GENERATION  1
-Individuo 0   Energy - 15.0
-Individuo 1   Energy - 13.0
-Individuo 2   Energy - 16.0
-Individuo 3   Energy - 18.0
-Individuo 4   Energy - 1.0
-Individuo 5   Energy - 9.0
-Individuo 6   Energy - 8.0
-Individuo 7   Energy - 1.0
-Individuo 8   Energy - 11.0
-Individuo 9   Energy - 2.0
 GENERATION 0
-Individuo 0 Energy 6.0
-Individuo 1 Energy 9.0
-Individuo 2 Energy 19.0
-Individuo 3 Energy 8.0
-Individuo 4 Energy 10.0
-Individuo 5 Energy 14.0
-Individuo 6 Energy 16.0
-Individuo 7 Energy 18.0
-Individuo 8 Energy 7.0
-Individuo 9 Energy 4.0
+Individuo 0 Energy 39.976674328259016
+Individuo 1 Energy 39.976674328259016
+Individuo 2 Energy 39.976674328259016
+Individuo 3 Energy 39.976674328259016
+Individuo 4 Energy 39.976674328259016
+Individuo 5 Energy 39.976674328259016
+Individuo 6 Energy 39.976674328259016
+Individuo 7 Energy 39.87452212774305
+Individuo 8 Energy 39.976674328259016
+Individuo 9 Energy 39.976674328259016
 GENERATION 1
-Individuo 0 Energy 19.0
-Individuo 1 Energy 9.0
-Individuo 2 Energy 12.0
-Individuo 3 Energy 1.0
-Individuo 4 Energy 5.0
-Individuo 5 Energy 7.0
-Individuo 6 Energy 7.0
-Individuo 7 Energy 10.0
-Individuo 8 Energy 0.0
-Individuo 9 Energy 8.0
+Individuo 0 Energy 39.82295304394326
+Individuo 1 Energy 39.82431056014447
+Individuo 2 Energy 39.87452212774305
+Individuo 3 Energy 39.87452212774305
+Individuo 4 Energy 39.976674328259016
+Individuo 5 Energy 39.976674328259016
+Individuo 6 Energy 39.976674328259016
+Individuo 7 Energy 39.976674328259016
+Individuo 8 Energy 39.976674328259016
+Individuo 9 Energy 39.976674328259016
+GENERATION 2
+Individuo 0 Energy 39.82295304394326
+Individuo 1 Energy 39.82295304394326
+Individuo 2 Energy 39.82431056014447
+Individuo 3 Energy 39.82431056014447
+Individuo 4 Energy 39.87452212774305
+Individuo 5 Energy 39.87452212774305
+Individuo 6 Energy 39.87452212774305
+Individuo 7 Energy 39.87452212774305
+Individuo 8 Energy 39.976674328259016
+Individuo 9 Energy 39.976674328259016
+GENERATION 3
+Individuo 0 Energy 39.82295304394326
+Individuo 1 Energy 39.82295304394326
+Individuo 2 Energy 39.82295304394326
+Individuo 3 Energy 39.82295304394326
+Individuo 4 Energy 39.82431056014447
+Individuo 5 Energy 39.82431056014447
+Individuo 6 Energy 39.82431056014447
+Individuo 7 Energy 39.82431056014447
+Individuo 8 Energy 39.87452212774305
+Individuo 9 Energy 39.87452212774305
+GENERATION 4
+Individuo 0 Energy 39.82295304394326
+Individuo 1 Energy 39.82295304394326
+Individuo 2 Energy 39.82295304394326
+Individuo 3 Energy 39.82295304394326
+Individuo 4 Energy 39.82295304394326
+Individuo 5 Energy 39.82295304394326
+Individuo 6 Energy 39.82295304394326
+Individuo 7 Energy 39.82431056014447
+Individuo 8 Energy 39.82431056014447
+Individuo 9 Energy 39.82431056014447
+GENERATION 5
+Individuo 0 Energy 39.82295304394326
+Individuo 1 Energy 39.82295304394326
+Individuo 2 Energy 39.82295304394326
+Individuo 3 Energy 39.82295304394326
+Individuo 4 Energy 39.82295304394326
+Individuo 5 Energy 39.82295304394326
+Individuo 6 Energy 39.82295304394326
+Individuo 7 Energy 39.82295304394326
+Individuo 8 Energy 39.82295304394326
+Individuo 9 Energy 39.82295304394326
+GENERATION 6
+Individuo 0 Energy 39.82295304394326
+Individuo 1 Energy 39.82295304394326
+Individuo 2 Energy 39.82295304394326
+Individuo 3 Energy 39.82295304394326
+Individuo 4 Energy 39.82295304394326
+Individuo 5 Energy 39.82295304394326
+Individuo 6 Energy 39.82295304394326
+Individuo 7 Energy 39.82295304394326
+Individuo 8 Energy 39.82295304394326
+Individuo 9 Energy 39.82295304394326
+GENERATION 7
+Individuo 0 Energy 39.82295304394326
+Individuo 1 Energy 39.82295304394326
+Individuo 2 Energy 39.82295304394326
+Individuo 3 Energy 39.82295304394326
+Individuo 4 Energy 39.82295304394326
+Individuo 5 Energy 39.82295304394326
+Individuo 6 Energy 39.82295304394326
+Individuo 7 Energy 39.82295304394326
+Individuo 8 Energy 39.82295304394326
+Individuo 9 Energy 39.82295304394326
+GENERATION 8
+Individuo 0 Energy 39.82295304394326
+Individuo 1 Energy 39.82295304394326
+Individuo 2 Energy 39.82295304394326
+Individuo 3 Energy 39.82295304394326
+Individuo 4 Energy 39.82295304394326
+Individuo 5 Energy 39.82295304394326
+Individuo 6 Energy 39.82295304394326
+Individuo 7 Energy 39.82295304394326
+Individuo 8 Energy 39.82295304394326
+Individuo 9 Energy 39.82295304394326
+GENERATION 9
+Individuo 0 Energy 39.82295304394326
+Individuo 1 Energy 39.82295304394326
+Individuo 2 Energy 39.82295304394326
+Individuo 3 Energy 39.82295304394326
+Individuo 4 Energy 39.82295304394326
+Individuo 5 Energy 39.82295304394326
+Individuo 6 Energy 39.82295304394326
+Individuo 7 Energy 39.82295304394326
+Individuo 8 Energy 39.82295304394326
+Individuo 9 Energy 39.82295304394326
 GENERATION 0
-Individuo 0 Energy 6.0
-Individuo 1 Energy 18.0
-Individuo 2 Energy 5.0
-Individuo 3 Energy 15.0
-Individuo 4 Energy 9.0
-Individuo 5 Energy 12.0
-Individuo 6 Energy 2.0
-Individuo 7 Energy 8.0
-Individuo 8 Energy 13.0
-Individuo 9 Energy 8.0
+Individuo 0 Energy 39.82295304394326
+Individuo 1 Energy 39.82295304394326
+Individuo 2 Energy 39.82295304394326
+Individuo 3 Energy 39.82295304394326
+Individuo 4 Energy 39.82295304394326
+Individuo 5 Energy 39.82295304394326
+Individuo 6 Energy 39.82295304394326
+Individuo 7 Energy 39.82295304394326
+Individuo 8 Energy 39.82295304394326
+Individuo 9 Energy 39.82295304394326
 GENERATION 1
-Individuo 0 Energy 9.0
-Individuo 1 Energy 15.0
-Individuo 2 Energy 10.0
-Individuo 3 Energy 6.0
-Individuo 4 Energy 8.0
-Individuo 5 Energy 1.0
-Individuo 6 Energy 2.0
-Individuo 7 Energy 4.0
-Individuo 8 Energy 9.0
-Individuo 9 Energy 17.0
-GENERATION 0
-Individuo 0 Energy 10.0
-Individuo 1 Energy 7.0
-Individuo 2 Energy 3.0
-Individuo 3 Energy 5.0
-Individuo 4 Energy 18.0
-Individuo 5 Energy 7.0
-Individuo 6 Energy 17.0
-Individuo 7 Energy 5.0
-Individuo 8 Energy 15.0
-Individuo 9 Energy 15.0
-GENERATION 1
-Individuo 0 Energy 17.0
-Individuo 1 Energy 0.0
-Individuo 2 Energy 5.0
-Individuo 3 Energy 15.0
-Individuo 4 Energy 7.0
-Individuo 5 Energy 4.0
-Individuo 6 Energy 11.0
-Individuo 7 Energy 5.0
-Individuo 8 Energy 15.0
-Individuo 9 Energy 8.0
+Individuo 0 Energy 39.82295304394326
+Individuo 1 Energy 39.82295304394326
+Individuo 2 Energy 39.82295304394326
+Individuo 3 Energy 39.82295304394326
+Individuo 4 Energy 39.82295304394326
+Individuo 5 Energy 39.82295304394326
+Individuo 6 Energy 39.82295304394326
+Individuo 7 Energy 39.82295304394326
+Individuo 8 Energy 39.82295304394326
+Individuo 9 Energy 39.82295304394326
+GENERATION 2
+Individuo 0 Energy 39.82295304394326
+Individuo 1 Energy 39.82295304394326
+Individuo 2 Energy 39.82295304394326
+Individuo 3 Energy 39.82295304394326
+Individuo 4 Energy 39.82295304394326
+Individuo 5 Energy 39.82295304394326
+Individuo 6 Energy 39.82295304394326
+Individuo 7 Energy 39.82295304394326
+Individuo 8 Energy 39.82295304394326
+Individuo 9 Energy 39.82295304394326
+GENERATION 3
+Individuo 0 Energy 39.82295304394326
+Individuo 1 Energy 39.82295304394326
+Individuo 2 Energy 39.82295304394326
+Individuo 3 Energy 39.82295304394326
+Individuo 4 Energy 39.82295304394326
+Individuo 5 Energy 39.82295304394326
+Individuo 6 Energy 39.82295304394326
+Individuo 7 Energy 39.82295304394326
+Individuo 8 Energy 39.82295304394326
+Individuo 9 Energy 39.82295304394326
+GENERATION 4
+Individuo 0 Energy 39.82295304394326
+Individuo 1 Energy 39.82295304394326
+Individuo 2 Energy 39.82295304394326
+Individuo 3 Energy 39.82295304394326
+Individuo 4 Energy 39.82295304394326
+Individuo 5 Energy 39.82295304394326
+Individuo 6 Energy 39.82295304394326
+Individuo 7 Energy 39.82295304394326
+Individuo 8 Energy 39.82295304394326
+Individuo 9 Energy 39.82295304394326
+GENERATION 5
+Individuo 0 Energy 39.82295304394326
+Individuo 1 Energy 39.82295304394326
+Individuo 2 Energy 39.82295304394326
+Individuo 3 Energy 39.82295304394326
+Individuo 4 Energy 39.82295304394326
+Individuo 5 Energy 39.82295304394326
+Individuo 6 Energy 39.82295304394326
+Individuo 7 Energy 39.82295304394326
+Individuo 8 Energy 39.82295304394326
+Individuo 9 Energy 39.82295304394326
