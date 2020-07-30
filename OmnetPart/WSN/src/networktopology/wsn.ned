@@ -102,7 +102,7 @@ network Sc1
             @display("p=954.1125,1161.3187;r=791,,,1");
         }
         sink1: WirelessHost {
-            @display("p=1103.4937,1166.1375;is=s");
+            @display("p=1098.6749,1185.4125;is=s");
         }
         sink2: WirelessHost {
             @display("p=1643.1937,1166.1375;is=s");

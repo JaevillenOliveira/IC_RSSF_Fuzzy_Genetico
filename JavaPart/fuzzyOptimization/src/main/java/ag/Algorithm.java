@@ -19,7 +19,6 @@ import operators.FzTournamentSelection;
 import operators.Mutation;
 import operators.Selection;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 /**
@@ -29,25 +28,24 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 public class Algorithm extends AbstractGeneticAlgorithm{
     
     private int iterations;
-    private int maxIterations;
+    private int noChangeCounter;
+    private double bestFit;
     private SequentialSolutionListEvaluator evaluator;
       
     /**
      *
      * @param problem
      * @param maxPopulationSize
-     * @param maxIterations
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public Algorithm(Problemfz problem, int maxPopulationSize, int maxIterations) throws FileNotFoundException, IOException {
+    public Algorithm(Problemfz problem, int maxPopulationSize) throws FileNotFoundException, IOException {
         super(problem);         
-        this.setMaxPopulationSize(maxPopulationSize-1);
+        this.setMaxPopulationSize(maxPopulationSize);   //(maxPopulationSize-1);
         this.iterations = 0; 
-        this.maxIterations = maxIterations;
         this.selectionOperator = new FzTournamentSelection(3);
         this.crossoverOperator = new Crossover(0.7);//new FzSetsBLXAlphaCrossover(0.7, problem);
-        this.mutationOperator = new Mutation(0.4);   //new FzSetsMutation(0.7, new Random(), problem);
+        this.mutationOperator = new Mutation(0.1);   //new FzSetsMutation(0.7, new Random(), problem);
         this.evaluator = new SequentialSolutionListEvaluator();
     }
 
@@ -116,24 +114,23 @@ public class Algorithm extends AbstractGeneticAlgorithm{
     public void run(FzArrayDoubleSolution modelSolution) throws IOException{
         List<FzArrayDoubleSolution> offspringPopulation;
         List<FzArrayDoubleSolution> matingPopulation;
-        Iterator it;
 
         population = this.createInitialPopulation();//This inherited method creates 'maxPopulationSize' new subjects
         population.add(0, modelSolution);
         setMaxPopulationSize(this.maxPopulationSize+1);  //It's declared twice because one subject is already saved in the file, therefore it just needs to create maxPopulationSize -1 new subjects
         population = evaluatePopulation(population);
         this.logEvolution(population);
-        System.out.println("GENERATION "+this.iterations);
+        System.out.println("GENERATION "+this.iterations+ " NoChangeCounter "+this.noChangeCounter);
         initProgress();
-        
         while(!this.isStoppingConditionReached()){
             matingPopulation = selection(population); 
             offspringPopulation = this.reproduction(matingPopulation);
             offspringPopulation = evaluatePopulation(offspringPopulation);
             population = replacement(population, offspringPopulation);
             this.logEvolution(population);
-            System.out.println("GENERATION "+this.iterations);
+            System.out.println("GENERATION "+this.iterations+ " NoChangeCounter "+this.noChangeCounter);
             this.writeBestSolution("/home/jaevillen/IC/Buffer/BestSolution.txt");
+            this.writePopulation("/home/jaevillen/IC/Buffer/FittestGeneration.txt");
             updateProgress();
         }
     }
@@ -141,18 +138,27 @@ public class Algorithm extends AbstractGeneticAlgorithm{
     @Override
     protected void initProgress() {
         this.iterations = 1;
+        this.noChangeCounter = 0;
     }
 
     @Override
     protected void updateProgress() {
         this.iterations++;
+        double newFit = (double)((FzArrayDoubleSolution) population.get(0)).getObjective(0);
+        if(this.bestFit > newFit){
+            this.bestFit = newFit;
+            this.noChangeCounter = 0;
+        }else{
+            this.noChangeCounter++;
+        }
     }
 
     @Override
     protected boolean isStoppingConditionReached() {
-        return iterations >= maxIterations;
+        return noChangeCounter >= 10 || this.iterations >= 50;
     }
 
+    
     @Override
     protected List evaluatePopulation(List list) {
         return this.evaluator.evaluate(list, problem);

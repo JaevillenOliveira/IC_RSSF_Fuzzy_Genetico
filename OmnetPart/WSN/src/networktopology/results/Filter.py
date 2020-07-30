@@ -47,33 +47,47 @@ for i in range(1, 3):
 	with open('/home/jaevillen/IC/Buffer/power_consumption_sc'+str(i)+'.txt', 'w') as outfile:
 		json.dump(y, outfile)
 
-	#results.to_csv('outSc'+str(i)+'.csv')
+#	results.to_csv('outSc'+str(i)+'.csv')
 
-	#ax = plt.gca()
+#	ax = plt.cla() 
+#	ax = plt.gca()
 
-	# results.plot(kind='line',y='PacketsLost(%)', ax=ax)
-	# results.plot(kind='line',y='PacketsLostFLC(%)', color='red', ax=ax)
-	# results.plot(kind='line',y='PacketsLostRO(%)', color='green', ax=ax)
-	# plt.title('Packet Loss Sc'+str(i))
-	# plt.savefig('DataOut/Sc'+str(i)+'PacketsLossGraphic.png')
+#	results.plot(kind='line',y='PacketsLost(%)',label='Always On', ax=ax)
+#	results.plot(kind='line',y='PacketsLostRO(%)', label='Random OFF', color='green', ax=ax)
+#	results.plot(kind='line',y='PacketsLostFLC(%)', label='Fuzzy Controlled', color='red', ax=ax)
+#	plt.ylabel('Perda de pacotes (%)')
+#	plt.title('Perda de pacotes Cenário'+str(i))
+#	plt.savefig('DataOut/Sc'+str(i)+'PacketsLossGraphic.png')
+	
+#	ax = plt.cla() 
+#	ax = plt.gca()
 
-	# results.plot(kind='line',y='Jitter', ax=ax)
-	# results.plot(kind='line',y='JitterFLC', color='red', ax=ax)
-	# results.plot(kind='line',y='JitterRO', color='green', ax=ax)
-	# plt.title('Jitter Sc2')
-	# plt.savefig('DataOut/Sc'+str(i)+'JitterGraphic.png')
+#	results.plot(kind='line',y='Jitter', label='Always On',ax=ax)
+#	results.plot(kind='line',y='JitterRO', label='Random OFF', color='green', ax=ax)
+#	results.plot(kind='line',y='JitterFLC', label='Fuzzy Controlled', color='red', ax=ax)
+#	plt.ylabel('Jitter (s)')
+#	plt.title('Jitter Cenário'+str(i))
+#	plt.savefig('DataOut/Sc'+str(i)+'JitterGraphic.png')
+	
+#	ax = plt.cla() 
+#	ax = plt.gca()
 
-	# results.plot(kind='line',y='Latency', ax=ax)
-	# results.plot(kind='line',y='LatencyFLC', color='red', ax=ax)
-	# results.plot(kind='line',y='LatencyRO', color='green', ax=ax)
-	# plt.title('Latency Sc2')
-	# plt.savefig('DataOut/Sc'+str(i)+'LatencyGraphic.png')
+#	results.plot(kind='line',y='Latency', label='Always On',ax=ax)
+#	results.plot(kind='line',y='LatencyRO', label='Random OFF', color='green', ax=ax)
+#	results.plot(kind='line',y='LatencyFLC', label='Fuzzy Controlled', color='red', ax=ax)
+#	plt.ylabel('Latência (s)')
+#	plt.title('Latência Cenário'+str(i))	
+#	plt.savefig('DataOut/Sc'+str(i)+'LatencyGraphic.png')
+	
+#	ax = plt.cla() 
+#	ax = plt.gca()
 
-	# results.plot(kind='line',y='PowerConsumed(W)', ax=ax)
-	# results.plot(kind='line',y='PowerConsumedFLC(W)', color='red', ax=ax)
-	# results.plot(kind='line',y='PowerConsumedRO(W)', color='green', ax=ax)
-	# plt.title('Power Consumption Sc2')
-	# plt.savefig('DataOut/Sc'+str(i)+'PowerConsumptionGraphic.png')
+#	results.plot(kind='line',y='PowerConsumed(W)', label='Always On',ax=ax)
+#	results.plot(kind='line',y='PowerConsumedRO(W)', label='Random OFF', color='green', ax=ax)
+#	results.plot(kind='line',y='PowerConsumedFLC(W)', label='Fuzzy Controlled', color='red', ax=ax)
+#	plt.ylabel('Potência consumida (W)')
+#	plt.title('Potência consumida Cenário'+str(i))	
+#	plt.savefig('DataOut/Sc'+str(i)+'PowerConsumptionGraphic.png')
 
 
 
