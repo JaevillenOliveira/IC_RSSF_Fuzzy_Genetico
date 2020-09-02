@@ -22,7 +22,7 @@ def ao_simulation_filter(wsn, run, scenario):
 
         totalPkSentCount.append(sum(packetSentCount.value))
         totalPkReceivedCount.append(sum(packetReceivedCount.value))
-        packetLoss.append((totalPkSentCount[i-1] - totalPkReceivedCount[i-1]) * 100 / totalPkSentCount[i-1])
+        #packetLoss.append((totalPkSentCount[i-1] - totalPkReceivedCount[i-1]) * 100 / totalPkSentCount[i-1])
 
 
         residualEnergy = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-2')) & (wsn.type=='scalar') & 

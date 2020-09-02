@@ -1,14 +1,14 @@
 version 2
-run wsnSc1T1-0-20200728-03:41:01-728461
+run wsnSc1T1-0-20200824-14:38:18-11360
 attr configname wsnSc1T1
-attr datetime 20200728-03:41:01
+attr datetime 20200824-14:38:18
 attr experiment wsnSc1T1
 attr inifile wsnSc1.ini
 attr iterationvars "$opMode=\"fuzzyControlled\""
 attr iterationvarsf opMode=fuzzyControlled-
 attr measurement "$opMode=\"fuzzyControlled\""
 attr network Sc1
-attr processid 728461
+attr processid 11360
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -36,7 +36,6 @@ param *.sensor7.sinkAddress "\"sink1\""
 param *.sensor7.app[0].sendInterval 1.171875s
 param **.arp.typename "\"GlobalArp\""
 param **.netmaskRoutes "\"\""
-param *.*.wlan[*].mac.mtu 9375Byte
 param *.ap*.wlan[*].mgmt.beaconInterval 0.05s
 param *.ap*.hasStatus true
 param *.ap*.energyStorage.typename "\"SimpleEpEnergyStorage\""
@@ -65,14 +64,14 @@ param *.ap*.wlan[*].radio.displayCommunicationRange true
 param *.controller.opMode "\"fuzzyControlled\""
 param *.sensor*.app[0].messageLength 1500Byte
 
-scalar Sc1.radioMedium.propagation "Arrival computation count" 245472
-scalar Sc1.radioMedium "transmission count" 20456
-scalar Sc1.radioMedium "signal send count" 245472
-scalar Sc1.radioMedium "reception computation count" 225359
-scalar Sc1.radioMedium "interference computation count" 673148
-scalar Sc1.radioMedium "reception decision computation count" 135093
-scalar Sc1.radioMedium "listening decision computation count" 315433
-scalar Sc1.radioMedium "reception cache hit" 83.315429076562
+scalar Sc1.radioMedium.propagation "Arrival computation count" 151272
+scalar Sc1.radioMedium "transmission count" 12606
+scalar Sc1.radioMedium "signal send count" 151272
+scalar Sc1.radioMedium "reception computation count" 126810
+scalar Sc1.radioMedium "interference computation count" 378266
+scalar Sc1.radioMedium "reception decision computation count" 71573
+scalar Sc1.radioMedium "listening decision computation count" 183720
+scalar Sc1.radioMedium "reception cache hit" 83.491827927594
 attr unit %
 scalar Sc1.radioMedium "interference cache hit" 66.666666666667
 attr unit %
@@ -100,25 +99,25 @@ scalar Sc1.sensor1.lo[0].lo passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.sensor1.wlan[0].agent dropConfirm:count 0
+scalar Sc1.sensor1.wlan[0].agent dropConfirm:count 595
 attr title "dropped confirms, count"
-scalar Sc1.sensor1.wlan[0].agent acceptConfirm:count 6
+scalar Sc1.sensor1.wlan[0].agent acceptConfirm:count 3
 attr title "accepted confirms, count"
-scalar Sc1.sensor1.wlan[0].agent sentRequest:count 6
+scalar Sc1.sensor1.wlan[0].agent sentRequest:count 599
 attr title "sent requests, count"
-scalar Sc1.sensor1.wlan[0].mac rcvdPkFromLl:count 8113
+scalar Sc1.sensor1.wlan[0].mac rcvdPkFromLl:count 754
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, count"
-scalar Sc1.sensor1.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 961402
+scalar Sc1.sensor1.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 32620
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, sum(packetBytes)"
-scalar Sc1.sensor1.wlan[0].mac sentDownPk:count 32
+scalar Sc1.sensor1.wlan[0].mac sentDownPk:count 620
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, count"
-scalar Sc1.sensor1.wlan[0].mac sentDownPk:sum(packetBytes) 11200
+scalar Sc1.sensor1.wlan[0].mac sentDownPk:sum(packetBytes) 30140
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, sum(packetBytes)"
@@ -138,19 +137,19 @@ scalar Sc1.sensor1.wlan[0].mac passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.sensor1.wlan[0].mac packetDropIncorrectlyReceived:count 431
+scalar Sc1.sensor1.wlan[0].mac packetDropIncorrectlyReceived:count 2
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, count"
-scalar Sc1.sensor1.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 169970
+scalar Sc1.sensor1.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 96
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, sum(packetBytes)"
-scalar Sc1.sensor1.wlan[0].mac packetDropNotAddressedToUs:count 2826
+scalar Sc1.sensor1.wlan[0].mac packetDropNotAddressedToUs:count 67
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, count"
-scalar Sc1.sensor1.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 558728
+scalar Sc1.sensor1.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 9372
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, sum(packetBytes)"
@@ -162,20 +161,20 @@ scalar Sc1.sensor1.wlan[0].mac packetDropQueueOverflow:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetDropReasonIsQueueOverflow(packetDropped)
 attr title "packet drop: queue overflow, sum(packetBytes)"
-scalar Sc1.sensor1.wlan[0].mac packetDropRetryLimitReached:count 1
+scalar Sc1.sensor1.wlan[0].mac packetDropRetryLimitReached:count 2
 attr interpolationmode none
 attr source packetDropReasonIsRetryLimitReached(packetDropped)
 attr title "packet drop: retry limit reached, count"
-scalar Sc1.sensor1.wlan[0].mac packetDropRetryLimitReached:sum(packetBytes) 30
+scalar Sc1.sensor1.wlan[0].mac packetDropRetryLimitReached:sum(packetBytes) 1530
 attr interpolationmode none
 attr source packetDropReasonIsRetryLimitReached(packetDropped)
 attr title "packet drop: retry limit reached, sum(packetBytes)"
-scalar Sc1.sensor1.wlan[0].mac linkBroken:count 1
+scalar Sc1.sensor1.wlan[0].mac linkBroken:count 2
 attr interpolationmode none
 attr source linkBroken
 attr title "link break, count"
 statistic Sc1.sensor1.wlan[0].radio radioChannel:histogram
-field count 7
+field count 600
 field mean 0
 field stddev 0
 field min 0
@@ -211,7 +210,7 @@ bin	-0.08	0
 bin	-0.06	0
 bin	-0.04	0
 bin	-0.02	0
-bin	0	7
+bin	0	600
 bin	0.02	0
 bin	0.04	0
 bin	0.06	0
@@ -237,30 +236,30 @@ bin	0.44	0
 bin	0.46	0
 bin	0.48	0
 bin	0.5	0
-scalar Sc1.sensor1.wlan[0].radio radioMode:count 67
+scalar Sc1.sensor1.wlan[0].radio radioMode:count 1243
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Sc1.sensor1.wlan[0].radio receptionState:count 17628
+scalar Sc1.sensor1.wlan[0].radio receptionState:count 3549
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
-scalar Sc1.sensor1.wlan[0].radio transmissionState:count 128
+scalar Sc1.sensor1.wlan[0].radio transmissionState:count 2480
 attr interpolationmode sample-hold
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
 statistic Sc1.sensor1.wlan[0].radio minSnir:histogram
-field count 8113
-field mean 642.32491239285
-field stddev 169.10626671735
+field count 754
+field mean 627.9532287722
+field stddev 80.70685449929
 field min 0.63476156709119
 field max 795.74380265701
-field sum 5211182.0142432
-field sqrsum 3579250322.4042
+field sum 473476.73449424
+field sqrsum 302225982.23564
 attr source minimumSnir(packetSentToUpper)
 attr title "Min SNIR, histogram"
 bin	-inf	0
-bin	0	523
+bin	0	5
 bin	20	0
 bin	40	0
 bin	60	0
@@ -281,7 +280,7 @@ bin	340	0
 bin	360	0
 bin	380	0
 bin	400	0
-bin	420	65
+bin	420	62
 bin	440	0
 bin	460	0
 bin	480	0
@@ -292,9 +291,9 @@ bin	560	0
 bin	580	0
 bin	600	0
 bin	620	0
-bin	640	0
+bin	640	606
 bin	660	0
-bin	680	7513
+bin	680	69
 bin	700	0
 bin	720	0
 bin	740	0
@@ -312,18 +311,18 @@ bin	960	0
 bin	980	0
 bin	1000	0
 statistic Sc1.sensor1.wlan[0].radio packetErrorRate:histogram
-field count 8113
-field mean 0.053124987716068
-field stddev 0.22429567874942
+field count 754
+field mean 0.0026525198997765
+field stddev 0.051468410613572
 field min 0
 field max 1
-field sum 431.00302534046
-field sqrsum 431.00000024075
+field sum 2.0000000044315
+field sqrsum 2
 attr source packetErrorRate(packetSentToUpper)
 attr title "Packet error rate, histogram"
 bin	-inf	0
-bin	0	7682
-bin	1	431
+bin	0	752
+bin	1	2
 bin	2	0
 statistic Sc1.sensor1.wlan[0].radio bitErrorRate:histogram
 field count 0
@@ -479,11 +478,11 @@ scalar Sc1.sensor2.wlan[0].agent acceptConfirm:count 3
 attr title "accepted confirms, count"
 scalar Sc1.sensor2.wlan[0].agent sentRequest:count 3
 attr title "sent requests, count"
-scalar Sc1.sensor2.wlan[0].mac rcvdPkFromLl:count 18123
+scalar Sc1.sensor2.wlan[0].mac rcvdPkFromLl:count 10449
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, count"
-scalar Sc1.sensor2.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 2832310
+scalar Sc1.sensor2.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 1724788
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, sum(packetBytes)"
@@ -511,19 +510,19 @@ scalar Sc1.sensor2.wlan[0].mac passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.sensor2.wlan[0].mac packetDropIncorrectlyReceived:count 1131
+scalar Sc1.sensor2.wlan[0].mac packetDropIncorrectlyReceived:count 695
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, count"
-scalar Sc1.sensor2.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 704556
+scalar Sc1.sensor2.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 157502
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, sum(packetBytes)"
-scalar Sc1.sensor2.wlan[0].mac packetDropNotAddressedToUs:count 6751
+scalar Sc1.sensor2.wlan[0].mac packetDropNotAddressedToUs:count 3668
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, count"
-scalar Sc1.sensor2.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 1646028
+scalar Sc1.sensor2.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 1294504
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, sum(packetBytes)"
@@ -614,7 +613,7 @@ scalar Sc1.sensor2.wlan[0].radio radioMode:count 35
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Sc1.sensor2.wlan[0].radio receptionState:count 38184
+scalar Sc1.sensor2.wlan[0].radio receptionState:count 23190
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
@@ -623,27 +622,27 @@ attr interpolationmode sample-hold
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
 statistic Sc1.sensor2.wlan[0].radio minSnir:histogram
-field count 18123
-field mean 693.97360906049
-field stddev 517.32898309346
-field min 0.44642343504144
+field count 10449
+field mean 686.90561275324
+field stddev 576.70066197056
+field min 0.55600905084194
 field max 4033.5718454157
-field sum 12576883.717003
-field sqrsum 13578003137.059
+field sum 7177476.7476586
+field sqrsum 8405083075.3211
 attr source minimumSnir(packetSentToUpper)
 attr title "Min SNIR, histogram"
 bin	-inf	0
-bin	0	1275
+bin	0	705
 bin	100	0
 bin	200	0
 bin	300	0
-bin	400	6855
+bin	400	7010
 bin	500	0
-bin	600	6997
-bin	700	23
-bin	800	429
-bin	900	0
-bin	1000	682
+bin	600	500
+bin	700	13
+bin	800	353
+bin	900	606
+bin	1000	0
 bin	1100	0
 bin	1200	0
 bin	1300	0
@@ -652,7 +651,7 @@ bin	1500	0
 bin	1600	0
 bin	1700	0
 bin	1800	0
-bin	1900	1797
+bin	1900	1200
 bin	2000	0
 bin	2100	0
 bin	2200	0
@@ -673,7 +672,7 @@ bin	3600	0
 bin	3700	0
 bin	3800	0
 bin	3900	0
-bin	4000	65
+bin	4000	62
 bin	4100	0
 bin	4200	0
 bin	4300	0
@@ -686,18 +685,18 @@ bin	4900	0
 bin	5000	0
 bin	5100	0
 statistic Sc1.sensor2.wlan[0].radio packetErrorRate:histogram
-field count 18123
-field mean 0.058794671404264
-field stddev 0.23338871846575
+field count 10449
+field mean 0.065960379821028
+field stddev 0.24790493914196
 field min 0
 field max 1
-field sum 1065.5358298595
-field sqrsum 1049.7584951703
+field sum 689.22000874992
+field sqrsum 687.56247483241
 attr source packetErrorRate(packetSentToUpper)
 attr title "Packet error rate, histogram"
 bin	-inf	0
-bin	0	17149
-bin	1	974
+bin	0	9762
+bin	1	687
 bin	2	0
 statistic Sc1.sensor2.wlan[0].radio bitErrorRate:histogram
 field count 0
@@ -831,19 +830,19 @@ scalar Sc1.sensor2.app[0] packetSent:sum(packetBytes) 1500
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
-scalar Sc1.ap1.wlan[0].mac rcvdPkFromLl:count 4309
+scalar Sc1.ap1.wlan[0].mac rcvdPkFromLl:count 150
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, count"
-scalar Sc1.ap1.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 1453046
+scalar Sc1.ap1.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 24314
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, sum(packetBytes)"
-scalar Sc1.ap1.wlan[0].mac sentDownPk:count 7198
+scalar Sc1.ap1.wlan[0].mac sentDownPk:count 71
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, count"
-scalar Sc1.ap1.wlan[0].mac sentDownPk:sum(packetBytes) 939056
+scalar Sc1.ap1.wlan[0].mac sentDownPk:sum(packetBytes) 4376
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, sum(packetBytes)"
@@ -863,19 +862,19 @@ scalar Sc1.ap1.wlan[0].mac passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.ap1.wlan[0].mac packetDropIncorrectlyReceived:count 288
+scalar Sc1.ap1.wlan[0].mac packetDropIncorrectlyReceived:count 10
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, count"
-scalar Sc1.ap1.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 394866
+scalar Sc1.ap1.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 12184
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, sum(packetBytes)"
-scalar Sc1.ap1.wlan[0].mac packetDropNotAddressedToUs:count 1098
+scalar Sc1.ap1.wlan[0].mac packetDropNotAddressedToUs:count 62
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, count"
-scalar Sc1.ap1.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 358864
+scalar Sc1.ap1.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 7724
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, sum(packetBytes)"
@@ -962,40 +961,40 @@ bin	0.44	0
 bin	0.46	0
 bin	0.48	0
 bin	0.5	0
-scalar Sc1.ap1.wlan[0].radio radioMode:count 14399
+scalar Sc1.ap1.wlan[0].radio radioMode:count 146
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Sc1.ap1.wlan[0].radio receptionState:count 23195
+scalar Sc1.ap1.wlan[0].radio receptionState:count 458
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
-scalar Sc1.ap1.wlan[0].radio transmissionState:count 28792
+scalar Sc1.ap1.wlan[0].radio transmissionState:count 284
 attr interpolationmode sample-hold
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
 statistic Sc1.ap1.wlan[0].radio minSnir:histogram
-field count 4309
-field mean 1771.2516931572
-field stddev 3057.3356229132
+field count 150
+field mean 1265.9814700174
+field stddev 2253.7301642244
 field min 0.53276270994318
-field max 8758.9789932269
-field sum 7632323.5458143
-field sqrsum 53786939190.012
+field max 9109.3434979415
+field sum 189897.22050261
+field sqrsum 997222010.68119
 attr source minimumSnir(packetSentToUpper)
 attr title "Min SNIR, histogram"
 bin	-inf	0
-bin	0	645
-bin	200	427
-bin	400	2226
-bin	600	100
+bin	0	14
+bin	200	10
+bin	400	21
+bin	600	84
 bin	800	0
 bin	1000	0
 bin	1200	0
 bin	1400	0
 bin	1600	0
 bin	1800	0
-bin	2000	229
+bin	2000	10
 bin	2200	0
 bin	2400	0
 bin	2600	0
@@ -1028,9 +1027,9 @@ bin	7800	0
 bin	8000	0
 bin	8200	0
 bin	8400	0
-bin	8600	682
+bin	8600	0
 bin	8800	0
-bin	9000	0
+bin	9000	11
 bin	9200	0
 bin	9400	0
 bin	9600	0
@@ -1041,14 +1040,16 @@ bin	10400	0
 bin	10600	0
 bin	10800	0
 bin	11000	0
+bin	11200	0
+bin	11400	0
 statistic Sc1.ap1.wlan[0].radio packetErrorRate:histogram
-field count 4309
-field mean 0.040808221178633
-field stddev 0.16943046675993
+field count 150
+field mean 0.062922529882484
+field stddev 0.2401883166399
 field min 0
 field max 1
-field sum 175.84262505873
-field sqrsum 130.84421538645
+field sum 9.4383794823726
+field sqrsum 9.1897604051177
 attr source packetErrorRate(packetSentToUpper)
 attr title "Packet error rate, histogram"
 bin	-inf	0
@@ -1077,7 +1078,7 @@ bin	-0.08	0
 bin	-0.06	0
 bin	-0.04	0
 bin	-0.02	0
-bin	0	4021
+bin	0	140
 bin	0.02	0
 bin	0.04	0
 bin	0.06	0
@@ -1086,19 +1087,19 @@ bin	0.1	0
 bin	0.12	0
 bin	0.14	0
 bin	0.16	0
-bin	0.18	1
+bin	0.18	0
 bin	0.2	0
 bin	0.22	0
 bin	0.24	0
-bin	0.26	20
+bin	0.26	0
 bin	0.28	0
 bin	0.3	0
 bin	0.32	0
 bin	0.34	0
 bin	0.36	0
-bin	0.38	64
+bin	0.38	0
 bin	0.4	0
-bin	0.42	102
+bin	0.42	1
 bin	0.44	0
 bin	0.46	0
 bin	0.48	0
@@ -1126,8 +1127,8 @@ bin	0.9	0
 bin	0.92	0
 bin	0.94	0
 bin	0.96	0
-bin	0.98	29
-bin	1	72
+bin	0.98	2
+bin	1	7
 bin	1.02	0
 statistic Sc1.ap1.wlan[0].radio bitErrorRate:histogram
 field count 0
@@ -1155,7 +1156,7 @@ attr title "Symbol error rate, histogram"
 bin	-inf	0
 bin	0	0
 bin	1	0
-scalar Sc1.ap1.energyStorage residualEnergyCapacity:last 877.92051018325
+scalar Sc1.ap1.energyStorage residualEnergyCapacity:last 998.976372
 attr interpolationmode linear
 attr source residualEnergyCapacityChanged
 attr title "Residual energy capacity, last"
@@ -1175,25 +1176,25 @@ scalar Sc1.sink1.lo[0].lo passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.sink1.wlan[0].agent dropConfirm:count 0
+scalar Sc1.sink1.wlan[0].agent dropConfirm:count 594
 attr title "dropped confirms, count"
 scalar Sc1.sink1.wlan[0].agent acceptConfirm:count 3
 attr title "accepted confirms, count"
-scalar Sc1.sink1.wlan[0].agent sentRequest:count 3
+scalar Sc1.sink1.wlan[0].agent sentRequest:count 598
 attr title "sent requests, count"
-scalar Sc1.sink1.wlan[0].mac rcvdPkFromLl:count 10672
+scalar Sc1.sink1.wlan[0].mac rcvdPkFromLl:count 2438
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, count"
-scalar Sc1.sink1.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 2380332
+scalar Sc1.sink1.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 470668
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, sum(packetBytes)"
-scalar Sc1.sink1.wlan[0].mac sentDownPk:count 835
+scalar Sc1.sink1.wlan[0].mac sentDownPk:count 606
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, count"
-scalar Sc1.sink1.wlan[0].mac sentDownPk:sum(packetBytes) 11770
+scalar Sc1.sink1.wlan[0].mac sentDownPk:sum(packetBytes) 19274
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, sum(packetBytes)"
@@ -1205,27 +1206,27 @@ scalar Sc1.sink1.wlan[0].mac rcvdPkFromHl:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, sum(packetBytes)"
-scalar Sc1.sink1.wlan[0].mac passedUpPk:count 413
+scalar Sc1.sink1.wlan[0].mac passedUpPk:count 1
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, count"
-scalar Sc1.sink1.wlan[0].mac passedUpPk:sum(packetBytes) 634368
+scalar Sc1.sink1.wlan[0].mac passedUpPk:sum(packetBytes) 1536
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.sink1.wlan[0].mac packetDropIncorrectlyReceived:count 294
+scalar Sc1.sink1.wlan[0].mac packetDropIncorrectlyReceived:count 616
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, count"
-scalar Sc1.sink1.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 402414
+scalar Sc1.sink1.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 34512
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, sum(packetBytes)"
-scalar Sc1.sink1.wlan[0].mac packetDropNotAddressedToUs:count 4102
+scalar Sc1.sink1.wlan[0].mac packetDropNotAddressedToUs:count 1131
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, count"
-scalar Sc1.sink1.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 1068596
+scalar Sc1.sink1.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 411250
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, sum(packetBytes)"
@@ -1250,7 +1251,7 @@ attr interpolationmode none
 attr source linkBroken
 attr title "link break, count"
 statistic Sc1.sink1.wlan[0].radio radioChannel:histogram
-field count 4
+field count 599
 field mean 0
 field stddev 0
 field min 0
@@ -1286,7 +1287,7 @@ bin	-0.08	0
 bin	-0.06	0
 bin	-0.04	0
 bin	-0.02	0
-bin	0	4
+bin	0	599
 bin	0.02	0
 bin	0.04	0
 bin	0.06	0
@@ -1312,45 +1313,45 @@ bin	0.44	0
 bin	0.46	0
 bin	0.48	0
 bin	0.5	0
-scalar Sc1.sink1.wlan[0].radio radioMode:count 1673
+scalar Sc1.sink1.wlan[0].radio radioMode:count 1215
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Sc1.sink1.wlan[0].radio receptionState:count 23195
+scalar Sc1.sink1.wlan[0].radio receptionState:count 6710
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
-scalar Sc1.sink1.wlan[0].radio transmissionState:count 3340
+scalar Sc1.sink1.wlan[0].radio transmissionState:count 2424
 attr interpolationmode sample-hold
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
 statistic Sc1.sink1.wlan[0].radio minSnir:histogram
-field count 10672
-field mean 5841.4264613523
-field stddev 3907.2295004454
-field min 0.14552031681377
-field max 8758.9789932269
-field sum 62339703.195552
-field sqrsum 527060998360.55
+field count 2438
+field mean 766.51786438747
+field stddev 1476.9999997343
+field min 0.13512006356437
+field max 9109.3434979415
+field sum 1868770.5533767
+field sqrsum 6748832184.6918
 attr source minimumSnir(packetSentToUpper)
 attr title "Min SNIR, histogram"
 bin	-inf	0
-bin	0	859
+bin	0	703
 bin	200	0
-bin	400	427
-bin	600	1820
-bin	800	429
-bin	1000	12
-bin	1200	65
+bin	400	13
+bin	600	1213
+bin	800	365
+bin	1000	0
+bin	1200	62
 bin	1400	0
 bin	1600	0
 bin	1800	0
 bin	2000	0
 bin	2200	0
 bin	2400	0
-bin	2600	229
+bin	2600	0
 bin	2800	0
-bin	3000	0
+bin	3000	13
 bin	3200	0
 bin	3400	0
 bin	3600	0
@@ -1378,9 +1379,9 @@ bin	7800	0
 bin	8000	0
 bin	8200	0
 bin	8400	0
-bin	8600	6831
+bin	8600	0
 bin	8800	0
-bin	9000	0
+bin	9000	69
 bin	9200	0
 bin	9400	0
 bin	9600	0
@@ -1391,19 +1392,21 @@ bin	10400	0
 bin	10600	0
 bin	10800	0
 bin	11000	0
+bin	11200	0
+bin	11400	0
 statistic Sc1.sink1.wlan[0].radio packetErrorRate:histogram
-field count 10672
-field mean 0.023610535330823
-field stddev 0.14115222428153
+field count 2438
+field mean 0.25213457828795
+field stddev 0.4337431881397
 field min 0
 field max 1
-field sum 251.97163305054
-field sqrsum 218.55766007232
+field sum 614.70410186601
+field sqrsum 613.46865398461
 attr source packetErrorRate(packetSentToUpper)
 attr title "Packet error rate, histogram"
 bin	-inf	0
-bin	0	10613
-bin	1	59
+bin	0	1827
+bin	1	611
 bin	2	0
 statistic Sc1.sink1.wlan[0].radio bitErrorRate:histogram
 field count 0
@@ -1479,11 +1482,11 @@ scalar Sc1.sink1.ipv4.ip packetDropUndefined:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetDropReasonIsUndefined(packetDropped)
 attr title "packet drop: undefined, sum(packetBytes)"
-scalar Sc1.sink1.udp packetReceived:count 413
+scalar Sc1.sink1.udp packetReceived:count 1
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, count"
-scalar Sc1.sink1.udp packetReceived:sum(packetBytes) 622804
+scalar Sc1.sink1.udp packetReceived:sum(packetBytes) 1508
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
@@ -1495,7 +1498,7 @@ scalar Sc1.sink1.udp packetSent:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
-scalar Sc1.sink1.udp passedUpPk:count 413
+scalar Sc1.sink1.udp passedUpPk:count 1
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed up, count"
@@ -1507,150 +1510,95 @@ scalar Sc1.sink1.udp droppedPkBadChecksum:count 0
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-scalar Sc1.sink1.app[0] packetReceived:count 413
+scalar Sc1.sink1.app[0] packetReceived:count 1
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, count"
-scalar Sc1.sink1.app[0] packetReceived:sum(packetBytes) 619500
+scalar Sc1.sink1.app[0] packetReceived:sum(packetBytes) 1500
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
 statistic Sc1.sink1.app[0] endToEndDelay:histogram
-field count 413
-field mean 0.012822375774424
-field stddev 0.0081186728079139
-field min 0.003010601658
-field max 0.046743494729
-field sum 5.295641194837
-field sqrsum 0.095058794809446
+field count 1
+field mean 0.019542211451
+field stddev -nan
+field min 0.019542211451
+field max 0.019542211451
+field sum 0.019542211451
+field sqrsum 0.0003818980283956
 attr interpolationmode none
 attr source dataAge(packetReceived)
 attr title "end-to-end delay, histogram"
 attr unit s
 bin	-inf	0
 bin	0	0
-bin	0.001	0
-bin	0.002	0
-bin	0.003	67
-bin	0.004	0
-bin	0.005	30
-bin	0.006	32
-bin	0.007	13
-bin	0.008	18
-bin	0.009	9
-bin	0.01	22
-bin	0.011	27
-bin	0.012	24
-bin	0.013	16
-bin	0.014	12
-bin	0.015	21
-bin	0.016	12
-bin	0.017	10
-bin	0.018	14
-bin	0.019	16
-bin	0.02	10
-bin	0.021	7
-bin	0.022	10
-bin	0.023	4
-bin	0.024	7
-bin	0.025	5
-bin	0.026	5
-bin	0.027	3
-bin	0.028	2
-bin	0.029	0
-bin	0.03	1
-bin	0.031	2
-bin	0.032	3
-bin	0.033	1
-bin	0.034	3
-bin	0.035	0
-bin	0.036	3
-bin	0.037	1
-bin	0.038	0
-bin	0.039	0
+bin	0.01	1
+bin	0.02	0
+bin	0.03	0
 bin	0.04	0
-bin	0.041	0
-bin	0.042	1
-bin	0.043	1
-bin	0.044	0
-bin	0.045	0
-bin	0.046	1
-bin	0.047	0
-bin	0.048	0
-bin	0.049	0
 bin	0.05	0
-bin	0.051	0
-bin	0.052	0
-bin	0.053	0
-bin	0.054	0
-bin	0.055	0
-bin	0.056	0
-bin	0.057	0
-bin	0.058	0
+bin	0.06	0
+bin	0.07	0
+bin	0.08	0
+bin	0.09	0
+bin	0.1	0
+bin	0.11	0
+bin	0.12	0
+bin	0.13	0
+bin	0.14	0
+bin	0.15	0
+bin	0.16	0
+bin	0.17	0
+bin	0.18	0
+bin	0.19	0
+bin	0.2	0
+bin	0.21	0
+bin	0.22	0
+bin	0.23	0
+bin	0.24	0
+bin	0.25	0
+bin	0.26	0
+bin	0.27	0
+bin	0.28	0
+bin	0.29	0
+bin	0.3	0
+bin	0.31	0
+bin	0.32	0
+bin	0.33	0
+bin	0.34	0
+bin	0.35	0
+bin	0.36	0
+bin	0.37	0
+bin	0.38	0
+bin	0.39	0
+bin	0.4	0
+bin	0.41	0
+bin	0.42	0
+bin	0.43	0
+bin	0.44	0
+bin	0.45	0
+bin	0.46	0
+bin	0.47	0
+bin	0.48	0
+bin	0.49	0
+bin	0.5	0
+bin	0.51	0
+bin	0.52	0
 statistic Sc1.sink1.app[0] jitter:histogram
-field count 412
-field mean 0.0070400768699854
-field stddev 0.0068518202643614
-field min 7.5801728e-05
-field max 0.039864913728
-field sum 2.900511670434
-field sqrsum 0.039715223346477
+field count 0
+field mean -nan
+field stddev -nan
+field min -nan
+field max -nan
+field sum 0
+field sqrsum 0
 attr interpolationmode none
 attr source jitter(packetReceived)
 attr title "jitter, histogram"
 attr unit s
 bin	-inf	0
-bin	0	47
-bin	0.001	50
-bin	0.002	17
-bin	0.003	85
-bin	0.004	21
-bin	0.005	16
-bin	0.006	28
-bin	0.007	17
-bin	0.008	19
-bin	0.009	13
-bin	0.01	10
-bin	0.011	9
-bin	0.012	9
-bin	0.013	11
-bin	0.014	6
-bin	0.015	13
-bin	0.016	6
-bin	0.017	6
-bin	0.018	5
-bin	0.019	3
-bin	0.02	2
-bin	0.021	3
-bin	0.022	4
-bin	0.023	1
-bin	0.024	0
-bin	0.025	0
-bin	0.026	2
-bin	0.027	1
-bin	0.028	1
-bin	0.029	0
-bin	0.03	0
-bin	0.031	2
-bin	0.032	2
-bin	0.033	0
-bin	0.034	0
-bin	0.035	0
-bin	0.036	0
-bin	0.037	1
-bin	0.038	0
-bin	0.039	2
-bin	0.04	0
-bin	0.041	0
-bin	0.042	0
-bin	0.043	0
-bin	0.044	0
-bin	0.045	0
-bin	0.046	0
-bin	0.047	0
-bin	0.048	0
-bin	0.049	0
-bin	0.05	0
+bin	0	0
+bin	1	0
 scalar Sc1.sink2.lo[0].lo rcvdPkFromHl:count 0
 attr interpolationmode none
 attr source packetReceivedFromUpper
@@ -1673,19 +1621,19 @@ scalar Sc1.sink2.wlan[0].agent acceptConfirm:count 3
 attr title "accepted confirms, count"
 scalar Sc1.sink2.wlan[0].agent sentRequest:count 598
 attr title "sent requests, count"
-scalar Sc1.sink2.wlan[0].mac rcvdPkFromLl:count 17437
+scalar Sc1.sink2.wlan[0].mac rcvdPkFromLl:count 10078
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, count"
-scalar Sc1.sink2.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 3153916
+scalar Sc1.sink2.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 1727530
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, sum(packetBytes)"
-scalar Sc1.sink2.wlan[0].mac sentDownPk:count 1821
+scalar Sc1.sink2.wlan[0].mac sentDownPk:count 1200
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, count"
-scalar Sc1.sink2.wlan[0].mac sentDownPk:sum(packetBytes) 36284
+scalar Sc1.sink2.wlan[0].mac sentDownPk:sum(packetBytes) 27590
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, sum(packetBytes)"
@@ -1697,27 +1645,27 @@ scalar Sc1.sink2.wlan[0].mac rcvdPkFromHl:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, sum(packetBytes)"
-scalar Sc1.sink2.wlan[0].mac passedUpPk:count 1
+scalar Sc1.sink2.wlan[0].mac passedUpPk:count 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, count"
-scalar Sc1.sink2.wlan[0].mac passedUpPk:sum(packetBytes) 1536
+scalar Sc1.sink2.wlan[0].mac passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.sink2.wlan[0].mac packetDropIncorrectlyReceived:count 1200
+scalar Sc1.sink2.wlan[0].mac packetDropIncorrectlyReceived:count 625
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, count"
-scalar Sc1.sink2.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 696576
+scalar Sc1.sink2.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 51090
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, sum(packetBytes)"
-scalar Sc1.sink2.wlan[0].mac packetDropNotAddressedToUs:count 5376
+scalar Sc1.sink2.wlan[0].mac packetDropNotAddressedToUs:count 3367
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, count"
-scalar Sc1.sink2.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 1934786
+scalar Sc1.sink2.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 1394102
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, sum(packetBytes)"
@@ -1804,35 +1752,35 @@ bin	0.44	0
 bin	0.46	0
 bin	0.48	0
 bin	0.5	0
-scalar Sc1.sink2.wlan[0].radio radioMode:count 3645
+scalar Sc1.sink2.wlan[0].radio radioMode:count 2403
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Sc1.sink2.wlan[0].radio receptionState:count 39095
+scalar Sc1.sink2.wlan[0].radio receptionState:count 23242
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
-scalar Sc1.sink2.wlan[0].radio transmissionState:count 7284
+scalar Sc1.sink2.wlan[0].radio transmissionState:count 4800
 attr interpolationmode sample-hold
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
 statistic Sc1.sink2.wlan[0].radio minSnir:histogram
-field count 17437
-field mean 788.9182890652
-field stddev 730.68869553373
-field min 0.35304683655411
+field count 10078
+field mean 1102.6178158296
+field stddev 788.95224905609
+field min 0.4539331504398
 field max 8342.7093995517
-field sum 13756368.20643
-field sqrsum 20161834958.265
+field sum 11112182.34793
+field sqrsum 18524875057.631
 attr source minimumSnir(packetSentToUpper)
 attr title "Min SNIR, histogram"
 bin	-inf	0
-bin	0	1401
+bin	0	711
 bin	200	0
-bin	400	7488
-bin	600	1417
+bin	400	95
+bin	600	1848
 bin	800	0
-bin	1000	6625
+bin	1000	6997
 bin	1200	0
 bin	1400	0
 bin	1600	0
@@ -1843,7 +1791,7 @@ bin	2400	0
 bin	2600	0
 bin	2800	0
 bin	3000	0
-bin	3200	429
+bin	3200	353
 bin	3400	0
 bin	3600	0
 bin	3800	0
@@ -1868,7 +1816,7 @@ bin	7400	0
 bin	7600	0
 bin	7800	0
 bin	8000	0
-bin	8200	65
+bin	8200	62
 bin	8400	0
 bin	8600	0
 bin	8800	0
@@ -1881,13 +1829,13 @@ bin	10000	0
 bin	10200	0
 bin	10400	0
 statistic Sc1.sink2.wlan[0].radio packetErrorRate:histogram
-field count 17437
-field mean 0.067448102288311
-field stddev 0.25033840403145
+field count 10078
+field mean 0.061813241941242
+field stddev 0.24069187080309
 field min 0
 field max 1
-field sum 1176.0925596013
-field sqrsum 1172.0274143301
+field sum 622.95385228383
+field sqrsum 622.29337230001
 attr source packetErrorRate(packetSentToUpper)
 attr title "Packet error rate, histogram"
 bin	-inf	0
@@ -1916,9 +1864,9 @@ bin	-0.08	0
 bin	-0.06	0
 bin	-0.04	0
 bin	-0.02	0
-bin	0	16229
-bin	0.02	26
-bin	0.04	2
+bin	0	9451
+bin	0.02	2
+bin	0.04	0
 bin	0.06	0
 bin	0.08	0
 bin	0.1	0
@@ -1930,7 +1878,7 @@ bin	0.2	0
 bin	0.22	0
 bin	0.24	0
 bin	0.26	0
-bin	0.28	2
+bin	0.28	1
 bin	0.3	0
 bin	0.32	0
 bin	0.34	0
@@ -1962,11 +1910,11 @@ bin	0.84	0
 bin	0.86	0
 bin	0.88	0
 bin	0.9	0
-bin	0.92	25
+bin	0.92	0
 bin	0.94	0
-bin	0.96	2
-bin	0.98	35
-bin	1	1114
+bin	0.96	0
+bin	0.98	0
+bin	1	622
 bin	1.02	0
 statistic Sc1.sink2.wlan[0].radio bitErrorRate:histogram
 field count 0
@@ -2042,11 +1990,11 @@ scalar Sc1.sink2.ipv4.ip packetDropUndefined:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetDropReasonIsUndefined(packetDropped)
 attr title "packet drop: undefined, sum(packetBytes)"
-scalar Sc1.sink2.udp packetReceived:count 1
+scalar Sc1.sink2.udp packetReceived:count 0
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, count"
-scalar Sc1.sink2.udp packetReceived:sum(packetBytes) 1508
+scalar Sc1.sink2.udp packetReceived:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
@@ -2058,7 +2006,7 @@ scalar Sc1.sink2.udp packetSent:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
-scalar Sc1.sink2.udp passedUpPk:count 1
+scalar Sc1.sink2.udp passedUpPk:count 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed up, count"
@@ -2070,84 +2018,29 @@ scalar Sc1.sink2.udp droppedPkBadChecksum:count 0
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-scalar Sc1.sink2.app[0] packetReceived:count 1
+scalar Sc1.sink2.app[0] packetReceived:count 0
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, count"
-scalar Sc1.sink2.app[0] packetReceived:sum(packetBytes) 1500
+scalar Sc1.sink2.app[0] packetReceived:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
 statistic Sc1.sink2.app[0] endToEndDelay:histogram
-field count 1
-field mean 0.053473497565
+field count 0
+field mean -nan
 field stddev -nan
-field min 0.053473497565
-field max 0.053473497565
-field sum 0.053473497565
-field sqrsum 0.0028594149418341
+field min -nan
+field max -nan
+field sum 0
+field sqrsum 0
 attr interpolationmode none
 attr source dataAge(packetReceived)
 attr title "end-to-end delay, histogram"
 attr unit s
 bin	-inf	0
 bin	0	0
-bin	0.01	0
-bin	0.02	0
-bin	0.03	0
-bin	0.04	0
-bin	0.05	1
-bin	0.06	0
-bin	0.07	0
-bin	0.08	0
-bin	0.09	0
-bin	0.1	0
-bin	0.11	0
-bin	0.12	0
-bin	0.13	0
-bin	0.14	0
-bin	0.15	0
-bin	0.16	0
-bin	0.17	0
-bin	0.18	0
-bin	0.19	0
-bin	0.2	0
-bin	0.21	0
-bin	0.22	0
-bin	0.23	0
-bin	0.24	0
-bin	0.25	0
-bin	0.26	0
-bin	0.27	0
-bin	0.28	0
-bin	0.29	0
-bin	0.3	0
-bin	0.31	0
-bin	0.32	0
-bin	0.33	0
-bin	0.34	0
-bin	0.35	0
-bin	0.36	0
-bin	0.37	0
-bin	0.38	0
-bin	0.39	0
-bin	0.4	0
-bin	0.41	0
-bin	0.42	0
-bin	0.43	0
-bin	0.44	0
-bin	0.45	0
-bin	0.46	0
-bin	0.47	0
-bin	0.48	0
-bin	0.49	0
-bin	0.5	0
-bin	0.51	0
-bin	0.52	0
-bin	0.53	0
-bin	0.54	0
-bin	0.55	0
-bin	0.56	0
+bin	1	0
 statistic Sc1.sink2.app[0] jitter:histogram
 field count 0
 field mean -nan
@@ -2163,19 +2056,19 @@ attr unit s
 bin	-inf	0
 bin	0	0
 bin	1	0
-scalar Sc1.ap2.wlan[0].mac rcvdPkFromLl:count 298
+scalar Sc1.ap2.wlan[0].mac rcvdPkFromLl:count 292
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, count"
-scalar Sc1.ap2.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 43900
+scalar Sc1.ap2.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 40922
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, sum(packetBytes)"
-scalar Sc1.ap2.wlan[0].mac sentDownPk:count 66
+scalar Sc1.ap2.wlan[0].mac sentDownPk:count 63
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, count"
-scalar Sc1.ap2.wlan[0].mac sentDownPk:sum(packetBytes) 4312
+scalar Sc1.ap2.wlan[0].mac sentDownPk:sum(packetBytes) 2706
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, sum(packetBytes)"
@@ -2195,19 +2088,19 @@ scalar Sc1.ap2.wlan[0].mac passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.ap2.wlan[0].mac packetDropIncorrectlyReceived:count 14
+scalar Sc1.ap2.wlan[0].mac packetDropIncorrectlyReceived:count 21
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, count"
-scalar Sc1.ap2.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 16654
+scalar Sc1.ap2.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 19958
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, sum(packetBytes)"
-scalar Sc1.ap2.wlan[0].mac packetDropNotAddressedToUs:count 169
+scalar Sc1.ap2.wlan[0].mac packetDropNotAddressedToUs:count 159
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, count"
-scalar Sc1.ap2.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 21082
+scalar Sc1.ap2.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 16328
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, sum(packetBytes)"
@@ -2294,36 +2187,36 @@ bin	0.44	0
 bin	0.46	0
 bin	0.48	0
 bin	0.5	0
-scalar Sc1.ap2.wlan[0].radio radioMode:count 136
+scalar Sc1.ap2.wlan[0].radio radioMode:count 130
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Sc1.ap2.wlan[0].radio receptionState:count 739
+scalar Sc1.ap2.wlan[0].radio receptionState:count 722
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
-scalar Sc1.ap2.wlan[0].radio transmissionState:count 264
+scalar Sc1.ap2.wlan[0].radio transmissionState:count 252
 attr interpolationmode sample-hold
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
 statistic Sc1.ap2.wlan[0].radio minSnir:histogram
-field count 298
-field mean 1138.7048099481
-field stddev 1695.9010831383
+field count 292
+field mean 1077.7593793402
+field stddev 1610.6856410077
 field min 0.1436852423087
 field max 8342.7093995517
-field sum 339334.03336454
-field sqrsum 1240597199.6568
+field sum 314705.73876733
+field sqrsum 1094120757.8259
 attr source minimumSnir(packetSentToUpper)
 attr title "Min SNIR, histogram"
 bin	-inf	0
-bin	0	17
-bin	200	15
-bin	400	43
-bin	600	175
+bin	0	24
+bin	200	13
+bin	400	41
+bin	600	170
 bin	800	0
 bin	1000	0
-bin	1200	13
+bin	1200	11
 bin	1400	0
 bin	1600	0
 bin	1800	0
@@ -2358,7 +2251,7 @@ bin	7400	0
 bin	7600	0
 bin	7800	0
 bin	8000	0
-bin	8200	12
+bin	8200	10
 bin	8400	0
 bin	8600	0
 bin	8800	0
@@ -2371,13 +2264,13 @@ bin	10000	0
 bin	10200	0
 bin	10400	0
 statistic Sc1.ap2.wlan[0].radio packetErrorRate:histogram
-field count 298
-field mean 0.046979865771812
-field stddev 0.21195166432646
+field count 292
+field mean 0.071917808219178
+field stddev 0.25879529271332
 field min 0
 field max 1
-field sum 14
-field sqrsum 14
+field sum 21
+field sqrsum 21
 attr source packetErrorRate(packetSentToUpper)
 attr title "Packet error rate, histogram"
 bin	-inf	0
@@ -2406,7 +2299,7 @@ bin	-0.08	0
 bin	-0.06	0
 bin	-0.04	0
 bin	-0.02	0
-bin	0	284
+bin	0	271
 bin	0.02	0
 bin	0.04	0
 bin	0.06	0
@@ -2456,7 +2349,7 @@ bin	0.92	0
 bin	0.94	0
 bin	0.96	0
 bin	0.98	0
-bin	1	14
+bin	1	21
 bin	1.02	0
 statistic Sc1.ap2.wlan[0].radio bitErrorRate:histogram
 field count 0
@@ -2484,23 +2377,23 @@ attr title "Symbol error rate, histogram"
 bin	-inf	0
 bin	0	0
 bin	1	0
-scalar Sc1.ap2.energyStorage residualEnergyCapacity:last 998.96813399999
+scalar Sc1.ap2.energyStorage residualEnergyCapacity:last 998.97065799999
 attr interpolationmode linear
 attr source residualEnergyCapacityChanged
 attr title "Residual energy capacity, last"
-scalar Sc1.ap3.wlan[0].mac rcvdPkFromLl:count 3789
+scalar Sc1.ap3.wlan[0].mac rcvdPkFromLl:count 2977
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, count"
-scalar Sc1.ap3.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 967658
+scalar Sc1.ap3.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 810514
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, sum(packetBytes)"
-scalar Sc1.ap3.wlan[0].mac sentDownPk:count 7286
+scalar Sc1.ap3.wlan[0].mac sentDownPk:count 7003
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, count"
-scalar Sc1.ap3.wlan[0].mac sentDownPk:sum(packetBytes) 965506
+scalar Sc1.ap3.wlan[0].mac sentDownPk:sum(packetBytes) 896638
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, sum(packetBytes)"
@@ -2520,19 +2413,19 @@ scalar Sc1.ap3.wlan[0].mac passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.ap3.wlan[0].mac packetDropIncorrectlyReceived:count 140
+scalar Sc1.ap3.wlan[0].mac packetDropIncorrectlyReceived:count 96
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, count"
-scalar Sc1.ap3.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 208548
+scalar Sc1.ap3.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 142548
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, sum(packetBytes)"
-scalar Sc1.ap3.wlan[0].mac packetDropNotAddressedToUs:count 637
+scalar Sc1.ap3.wlan[0].mac packetDropNotAddressedToUs:count 37
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, count"
-scalar Sc1.ap3.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 10974
+scalar Sc1.ap3.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 1010
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, sum(packetBytes)"
@@ -2619,35 +2512,35 @@ bin	0.44	0
 bin	0.46	0
 bin	0.48	0
 bin	0.5	0
-scalar Sc1.ap3.wlan[0].radio radioMode:count 14575
+scalar Sc1.ap3.wlan[0].radio radioMode:count 14009
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Sc1.ap3.wlan[0].radio receptionState:count 22325
+scalar Sc1.ap3.wlan[0].radio receptionState:count 21250
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
-scalar Sc1.ap3.wlan[0].radio transmissionState:count 29144
+scalar Sc1.ap3.wlan[0].radio transmissionState:count 28012
 attr interpolationmode sample-hold
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
 statistic Sc1.ap3.wlan[0].radio minSnir:histogram
-field count 3789
-field mean 1963.2760045492
-field stddev 2840.5674621946
+field count 2977
+field mean 3034.4936408457
+field stddev 3448.2234877041
 field min 0.44677838208667
 field max 8758.9672784126
-field sum 7438852.7812369
-field sqrsum 45169224612.347
+field sum 9033687.5687977
+field sqrsum 62798037259.059
 attr source minimumSnir(packetSentToUpper)
 attr title "Min SNIR, histogram"
 bin	-inf	0
-bin	0	750
+bin	0	108
 bin	200	0
 bin	400	12
-bin	600	512
+bin	600	437
 bin	800	0
-bin	1000	1963
+bin	1000	1631
 bin	1200	0
 bin	1400	0
 bin	1600	0
@@ -2685,7 +2578,7 @@ bin	7800	0
 bin	8000	0
 bin	8200	0
 bin	8400	0
-bin	8600	552
+bin	8600	789
 bin	8800	0
 bin	9000	0
 bin	9200	0
@@ -2699,18 +2592,18 @@ bin	10600	0
 bin	10800	0
 bin	11000	0
 statistic Sc1.ap3.wlan[0].radio packetErrorRate:histogram
-field count 3789
-field mean 0.032784048384506
-field stddev 0.1762830228534
+field count 2977
+field mean 0.032159351254087
+field stddev 0.17626873405017
 field min 0
 field max 1
-field sum 124.21875932889
-field sqrsum 121.78716112241
+field sum 95.738388683418
+field sqrsum 95.545188282628
 attr source packetErrorRate(packetSentToUpper)
 attr title "Packet error rate, histogram"
 bin	-inf	0
-bin	0	3681
-bin	1	108
+bin	0	2960
+bin	1	17
 bin	2	0
 statistic Sc1.ap3.wlan[0].radio bitErrorRate:histogram
 field count 0
@@ -2738,7 +2631,7 @@ attr title "Symbol error rate, histogram"
 bin	-inf	0
 bin	0	0
 bin	1	0
-scalar Sc1.ap3.energyStorage residualEnergyCapacity:last 878.2321176689
+scalar Sc1.ap3.energyStorage residualEnergyCapacity:last 878.40878366892
 attr interpolationmode linear
 attr source residualEnergyCapacityChanged
 attr title "Residual energy capacity, last"
@@ -2764,19 +2657,19 @@ scalar Sc1.sink3.wlan[0].agent acceptConfirm:count 3
 attr title "accepted confirms, count"
 scalar Sc1.sink3.wlan[0].agent sentRequest:count 3
 attr title "sent requests, count"
-scalar Sc1.sink3.wlan[0].mac rcvdPkFromLl:count 10187
+scalar Sc1.sink3.wlan[0].mac rcvdPkFromLl:count 9170
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, count"
-scalar Sc1.sink3.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 1914550
+scalar Sc1.sink3.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 1689630
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, sum(packetBytes)"
-scalar Sc1.sink3.wlan[0].mac sentDownPk:count 873
+scalar Sc1.sink3.wlan[0].mac sentDownPk:count 795
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, count"
-scalar Sc1.sink3.wlan[0].mac sentDownPk:sum(packetBytes) 12302
+scalar Sc1.sink3.wlan[0].mac sentDownPk:sum(packetBytes) 11210
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, sum(packetBytes)"
@@ -2788,27 +2681,27 @@ scalar Sc1.sink3.wlan[0].mac rcvdPkFromHl:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, sum(packetBytes)"
-scalar Sc1.sink3.wlan[0].mac passedUpPk:count 432
+scalar Sc1.sink3.wlan[0].mac passedUpPk:count 393
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, count"
-scalar Sc1.sink3.wlan[0].mac passedUpPk:sum(packetBytes) 663552
+scalar Sc1.sink3.wlan[0].mac passedUpPk:sum(packetBytes) 603648
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.sink3.wlan[0].mac packetDropIncorrectlyReceived:count 177
+scalar Sc1.sink3.wlan[0].mac packetDropIncorrectlyReceived:count 93
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, count"
-scalar Sc1.sink3.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 230652
+scalar Sc1.sink3.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 138048
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, sum(packetBytes)"
-scalar Sc1.sink3.wlan[0].mac packetDropNotAddressedToUs:count 3699
+scalar Sc1.sink3.wlan[0].mac packetDropNotAddressedToUs:count 2844
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, count"
-scalar Sc1.sink3.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 744424
+scalar Sc1.sink3.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 674196
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, sum(packetBytes)"
@@ -2895,34 +2788,34 @@ bin	0.44	0
 bin	0.46	0
 bin	0.48	0
 bin	0.5	0
-scalar Sc1.sink3.wlan[0].radio radioMode:count 1749
+scalar Sc1.sink3.wlan[0].radio radioMode:count 1593
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Sc1.sink3.wlan[0].radio receptionState:count 22309
+scalar Sc1.sink3.wlan[0].radio receptionState:count 21236
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
-scalar Sc1.sink3.wlan[0].radio transmissionState:count 3492
+scalar Sc1.sink3.wlan[0].radio transmissionState:count 3180
 attr interpolationmode sample-hold
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
 statistic Sc1.sink3.wlan[0].radio minSnir:histogram
-field count 10187
-field mean 5842.8824320671
-field stddev 3979.5039912719
+field count 9170
+field mean 6822.4504431149
+field stddev 3476.2927478798
 field min 0.4817126954435
 field max 8758.9672784126
-field sum 59521443.335467
-field sqrsum 509086895836.64
+field sum 62561870.563364
+field sqrsum 537629062272.23
 attr source minimumSnir(packetSentToUpper)
 attr title "Min SNIR, histogram"
 bin	-inf	0
-bin	0	1088
-bin	200	494
-bin	400	18
-bin	600	1797
-bin	800	166
+bin	0	105
+bin	200	415
+bin	400	22
+bin	600	1200
+bin	800	431
 bin	1000	0
 bin	1200	0
 bin	1400	0
@@ -2961,7 +2854,7 @@ bin	7800	0
 bin	8000	0
 bin	8200	0
 bin	8400	0
-bin	8600	6624
+bin	8600	6997
 bin	8800	0
 bin	9000	0
 bin	9200	0
@@ -2975,18 +2868,18 @@ bin	10600	0
 bin	10800	0
 bin	11000	0
 statistic Sc1.sink3.wlan[0].radio packetErrorRate:histogram
-field count 10187
-field mean 0.014724390365583
-field stddev 0.11642482636987
+field count 9170
+field mean 0.0090818816461885
+field stddev 0.089855142961795
 field min 0
 field max 1
-field sum 149.9973646542
-field sqrsum 140.27720337984
+field sum 83.280854695548
+field sqrsum 74.78636431102
 attr source packetErrorRate(packetSentToUpper)
 attr title "Packet error rate, histogram"
 bin	-inf	0
-bin	0	10081
-bin	1	106
+bin	0	9155
+bin	1	15
 bin	2	0
 statistic Sc1.sink3.wlan[0].radio bitErrorRate:histogram
 field count 0
@@ -3062,11 +2955,11 @@ scalar Sc1.sink3.ipv4.ip packetDropUndefined:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetDropReasonIsUndefined(packetDropped)
 attr title "packet drop: undefined, sum(packetBytes)"
-scalar Sc1.sink3.udp packetReceived:count 432
+scalar Sc1.sink3.udp packetReceived:count 393
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, count"
-scalar Sc1.sink3.udp packetReceived:sum(packetBytes) 651456
+scalar Sc1.sink3.udp packetReceived:sum(packetBytes) 592644
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
@@ -3078,7 +2971,7 @@ scalar Sc1.sink3.udp packetSent:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
-scalar Sc1.sink3.udp passedUpPk:count 432
+scalar Sc1.sink3.udp passedUpPk:count 393
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed up, count"
@@ -3090,22 +2983,22 @@ scalar Sc1.sink3.udp droppedPkBadChecksum:count 0
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-scalar Sc1.sink3.app[0] packetReceived:count 432
+scalar Sc1.sink3.app[0] packetReceived:count 393
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, count"
-scalar Sc1.sink3.app[0] packetReceived:sum(packetBytes) 648000
+scalar Sc1.sink3.app[0] packetReceived:sum(packetBytes) 589500
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
 statistic Sc1.sink3.app[0] endToEndDelay:histogram
-field count 432
-field mean 0.010756925324704
-field stddev 0.006824890173617
+field count 393
+field mean 0.0095674516085929
+field stddev 0.0065637742604136
 field min 0.003011836842
-field max 0.058402503348
-field sum 4.646991740272
-field sqrsum 0.070062946389734
+field max 0.048816352947
+field sum 3.760008482177
+field sqrsum 0.052862287157461
 attr interpolationmode none
 attr source dataAge(packetReceived)
 attr title "end-to-end delay, histogram"
@@ -3114,52 +3007,52 @@ bin	-inf	0
 bin	0	0
 bin	0.001	0
 bin	0.002	0
-bin	0.003	59
+bin	0.003	98
 bin	0.004	0
-bin	0.005	40
-bin	0.006	60
-bin	0.007	11
-bin	0.008	23
-bin	0.009	41
-bin	0.01	34
-bin	0.011	19
-bin	0.012	23
+bin	0.005	41
+bin	0.006	35
+bin	0.007	3
+bin	0.008	27
+bin	0.009	46
+bin	0.01	18
+bin	0.011	15
+bin	0.012	27
 bin	0.013	17
-bin	0.014	13
-bin	0.015	21
-bin	0.016	18
-bin	0.017	12
-bin	0.018	6
-bin	0.019	6
+bin	0.014	9
+bin	0.015	13
+bin	0.016	7
+bin	0.017	7
+bin	0.018	2
+bin	0.019	5
 bin	0.02	2
-bin	0.021	1
-bin	0.022	4
-bin	0.023	5
-bin	0.024	2
-bin	0.025	2
-bin	0.026	3
-bin	0.027	0
+bin	0.021	2
+bin	0.022	2
+bin	0.023	4
+bin	0.024	0
+bin	0.025	1
+bin	0.026	1
+bin	0.027	2
 bin	0.028	0
-bin	0.029	0
+bin	0.029	1
 bin	0.03	1
 bin	0.031	1
 bin	0.032	1
 bin	0.033	0
 bin	0.034	0
-bin	0.035	0
+bin	0.035	1
 bin	0.036	1
-bin	0.037	1
-bin	0.038	1
+bin	0.037	0
+bin	0.038	0
 bin	0.039	1
 bin	0.04	1
 bin	0.041	0
-bin	0.042	1
+bin	0.042	0
 bin	0.043	0
 bin	0.044	0
 bin	0.045	0
 bin	0.046	0
 bin	0.047	0
-bin	0.048	0
+bin	0.048	1
 bin	0.049	0
 bin	0.05	0
 bin	0.051	0
@@ -3169,71 +3062,59 @@ bin	0.054	0
 bin	0.055	0
 bin	0.056	0
 bin	0.057	0
-bin	0.058	1
+bin	0.058	0
 bin	0.059	0
 bin	0.06	0
 bin	0.061	0
-bin	0.062	0
-bin	0.063	0
-bin	0.064	0
-bin	0.065	0
-bin	0.066	0
-bin	0.067	0
-bin	0.068	0
-bin	0.069	0
-bin	0.07	0
-bin	0.071	0
-bin	0.072	0
-bin	0.073	0
 statistic Sc1.sink3.app[0] jitter:histogram
-field count 431
-field mean 0.0050743074941555
-field stddev 0.0049494087856336
-field min 6.823933e-06
-field max 0.055330666506
-field sum 2.187026529981
-field sqrsum 0.021631203461742
+field count 392
+field mean 0.0038881713969719
+field stddev 0.0045180277524456
+field min 1.8680654e-05
+field max 0.043100516105
+field sum 1.524163187613
+field sqrsum 0.013907524446195
 attr interpolationmode none
 attr source jitter(packetReceived)
 attr title "jitter, histogram"
 attr unit s
 bin	-inf	0
-bin	0	70
-bin	0.001	49
-bin	0.002	25
-bin	0.003	80
-bin	0.004	41
-bin	0.005	36
-bin	0.006	36
-bin	0.007	18
-bin	0.008	11
+bin	0	93
+bin	0.001	65
+bin	0.002	27
+bin	0.003	91
+bin	0.004	18
+bin	0.005	21
+bin	0.006	18
+bin	0.007	16
+bin	0.008	7
 bin	0.009	11
-bin	0.01	14
-bin	0.011	9
-bin	0.012	7
-bin	0.013	7
-bin	0.014	2
-bin	0.015	4
+bin	0.01	8
+bin	0.011	2
+bin	0.012	1
+bin	0.013	4
+bin	0.014	1
+bin	0.015	2
 bin	0.016	1
 bin	0.017	1
-bin	0.018	2
-bin	0.019	1
-bin	0.02	2
-bin	0.021	1
+bin	0.018	0
+bin	0.019	0
+bin	0.02	1
+bin	0.021	0
 bin	0.022	0
 bin	0.023	1
 bin	0.024	0
 bin	0.025	0
 bin	0.026	0
 bin	0.027	0
-bin	0.028	0
+bin	0.028	1
 bin	0.029	0
 bin	0.03	0
 bin	0.031	0
 bin	0.032	0
-bin	0.033	1
+bin	0.033	0
 bin	0.034	0
-bin	0.035	0
+bin	0.035	1
 bin	0.036	0
 bin	0.037	0
 bin	0.038	0
@@ -3241,7 +3122,7 @@ bin	0.039	0
 bin	0.04	0
 bin	0.041	0
 bin	0.042	0
-bin	0.043	0
+bin	0.043	1
 bin	0.044	0
 bin	0.045	0
 bin	0.046	0
@@ -3253,22 +3134,6 @@ bin	0.051	0
 bin	0.052	0
 bin	0.053	0
 bin	0.054	0
-bin	0.055	1
-bin	0.056	0
-bin	0.057	0
-bin	0.058	0
-bin	0.059	0
-bin	0.06	0
-bin	0.061	0
-bin	0.062	0
-bin	0.063	0
-bin	0.064	0
-bin	0.065	0
-bin	0.066	0
-bin	0.067	0
-bin	0.068	0
-bin	0.069	0
-bin	0.07	0
 scalar Sc1.sensor3.lo[0].lo rcvdPkFromHl:count 0
 attr interpolationmode none
 attr source packetReceivedFromUpper
@@ -3291,19 +3156,19 @@ scalar Sc1.sensor3.wlan[0].agent acceptConfirm:count 3
 attr title "accepted confirms, count"
 scalar Sc1.sensor3.wlan[0].agent sentRequest:count 3
 attr title "sent requests, count"
-scalar Sc1.sensor3.wlan[0].mac rcvdPkFromLl:count 11160
+scalar Sc1.sensor3.wlan[0].mac rcvdPkFromLl:count 10124
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, count"
-scalar Sc1.sensor3.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 2194524
+scalar Sc1.sensor3.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 1355278
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, sum(packetBytes)"
-scalar Sc1.sensor3.wlan[0].mac sentDownPk:count 35
+scalar Sc1.sensor3.wlan[0].mac sentDownPk:count 36
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, count"
-scalar Sc1.sensor3.wlan[0].mac sentDownPk:sum(packetBytes) 29350
+scalar Sc1.sensor3.wlan[0].mac sentDownPk:sum(packetBytes) 30850
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, sum(packetBytes)"
@@ -3323,19 +3188,19 @@ scalar Sc1.sensor3.wlan[0].mac passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.sensor3.wlan[0].mac packetDropIncorrectlyReceived:count 893
+scalar Sc1.sensor3.wlan[0].mac packetDropIncorrectlyReceived:count 612
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, count"
-scalar Sc1.sensor3.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 620424
+scalar Sc1.sensor3.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 24038
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, sum(packetBytes)"
-scalar Sc1.sensor3.wlan[0].mac packetDropNotAddressedToUs:count 4814
+scalar Sc1.sensor3.wlan[0].mac packetDropNotAddressedToUs:count 4050
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, count"
-scalar Sc1.sensor3.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 1322574
+scalar Sc1.sensor3.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 1079282
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, sum(packetBytes)"
@@ -3422,30 +3287,30 @@ bin	0.44	0
 bin	0.46	0
 bin	0.48	0
 bin	0.5	0
-scalar Sc1.sensor3.wlan[0].radio radioMode:count 73
+scalar Sc1.sensor3.wlan[0].radio radioMode:count 75
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Sc1.sensor3.wlan[0].radio receptionState:count 23063
+scalar Sc1.sensor3.wlan[0].radio receptionState:count 20930
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
-scalar Sc1.sensor3.wlan[0].radio transmissionState:count 140
+scalar Sc1.sensor3.wlan[0].radio transmissionState:count 144
 attr interpolationmode sample-hold
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
 statistic Sc1.sensor3.wlan[0].radio minSnir:histogram
-field count 11160
-field mean 634.74927455835
-field stddev 243.03304309625
+field count 10124
+field mean 643.15932981423
+field stddev 212.82910361036
 field min 0.51098667204896
 field max 1271.8688130938
-field sum 7083801.9040712
-field sqrsum 5155545124.6729
+field sum 6511345.0550393
+field sqrsum 4646366031.1874
 attr source minimumSnir(packetSentToUpper)
 attr title "Min SNIR, histogram"
 bin	-inf	0
-bin	0	1037
+bin	0	697
 bin	20	0
 bin	40	0
 bin	60	0
@@ -3462,7 +3327,7 @@ bin	260	0
 bin	280	0
 bin	300	0
 bin	320	0
-bin	340	230
+bin	340	13
 bin	360	0
 bin	380	0
 bin	400	0
@@ -3470,22 +3335,22 @@ bin	420	0
 bin	440	0
 bin	460	0
 bin	480	0
-bin	500	551
-bin	520	65
+bin	500	789
+bin	520	62
 bin	540	0
 bin	560	0
 bin	580	0
 bin	600	0
 bin	620	0
 bin	640	0
-bin	660	6624
+bin	660	6997
 bin	680	0
 bin	700	0
 bin	720	0
-bin	740	1797
+bin	740	1200
 bin	760	0
 bin	780	0
-bin	800	427
+bin	800	13
 bin	820	0
 bin	840	0
 bin	860	0
@@ -3508,7 +3373,7 @@ bin	1180	0
 bin	1200	0
 bin	1220	0
 bin	1240	0
-bin	1260	429
+bin	1260	353
 bin	1280	0
 bin	1300	0
 bin	1320	0
@@ -3527,18 +3392,18 @@ bin	1560	0
 bin	1580	0
 bin	1600	0
 statistic Sc1.sensor3.wlan[0].radio packetErrorRate:histogram
-field count 11160
-field mean 0.077985572355314
-field stddev 0.26669874725554
+field count 10124
+field mean 0.06045275682521
+field stddev 0.23833074405801
 field min 0
 field max 1
-field sum 870.3189874853
-field sqrsum 861.59215129941
+field sum 612.02371009842
+field sqrsum 612.00054600855
 attr source packetErrorRate(packetSentToUpper)
 attr title "Packet error rate, histogram"
 bin	-inf	0
-bin	0	10336
-bin	1	824
+bin	0	9512
+bin	1	612
 bin	2	0
 statistic Sc1.sensor3.wlan[0].radio bitErrorRate:histogram
 field count 0
@@ -3694,27 +3559,27 @@ scalar Sc1.sensor4.wlan[0].agent acceptConfirm:count 3
 attr title "accepted confirms, count"
 scalar Sc1.sensor4.wlan[0].agent sentRequest:count 3
 attr title "sent requests, count"
-scalar Sc1.sensor4.wlan[0].mac rcvdPkFromLl:count 10519
+scalar Sc1.sensor4.wlan[0].mac rcvdPkFromLl:count 9434
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, count"
-scalar Sc1.sensor4.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 1423432
+scalar Sc1.sensor4.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 1224500
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, sum(packetBytes)"
-scalar Sc1.sensor4.wlan[0].mac sentDownPk:count 534
+scalar Sc1.sensor4.wlan[0].mac sentDownPk:count 524
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, count"
-scalar Sc1.sensor4.wlan[0].mac sentDownPk:sum(packetBytes) 499066
+scalar Sc1.sensor4.wlan[0].mac sentDownPk:sum(packetBytes) 472802
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, sum(packetBytes)"
-scalar Sc1.sensor4.wlan[0].mac rcvdPkFromHl:count 209
+scalar Sc1.sensor4.wlan[0].mac rcvdPkFromHl:count 216
 attr interpolationmode none
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, count"
-scalar Sc1.sensor4.wlan[0].mac rcvdPkFromHl:sum(packetBytes) 321024
+scalar Sc1.sensor4.wlan[0].mac rcvdPkFromHl:sum(packetBytes) 331776
 attr interpolationmode none
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, sum(packetBytes)"
@@ -3726,19 +3591,19 @@ scalar Sc1.sensor4.wlan[0].mac passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.sensor4.wlan[0].mac packetDropIncorrectlyReceived:count 854
+scalar Sc1.sensor4.wlan[0].mac packetDropIncorrectlyReceived:count 18
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, count"
-scalar Sc1.sensor4.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 393582
+scalar Sc1.sensor4.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 12408
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, sum(packetBytes)"
-scalar Sc1.sensor4.wlan[0].mac packetDropNotAddressedToUs:count 3817
+scalar Sc1.sensor4.wlan[0].mac packetDropNotAddressedToUs:count 3543
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, count"
-scalar Sc1.sensor4.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 772812
+scalar Sc1.sensor4.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 954398
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, sum(packetBytes)"
@@ -3825,30 +3690,30 @@ bin	0.44	0
 bin	0.46	0
 bin	0.48	0
 bin	0.5	0
-scalar Sc1.sensor4.wlan[0].radio radioMode:count 1070
+scalar Sc1.sensor4.wlan[0].radio radioMode:count 1050
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Sc1.sensor4.wlan[0].radio receptionState:count 22266
+scalar Sc1.sensor4.wlan[0].radio receptionState:count 21199
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
-scalar Sc1.sensor4.wlan[0].radio transmissionState:count 2134
+scalar Sc1.sensor4.wlan[0].radio transmissionState:count 2094
 attr interpolationmode sample-hold
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
 statistic Sc1.sensor4.wlan[0].radio minSnir:histogram
-field count 10519
-field mean 832.22360901989
-field stddev 330.67086876764
-field min 0.65954299014194
+field count 9434
+field mean 942.48175036132
+field stddev 185.18463546551
+field min 1.4060061210479
 field max 1039.6217479564
-field sum 8754160.1432802
-field sqrsum 8435490772.6421
+field sum 8891372.8329087
+field sqrsum 8703445793.7964
 attr source minimumSnir(packetSentToUpper)
 attr title "Min SNIR, histogram"
 bin	-inf	0
-bin	0	1040
+bin	0	21
 bin	20	0
 bin	40	0
 bin	60	0
@@ -3864,7 +3729,7 @@ bin	240	0
 bin	260	0
 bin	280	0
 bin	300	0
-bin	320	429
+bin	320	353
 bin	340	0
 bin	360	0
 bin	380	0
@@ -3874,7 +3739,7 @@ bin	440	0
 bin	460	0
 bin	480	0
 bin	500	0
-bin	520	65
+bin	520	62
 bin	540	0
 bin	560	0
 bin	580	0
@@ -3882,13 +3747,13 @@ bin	600	0
 bin	620	0
 bin	640	0
 bin	660	12
-bin	680	1797
+bin	680	1200
 bin	700	0
 bin	720	0
 bin	740	0
 bin	760	0
 bin	780	0
-bin	800	552
+bin	800	789
 bin	820	0
 bin	840	0
 bin	860	0
@@ -3899,7 +3764,7 @@ bin	940	0
 bin	960	0
 bin	980	0
 bin	1000	0
-bin	1020	6624
+bin	1020	6997
 bin	1040	0
 bin	1060	0
 bin	1080	0
@@ -3915,18 +3780,18 @@ bin	1260	0
 bin	1280	0
 bin	1300	0
 statistic Sc1.sensor4.wlan[0].radio packetErrorRate:histogram
-field count 10519
-field mean 0.079682675798986
-field stddev 0.27020270249813
+field count 9434
+field mean 0.001909472483437
+field stddev 0.043641247678221
 field min 0
 field max 1
-field sum 838.18206672954
-field sqrsum 834.70251548318
+field sum 18.013963408745
+field sqrsum 18.000097487682
 attr source packetErrorRate(packetSentToUpper)
 attr title "Packet error rate, histogram"
 bin	-inf	0
-bin	0	9695
-bin	1	824
+bin	0	9416
+bin	1	18
 bin	2	0
 statistic Sc1.sensor4.wlan[0].radio bitErrorRate:histogram
 field count 0
@@ -4010,11 +3875,11 @@ scalar Sc1.sensor4.udp packetReceived:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
-scalar Sc1.sensor4.udp packetSent:count 209
+scalar Sc1.sensor4.udp packetSent:count 216
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, count"
-scalar Sc1.sensor4.udp packetSent:sum(packetBytes) 315172
+scalar Sc1.sensor4.udp packetSent:sum(packetBytes) 325728
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
@@ -4030,7 +3895,7 @@ scalar Sc1.sensor4.udp droppedPkBadChecksum:count 0
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-scalar Sc1.sensor4.app[0] "packets sent" 209
+scalar Sc1.sensor4.app[0] "packets sent" 216
 scalar Sc1.sensor4.app[0] "packets received" 0
 scalar Sc1.sensor4.app[0] packetReceived:count 0
 attr interpolationmode none
@@ -4052,11 +3917,11 @@ attr interpolationmode none
 attr source dataAge(packetReceived)
 attr title "received packet lifetime, stats"
 attr unit s
-scalar Sc1.sensor4.app[0] packetSent:count 209
+scalar Sc1.sensor4.app[0] packetSent:count 216
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, count"
-scalar Sc1.sensor4.app[0] packetSent:sum(packetBytes) 313500
+scalar Sc1.sensor4.app[0] packetSent:sum(packetBytes) 324000
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
@@ -4076,33 +3941,33 @@ scalar Sc1.sensor5.lo[0].lo passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.sensor5.wlan[0].agent dropConfirm:count 0
+scalar Sc1.sensor5.wlan[0].agent dropConfirm:count 595
 attr title "dropped confirms, count"
 scalar Sc1.sensor5.wlan[0].agent acceptConfirm:count 3
 attr title "accepted confirms, count"
-scalar Sc1.sensor5.wlan[0].agent sentRequest:count 3
+scalar Sc1.sensor5.wlan[0].agent sentRequest:count 599
 attr title "sent requests, count"
-scalar Sc1.sensor5.wlan[0].mac rcvdPkFromLl:count 11030
+scalar Sc1.sensor5.wlan[0].mac rcvdPkFromLl:count 2441
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, count"
-scalar Sc1.sensor5.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 1999492
+scalar Sc1.sensor5.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 484266
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, sum(packetBytes)"
-scalar Sc1.sensor5.wlan[0].mac sentDownPk:count 468
+scalar Sc1.sensor5.wlan[0].mac sentDownPk:count 614
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, count"
-scalar Sc1.sensor5.wlan[0].mac sentDownPk:sum(packetBytes) 401474
+scalar Sc1.sensor5.wlan[0].mac sentDownPk:sum(packetBytes) 22548
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, sum(packetBytes)"
-scalar Sc1.sensor5.wlan[0].mac rcvdPkFromHl:count 205
+scalar Sc1.sensor5.wlan[0].mac rcvdPkFromHl:count 220
 attr interpolationmode none
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, count"
-scalar Sc1.sensor5.wlan[0].mac rcvdPkFromHl:sum(packetBytes) 314880
+scalar Sc1.sensor5.wlan[0].mac rcvdPkFromHl:sum(packetBytes) 337920
 attr interpolationmode none
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, sum(packetBytes)"
@@ -4114,19 +3979,19 @@ scalar Sc1.sensor5.wlan[0].mac passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.sensor5.wlan[0].mac packetDropIncorrectlyReceived:count 417
+scalar Sc1.sensor5.wlan[0].mac packetDropIncorrectlyReceived:count 16
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, count"
-scalar Sc1.sensor5.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 243840
+scalar Sc1.sensor5.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 16686
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, sum(packetBytes)"
-scalar Sc1.sensor5.wlan[0].mac packetDropNotAddressedToUs:count 4759
+scalar Sc1.sensor5.wlan[0].mac packetDropNotAddressedToUs:count 1140
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, count"
-scalar Sc1.sensor5.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 1498290
+scalar Sc1.sensor5.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 425246
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, sum(packetBytes)"
@@ -4138,20 +4003,20 @@ scalar Sc1.sensor5.wlan[0].mac packetDropQueueOverflow:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetDropReasonIsQueueOverflow(packetDropped)
 attr title "packet drop: queue overflow, sum(packetBytes)"
-scalar Sc1.sensor5.wlan[0].mac packetDropRetryLimitReached:count 0
+scalar Sc1.sensor5.wlan[0].mac packetDropRetryLimitReached:count 1
 attr interpolationmode none
 attr source packetDropReasonIsRetryLimitReached(packetDropped)
 attr title "packet drop: retry limit reached, count"
-scalar Sc1.sensor5.wlan[0].mac packetDropRetryLimitReached:sum(packetBytes) 0
+scalar Sc1.sensor5.wlan[0].mac packetDropRetryLimitReached:sum(packetBytes) 30
 attr interpolationmode none
 attr source packetDropReasonIsRetryLimitReached(packetDropped)
 attr title "packet drop: retry limit reached, sum(packetBytes)"
-scalar Sc1.sensor5.wlan[0].mac linkBroken:count 0
+scalar Sc1.sensor5.wlan[0].mac linkBroken:count 1
 attr interpolationmode none
 attr source linkBroken
 attr title "link break, count"
 statistic Sc1.sensor5.wlan[0].radio radioChannel:histogram
-field count 4
+field count 600
 field mean 0
 field stddev 0
 field min 0
@@ -4187,7 +4052,7 @@ bin	-0.08	0
 bin	-0.06	0
 bin	-0.04	0
 bin	-0.02	0
-bin	0	4
+bin	0	600
 bin	0.02	0
 bin	0.04	0
 bin	0.06	0
@@ -4213,52 +4078,52 @@ bin	0.44	0
 bin	0.46	0
 bin	0.48	0
 bin	0.5	0
-scalar Sc1.sensor5.wlan[0].radio radioMode:count 938
+scalar Sc1.sensor5.wlan[0].radio radioMode:count 1231
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Sc1.sensor5.wlan[0].radio receptionState:count 23170
+scalar Sc1.sensor5.wlan[0].radio receptionState:count 6728
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
-scalar Sc1.sensor5.wlan[0].radio transmissionState:count 1870
+scalar Sc1.sensor5.wlan[0].radio transmissionState:count 2456
 attr interpolationmode sample-hold
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
 statistic Sc1.sensor5.wlan[0].radio minSnir:histogram
-field count 11030
-field mean 1599.0979885067
-field stddev 762.33734182151
-field min 0.12832828661252
-field max 2686.0498966353
-field sum 17638050.813229
-field sqrsum 34614565615.162
+field count 2441
+field mean 1271.3396543116
+field stddev 1107.2122805629
+field min 0.38781958411421
+field max 3116.1756892998
+field sum 3103340.0961747
+field sqrsum 6936641768.6017
 attr source minimumSnir(packetSentToUpper)
 attr title "Min SNIR, histogram"
 bin	-inf	0
-bin	0	769
+bin	0	104
 bin	50	0
 bin	100	0
 bin	150	0
 bin	200	0
 bin	250	0
-bin	300	18
+bin	300	22
 bin	350	0
 bin	400	0
 bin	450	12
-bin	500	1797
+bin	500	1200
 bin	550	0
 bin	600	0
 bin	650	0
 bin	700	0
-bin	750	65
+bin	750	62
 bin	800	0
 bin	850	0
 bin	900	0
 bin	950	0
-bin	1000	429
+bin	1000	353
 bin	1050	0
-bin	1100	427
+bin	1100	13
 bin	1150	0
 bin	1200	0
 bin	1250	0
@@ -4276,7 +4141,7 @@ bin	1800	0
 bin	1850	0
 bin	1900	0
 bin	1950	0
-bin	2000	6831
+bin	2000	69
 bin	2050	0
 bin	2100	0
 bin	2150	0
@@ -4289,7 +4154,7 @@ bin	2450	0
 bin	2500	0
 bin	2550	0
 bin	2600	0
-bin	2650	682
+bin	2650	0
 bin	2700	0
 bin	2750	0
 bin	2800	0
@@ -4298,26 +4163,36 @@ bin	2900	0
 bin	2950	0
 bin	3000	0
 bin	3050	0
-bin	3100	0
+bin	3100	606
 bin	3150	0
 bin	3200	0
 bin	3250	0
 bin	3300	0
 bin	3350	0
 bin	3400	0
+bin	3450	0
+bin	3500	0
+bin	3550	0
+bin	3600	0
+bin	3650	0
+bin	3700	0
+bin	3750	0
+bin	3800	0
+bin	3850	0
+bin	3900	0
 statistic Sc1.sensor5.wlan[0].radio packetErrorRate:histogram
-field count 11030
-field mean 0.0374065127681
-field stddev 0.18576603058626
+field count 2441
+field mean 0.0052236768933241
+field stddev 0.066768832015932
 field min 0
 field max 1
-field sum 412.59383583214
-field sqrsum 396.03365743112
+field sum 12.750995296604
+field sqrsum 10.944314785701
 attr source packetErrorRate(packetSentToUpper)
 attr title "Packet error rate, histogram"
 bin	-inf	0
-bin	0	10726
-bin	1	304
+bin	0	2434
+bin	1	7
 bin	2	0
 statistic Sc1.sensor5.wlan[0].radio bitErrorRate:histogram
 field count 0
@@ -4401,11 +4276,11 @@ scalar Sc1.sensor5.udp packetReceived:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
-scalar Sc1.sensor5.udp packetSent:count 205
+scalar Sc1.sensor5.udp packetSent:count 220
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, count"
-scalar Sc1.sensor5.udp packetSent:sum(packetBytes) 309140
+scalar Sc1.sensor5.udp packetSent:sum(packetBytes) 331760
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
@@ -4421,7 +4296,7 @@ scalar Sc1.sensor5.udp droppedPkBadChecksum:count 0
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-scalar Sc1.sensor5.app[0] "packets sent" 205
+scalar Sc1.sensor5.app[0] "packets sent" 220
 scalar Sc1.sensor5.app[0] "packets received" 0
 scalar Sc1.sensor5.app[0] packetReceived:count 0
 attr interpolationmode none
@@ -4443,11 +4318,11 @@ attr interpolationmode none
 attr source dataAge(packetReceived)
 attr title "received packet lifetime, stats"
 attr unit s
-scalar Sc1.sensor5.app[0] packetSent:count 205
+scalar Sc1.sensor5.app[0] packetSent:count 220
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, count"
-scalar Sc1.sensor5.app[0] packetSent:sum(packetBytes) 307500
+scalar Sc1.sensor5.app[0] packetSent:sum(packetBytes) 330000
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
@@ -4473,27 +4348,27 @@ scalar Sc1.sensor6.wlan[0].agent acceptConfirm:count 3
 attr title "accepted confirms, count"
 scalar Sc1.sensor6.wlan[0].agent sentRequest:count 3
 attr title "sent requests, count"
-scalar Sc1.sensor6.wlan[0].mac rcvdPkFromLl:count 18690
+scalar Sc1.sensor6.wlan[0].mac rcvdPkFromLl:count 10844
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, count"
-scalar Sc1.sensor6.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 2656952
+scalar Sc1.sensor6.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 1355196
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, sum(packetBytes)"
-scalar Sc1.sensor6.wlan[0].mac sentDownPk:count 572
+scalar Sc1.sensor6.wlan[0].mac sentDownPk:count 437
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, count"
-scalar Sc1.sensor6.wlan[0].mac sentDownPk:sum(packetBytes) 534868
+scalar Sc1.sensor6.wlan[0].mac sentDownPk:sum(packetBytes) 398544
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, sum(packetBytes)"
-scalar Sc1.sensor6.wlan[0].mac rcvdPkFromHl:count 220
+scalar Sc1.sensor6.wlan[0].mac rcvdPkFromHl:count 172
 attr interpolationmode none
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, count"
-scalar Sc1.sensor6.wlan[0].mac rcvdPkFromHl:sum(packetBytes) 337920
+scalar Sc1.sensor6.wlan[0].mac rcvdPkFromHl:sum(packetBytes) 264192
 attr interpolationmode none
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, sum(packetBytes)"
@@ -4505,19 +4380,19 @@ scalar Sc1.sensor6.wlan[0].mac passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.sensor6.wlan[0].mac packetDropIncorrectlyReceived:count 1183
+scalar Sc1.sensor6.wlan[0].mac packetDropIncorrectlyReceived:count 620
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, count"
-scalar Sc1.sensor6.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 547074
+scalar Sc1.sensor6.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 39074
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, sum(packetBytes)"
-scalar Sc1.sensor6.wlan[0].mac packetDropNotAddressedToUs:count 6803
+scalar Sc1.sensor6.wlan[0].mac packetDropNotAddressedToUs:count 3794
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, count"
-scalar Sc1.sensor6.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 1621652
+scalar Sc1.sensor6.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 1038488
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, sum(packetBytes)"
@@ -4604,55 +4479,55 @@ bin	0.44	0
 bin	0.46	0
 bin	0.48	0
 bin	0.5	0
-scalar Sc1.sensor6.wlan[0].radio radioMode:count 1146
+scalar Sc1.sensor6.wlan[0].radio radioMode:count 877
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Sc1.sensor6.wlan[0].radio receptionState:count 39100
+scalar Sc1.sensor6.wlan[0].radio receptionState:count 23249
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
-scalar Sc1.sensor6.wlan[0].radio transmissionState:count 2286
+scalar Sc1.sensor6.wlan[0].radio transmissionState:count 1748
 attr interpolationmode sample-hold
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
 statistic Sc1.sensor6.wlan[0].radio minSnir:histogram
-field count 18690
-field mean 814.24723753242
-field stddev 844.99114743692
+field count 10844
+field mean 876.14520371127
+field stddev 892.46717503957
 field min 0.25581777094642
 field max 3299.1910120086
-field sum 15218280.869481
-field sqrsum 25735576781.45
+field sum 9500918.589045
+field sqrsum 16960608364.009
 attr source minimumSnir(packetSentToUpper)
 attr title "Min SNIR, histogram"
 bin	-inf	0
-bin	0	1287
+bin	0	630
 bin	50	0
 bin	100	0
 bin	150	0
 bin	200	0
 bin	250	0
-bin	300	166
-bin	350	551
+bin	300	431
+bin	350	789
 bin	400	0
 bin	450	0
-bin	500	6831
+bin	500	69
 bin	550	0
-bin	600	6624
+bin	600	6997
 bin	650	0
 bin	700	0
 bin	750	0
-bin	800	682
-bin	850	12
+bin	800	0
+bin	850	618
 bin	900	0
 bin	950	0
-bin	1000	657
+bin	1000	26
 bin	1050	0
 bin	1100	0
 bin	1150	0
 bin	1200	0
-bin	1250	18
+bin	1250	22
 bin	1300	0
 bin	1350	0
 bin	1400	0
@@ -4687,12 +4562,12 @@ bin	2800	0
 bin	2850	0
 bin	2900	0
 bin	2950	0
-bin	3000	65
+bin	3000	62
 bin	3050	0
 bin	3100	0
 bin	3150	0
 bin	3200	0
-bin	3250	1797
+bin	3250	1200
 bin	3300	0
 bin	3350	0
 bin	3400	0
@@ -4712,18 +4587,18 @@ bin	4050	0
 bin	4100	0
 bin	4150	0
 statistic Sc1.sensor6.wlan[0].radio packetErrorRate:histogram
-field count 18690
-field mean 0.063063108966978
-field stddev 0.24263861994843
+field count 10844
+field mean 0.057174694874159
+field stddev 0.23218634879737
 field min 0
 field max 1
-field sum 1178.6495065928
-field sqrsum 1174.6161417213
+field sum 620.00239121538
+field sqrsum 620.00000519622
 attr source packetErrorRate(packetSentToUpper)
 attr title "Packet error rate, histogram"
 bin	-inf	0
-bin	0	17542
-bin	1	1148
+bin	0	10224
+bin	1	620
 bin	2	0
 statistic Sc1.sensor6.wlan[0].radio bitErrorRate:histogram
 field count 0
@@ -4807,11 +4682,11 @@ scalar Sc1.sensor6.udp packetReceived:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
-scalar Sc1.sensor6.udp packetSent:count 220
+scalar Sc1.sensor6.udp packetSent:count 172
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, count"
-scalar Sc1.sensor6.udp packetSent:sum(packetBytes) 331760
+scalar Sc1.sensor6.udp packetSent:sum(packetBytes) 259376
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
@@ -4827,7 +4702,7 @@ scalar Sc1.sensor6.udp droppedPkBadChecksum:count 0
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-scalar Sc1.sensor6.app[0] "packets sent" 220
+scalar Sc1.sensor6.app[0] "packets sent" 172
 scalar Sc1.sensor6.app[0] "packets received" 0
 scalar Sc1.sensor6.app[0] packetReceived:count 0
 attr interpolationmode none
@@ -4849,11 +4724,11 @@ attr interpolationmode none
 attr source dataAge(packetReceived)
 attr title "received packet lifetime, stats"
 attr unit s
-scalar Sc1.sensor6.app[0] packetSent:count 220
+scalar Sc1.sensor6.app[0] packetSent:count 172
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, count"
-scalar Sc1.sensor6.app[0] packetSent:sum(packetBytes) 330000
+scalar Sc1.sensor6.app[0] packetSent:sum(packetBytes) 258000
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
@@ -4873,33 +4748,33 @@ scalar Sc1.sensor7.lo[0].lo passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.sensor7.wlan[0].agent dropConfirm:count 0
+scalar Sc1.sensor7.wlan[0].agent dropConfirm:count 595
 attr title "dropped confirms, count"
 scalar Sc1.sensor7.wlan[0].agent acceptConfirm:count 3
 attr title "accepted confirms, count"
-scalar Sc1.sensor7.wlan[0].agent sentRequest:count 3
+scalar Sc1.sensor7.wlan[0].agent sentRequest:count 599
 attr title "sent requests, count"
-scalar Sc1.sensor7.wlan[0].mac rcvdPkFromLl:count 10766
+scalar Sc1.sensor7.wlan[0].mac rcvdPkFromLl:count 2422
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, count"
-scalar Sc1.sensor7.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 1628172
+scalar Sc1.sensor7.wlan[0].mac rcvdPkFromLl:sum(packetBytes) 474770
 attr interpolationmode none
 attr source packetReceivedFromLower
 attr title "packets received from lower layer, sum(packetBytes)"
-scalar Sc1.sensor7.wlan[0].mac sentDownPk:count 720
+scalar Sc1.sensor7.wlan[0].mac sentDownPk:count 621
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, count"
-scalar Sc1.sensor7.wlan[0].mac sentDownPk:sum(packetBytes) 772434
+scalar Sc1.sensor7.wlan[0].mac sentDownPk:sum(packetBytes) 30232
 attr interpolationmode none
 attr source packetSentToLower
 attr title "packets sent to lower layer, sum(packetBytes)"
-scalar Sc1.sensor7.wlan[0].mac rcvdPkFromHl:count 210
+scalar Sc1.sensor7.wlan[0].mac rcvdPkFromHl:count 194
 attr interpolationmode none
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, count"
-scalar Sc1.sensor7.wlan[0].mac rcvdPkFromHl:sum(packetBytes) 322560
+scalar Sc1.sensor7.wlan[0].mac rcvdPkFromHl:sum(packetBytes) 297984
 attr interpolationmode none
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, sum(packetBytes)"
@@ -4911,19 +4786,19 @@ scalar Sc1.sensor7.wlan[0].mac passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Sc1.sensor7.wlan[0].mac packetDropIncorrectlyReceived:count 538
+scalar Sc1.sensor7.wlan[0].mac packetDropIncorrectlyReceived:count 10
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, count"
-scalar Sc1.sensor7.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 226182
+scalar Sc1.sensor7.wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 7686
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drop: incorrectly received, sum(packetBytes)"
-scalar Sc1.sensor7.wlan[0].mac packetDropNotAddressedToUs:count 4333
+scalar Sc1.sensor7.wlan[0].mac packetDropNotAddressedToUs:count 1129
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, count"
-scalar Sc1.sensor7.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 1142586
+scalar Sc1.sensor7.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 424796
 attr interpolationmode none
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drop: not addressed to us, sum(packetBytes)"
@@ -4935,20 +4810,20 @@ scalar Sc1.sensor7.wlan[0].mac packetDropQueueOverflow:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetDropReasonIsQueueOverflow(packetDropped)
 attr title "packet drop: queue overflow, sum(packetBytes)"
-scalar Sc1.sensor7.wlan[0].mac packetDropRetryLimitReached:count 0
+scalar Sc1.sensor7.wlan[0].mac packetDropRetryLimitReached:count 2
 attr interpolationmode none
 attr source packetDropReasonIsRetryLimitReached(packetDropped)
 attr title "packet drop: retry limit reached, count"
-scalar Sc1.sensor7.wlan[0].mac packetDropRetryLimitReached:sum(packetBytes) 0
+scalar Sc1.sensor7.wlan[0].mac packetDropRetryLimitReached:sum(packetBytes) 1530
 attr interpolationmode none
 attr source packetDropReasonIsRetryLimitReached(packetDropped)
 attr title "packet drop: retry limit reached, sum(packetBytes)"
-scalar Sc1.sensor7.wlan[0].mac linkBroken:count 0
+scalar Sc1.sensor7.wlan[0].mac linkBroken:count 2
 attr interpolationmode none
 attr source linkBroken
 attr title "link break, count"
 statistic Sc1.sensor7.wlan[0].radio radioChannel:histogram
-field count 4
+field count 600
 field mean 0
 field stddev 0
 field min 0
@@ -4984,7 +4859,7 @@ bin	-0.08	0
 bin	-0.06	0
 bin	-0.04	0
 bin	-0.02	0
-bin	0	4
+bin	0	600
 bin	0.02	0
 bin	0.04	0
 bin	0.06	0
@@ -5010,30 +4885,30 @@ bin	0.44	0
 bin	0.46	0
 bin	0.48	0
 bin	0.5	0
-scalar Sc1.sensor7.wlan[0].radio radioMode:count 1442
+scalar Sc1.sensor7.wlan[0].radio radioMode:count 1245
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Sc1.sensor7.wlan[0].radio receptionState:count 23141
+scalar Sc1.sensor7.wlan[0].radio receptionState:count 6696
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
-scalar Sc1.sensor7.wlan[0].radio transmissionState:count 2878
+scalar Sc1.sensor7.wlan[0].radio transmissionState:count 2484
 attr interpolationmode sample-hold
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
 statistic Sc1.sensor7.wlan[0].radio minSnir:histogram
-field count 10766
-field mean 400.47565002547
-field stddev 193.91919993048
-field min 0.35898626807228
+field count 2422
+field mean 512.20981087302
+field stddev 236.31204447034
+field min 1.0931715108764
 field max 1102.6078967375
-field sum 4311520.8481742
-field sqrsum 2131473237.2055
+field sum 1240572.1619345
+field sqrsum 770630061.13658
 attr source minimumSnir(packetSentToUpper)
 attr title "Min SNIR, histogram"
 bin	-inf	0
-bin	0	715
+bin	0	97
 bin	20	0
 bin	40	0
 bin	60	0
@@ -5051,12 +4926,12 @@ bin	280	0
 bin	300	0
 bin	320	0
 bin	340	0
-bin	360	6831
+bin	360	69
 bin	380	0
 bin	400	0
-bin	420	1797
-bin	440	747
-bin	460	0
+bin	420	1200
+bin	440	62
+bin	460	606
 bin	480	0
 bin	500	0
 bin	520	0
@@ -5073,7 +4948,7 @@ bin	720	0
 bin	740	0
 bin	760	0
 bin	780	0
-bin	800	18
+bin	800	22
 bin	820	0
 bin	840	0
 bin	860	0
@@ -5084,11 +4959,11 @@ bin	940	0
 bin	960	0
 bin	980	0
 bin	1000	0
-bin	1020	429
+bin	1020	353
 bin	1040	0
 bin	1060	0
 bin	1080	0
-bin	1100	229
+bin	1100	13
 bin	1120	0
 bin	1140	0
 bin	1160	0
@@ -5104,18 +4979,18 @@ bin	1340	0
 bin	1360	0
 bin	1380	0
 statistic Sc1.sensor7.wlan[0].radio packetErrorRate:histogram
-field count 10766
-field mean 0.047629548600662
-field stddev 0.20998548600787
+field count 2422
+field mean 0.0041313028898761
+field stddev 0.064136240431139
 field min 0
 field max 1
-field sum 512.77972023473
-field sqrsum 499.09434676146
+field sum 10.00601559928
+field sqrsum 10.000018093169
 attr source packetErrorRate(packetSentToUpper)
 attr title "Packet error rate, histogram"
 bin	-inf	0
-bin	0	10285
-bin	1	481
+bin	0	2412
+bin	1	10
 bin	2	0
 statistic Sc1.sensor7.wlan[0].radio bitErrorRate:histogram
 field count 0
@@ -5199,11 +5074,11 @@ scalar Sc1.sensor7.udp packetReceived:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
-scalar Sc1.sensor7.udp packetSent:count 210
+scalar Sc1.sensor7.udp packetSent:count 194
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, count"
-scalar Sc1.sensor7.udp packetSent:sum(packetBytes) 316680
+scalar Sc1.sensor7.udp packetSent:sum(packetBytes) 292552
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
@@ -5219,7 +5094,7 @@ scalar Sc1.sensor7.udp droppedPkBadChecksum:count 0
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-scalar Sc1.sensor7.app[0] "packets sent" 210
+scalar Sc1.sensor7.app[0] "packets sent" 194
 scalar Sc1.sensor7.app[0] "packets received" 0
 scalar Sc1.sensor7.app[0] packetReceived:count 0
 attr interpolationmode none
@@ -5241,11 +5116,11 @@ attr interpolationmode none
 attr source dataAge(packetReceived)
 attr title "received packet lifetime, stats"
 attr unit s
-scalar Sc1.sensor7.app[0] packetSent:count 210
+scalar Sc1.sensor7.app[0] packetSent:count 194
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, count"
-scalar Sc1.sensor7.app[0] packetSent:sum(packetBytes) 315000
+scalar Sc1.sensor7.app[0] packetSent:sum(packetBytes) 291000
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
@@ -5254,23 +5129,23 @@ attr interpolationmode none
 attr source handoverDelay
 attr title "handoverTime, mean"
 attr unit s
-scalar Sc1 packetReceived:count 1692
+scalar Sc1 packetReceived:count 788
 attr interpolationmode none
 attr source (packetReceived)
 attr title "packets received, count"
-scalar Sc1 packetReceived:sum(packetBytes) 2544768
+scalar Sc1 packetReceived:sum(packetBytes) 1185152
 attr interpolationmode none
 attr source (packetReceived)
 attr title "packets received, sum(packetBytes)"
-scalar Sc1 packetLoss:last 14
+scalar Sc1 packetLoss:last 834
 attr interpolationmode none
 attr source (count(packetSent)-count(packetReceived))
 attr title "packet loss, last"
-scalar Sc1 packetSent:count 1706
+scalar Sc1 packetSent:count 1622
 attr interpolationmode none
 attr source (packetSent)
 attr title "packets sent, count"
-scalar Sc1 packetSent:sum(packetBytes) 2565824
+scalar Sc1 packetSent:sum(packetBytes) 2439488
 attr interpolationmode none
 attr source (packetSent)
 attr title "packets sent, sum(packetBytes)"
