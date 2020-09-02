@@ -13,7 +13,7 @@ def ao_simulation_filter(wsn, run, scenario):
 
     for i in range(1, 11):
         packetSentCount = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-2')) & (wsn.type=='scalar') & 
-        (wsn.module.str.startswith("Sc"+scenario+".sensor")) & (wsn.module.str.endswith("udp")) & 
+        (wsn.module.str.startswith("Sc"+scenario+".ss")) & (wsn.module.str.endswith("udp")) & 
         (wsn.name=='packetSent:count')]   
 
         packetReceivedCount = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-2'))& (wsn.type=='scalar') & 
@@ -22,7 +22,7 @@ def ao_simulation_filter(wsn, run, scenario):
 
         totalPkSentCount.append(sum(packetSentCount.value))
         totalPkReceivedCount.append(sum(packetReceivedCount.value))
-        #packetLoss.append((totalPkSentCount[i-1] - totalPkReceivedCount[i-1]) * 100 / totalPkSentCount[i-1])
+        packetLoss.append((totalPkSentCount[i-1] - totalPkReceivedCount[i-1]) * 100 / totalPkSentCount[i-1])
 
 
         residualEnergy = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-2')) & (wsn.type=='scalar') & 
@@ -31,8 +31,11 @@ def ao_simulation_filter(wsn, run, scenario):
 
         if(int(scenario) == 1):
             spentEnergyJ = 3000 - sum(residualEnergy.value)
-        else:
+        elif(int(scenario) == 2):
             spentEnergyJ = 9000 - sum(residualEnergy.value)
+        elif(int(scenario) == 3):
+            spentEnergyJ = 15000 - sum(residualEnergy.value)
+            
         consumedPower.append(spentEnergyJ / 240)
 
         latency = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-2')) & (wsn.type=='histogram') & 
@@ -59,7 +62,7 @@ def ro_simulation_filter(wsn, run, scenario):
 
     for i in range(1, 11):
         packetSentCountRO = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-1')) & (wsn.type=='scalar') & 
-        (wsn.module.str.startswith('Sc'+scenario+'.sensor')) & (wsn.module.str.endswith("udp")) & 
+        (wsn.module.str.startswith('Sc'+scenario+'.ss')) & (wsn.module.str.endswith("udp")) & 
         (wsn.name=='packetSent:count')]   
 
         packetReceivedCountRO = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-1'))& (wsn.type=='scalar') & 
@@ -75,9 +78,11 @@ def ro_simulation_filter(wsn, run, scenario):
         (wsn.module.str.endswith('energyStorage'))] 
 
         if(int(scenario) == 1):
-            spentEnergyJRO = 3000 - sum(residualEnergyRO.value)
-        else:
-            spentEnergyJRO = 9000 - sum(residualEnergyRO.value)
+            spentEnergyJ = 3000 - sum(residualEnergy.value)
+        elif(int(scenario) == 2):
+            spentEnergyJ = 9000 - sum(residualEnergy.value)
+        elif(int(scenario) == 3):
+            spentEnergyJ = 15000 - sum(residualEnergy.value)
         consumedPowerRO.append(spentEnergyJRO / 240)
 
         latencyRO = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-1')) & (wsn.type=='histogram') & 
@@ -104,7 +109,7 @@ def flc_simulation_filter(wsn, run, scenario):
 
     for i in range(1, 11):
         packetSentCountFLC = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-0')) & (wsn.type=='scalar') & 
-        (wsn.module.str.startswith('Sc'+scenario+'.sensor')) & 
+        (wsn.module.str.startswith('Sc'+scenario+'.ss')) & 
         (wsn.module.str.endswith("udp")) & (wsn.name=='packetSent:count')] 
 
         packetReceivedCountFLC = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-0'))& (wsn.type=='scalar') & 
@@ -121,9 +126,11 @@ def flc_simulation_filter(wsn, run, scenario):
         (wsn.module.str.endswith('energyStorage'))] 
 
         if(int(scenario) == 1):
-            spentEnergyJFLC = 3000 - sum(residualEnergyFLC.value)
-        else:
-            spentEnergyJFLC = 9000 - sum(residualEnergyFLC.value)
+            spentEnergyJ = 3000 - sum(residualEnergy.value)
+        elif(int(scenario) == 2):
+            spentEnergyJ = 9000 - sum(residualEnergy.value)
+        elif(int(scenario) == 3):
+            spentEnergyJ = 15000 - sum(residualEnergy.value)
         consumedPowerFLC.append(spentEnergyJFLC / 240)
 
         latencyFLC = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-0')) & (wsn.type=='histogram') & 
