@@ -430,6 +430,36 @@ network Sc3
         ss20: Sensor {
             @display("p=4354.6465,2179.6924;is=s");
         }
+        ss21: Sensor {
+            @display("p=4387.816,1710.5847;is=s");
+        }
+        ss22: Sensor {
+            @display("p=4245.6616,2753.0464;is=s");
+        }
+        ss23: Sensor {
+            @display("p=1042.4615,2724.6155;is=s");
+        }
+        ss24: Sensor {
+            @display("p=2378.7078,1274.6462;is=s");
+        }
+        ss25: Sensor {
+            @display("p=1919.077,2179.6924;is=s");
+        }
+        ss26: Sensor {
+            @display("p=3070.5232,1563.6924;is=s");
+        }
+        ss27: Sensor {
+            @display("p=2994.708,1032.9847;is=s");
+        }
+        ss28: Sensor {
+            @display("p=3928.1848,2137.0464;is=s");
+        }
+        ss29: Sensor {
+            @display("p=4070.3386,1563.6924;is=s");
+        }
+        ss30: Sensor {
+            @display("p=2686.7078,2080.1848;is=s");
+        }
 }
 
 

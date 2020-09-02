@@ -15,14 +15,10 @@ run = ['wsnSc1T', 'wsnSc2T']
 
 
 for i in range(1, 3):
-	fresult_fao = fao(wsn[i-1], run[i-1], str(i)) ##Only needed to be executed once,the GA doesn't interfere here
-	fresult_fro = fro(wsn[i-1], run[i-1], str(i)) ##Only needed to be executed once,the GA doesn't interfere here
+	fresult_fao = fao(wsn[i-1], run[i-1], str(i)) 
+	fresult_fro = fro(wsn[i-1], run[i-1], str(i)) 
 	fresult_fflc = fflc(wsn[i-1], run[i-1], str(i)) 
 	fresult_fflcag = fflcag(wsn[i-1], run[i-1], str(i)) 
-
-	#####
-	# HERE JUST NEED TO EXECUTE AT THE END, WHEN HAVE THE IDEAL SOLUTION 
-	####
 
 	results = pd.DataFrame(index=['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10'])
 	results.insert(0, "PacketsSent", fresult_fao[0])  
@@ -68,15 +64,6 @@ for i in range(1, 3):
 		for b in (fresult_fao[5]):
 			minConsump.append(b/3*2)
 	
-	#results.insert(24, "Min Consump Possible", minConsump)  
-	#results.insert(25, "diff", sum(fresult_fflcag[5]) - sum(minConsump))  
-	  
-
-#	power_consumption_dict = {'T'+str(i+1) : (fresult_fflc[5])[i] for i in range(0, len(fresult_fflc[5])) }
-#	y = json.dumps(power_consumption_dict)
-#	with open('/home/jaevillen/IC/Buffer/power_consumption_sc'+str(i)+'.txt', 'w') as outfile:
-#		json.dump(y, outfile)
-
 	results.to_csv('outSc'+str(i)+'.csv')
 
 	ax = plt.cla() 

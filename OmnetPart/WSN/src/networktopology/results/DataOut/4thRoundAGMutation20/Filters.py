@@ -138,9 +138,7 @@ def flc_simulation_filter(wsn, run, scenario):
 
     return [totalPkSentCountFLC, totalPkReceivedCountFLC, packetLossFLC, jitterMeanFLC, latencyMeanFLC, consumedPowerFLC];
     
-    
-    
-    
+        
 def flcag_simulation_filter(wsn, run, scenario):
 
     totalPkSentCountFLC = []
