@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-def plot_packet_loss(results):
+def plot_packet_loss(results, scenario):
 	ax = plt.cla() 
 	ax = plt.gca()
 
@@ -8,10 +8,10 @@ def plot_packet_loss(results):
 	results.plot(kind='line',y='PacketsLostRO(%)', label='Random OFF', color='green', ax=ax)
 	results.plot(kind='line',y='PacketsLostFLC(%)', label='Fuzzy Controlled', color='red', ax=ax)
 	plt.ylabel('Perda de pacotes (%)')
-	plt.title('Perda de pacotes Cenário'+str(i))
-	plt.savefig('DataOut/Sc'+str(i)+'PacketsLossGraphic.png')
+	plt.title('Perda de pacotes Cenário'+scenario)
+	plt.savefig('Sc'+scenario+'PacketsLossGraphic.png')
 	
-def plot_jitter(results):
+def plot_jitter(results, scenario):
 	ax = plt.cla() 
 	ax = plt.gca()
 
@@ -19,10 +19,10 @@ def plot_jitter(results):
 	results.plot(kind='line',y='JitterRO', label='Random OFF', color='green', ax=ax)
 	results.plot(kind='line',y='JitterFLC', label='Fuzzy Controlled', color='red', ax=ax)
 	plt.ylabel('Jitter (s)')
-	plt.title('Jitter Cenário'+str(i))
-	plt.savefig('DataOut/Sc'+str(i)+'JitterGraphic.png')
+	plt.title('Jitter Cenário'+scenario)
+	plt.savefig('Sc'+scenario+'JitterGraphic.png')
 	
-def plot_latency(results):
+def plot_latency(results, scenario):
 	ax = plt.cla() 
 	ax = plt.gca()
 
@@ -30,10 +30,10 @@ def plot_latency(results):
 	results.plot(kind='line',y='LatencyRO', label='Random OFF', color='green', ax=ax)
 	results.plot(kind='line',y='LatencyFLC', label='Fuzzy Controlled', color='red', ax=ax)
 	plt.ylabel('Latência (s)')
-	plt.title('Latência Cenário'+str(i))	
-	plt.savefig('DataOut/Sc'+str(i)+'LatencyGraphic.png')
+	plt.title('Latência Cenário'+scenario)	
+	plt.savefig('Sc'+scenario+'LatencyGraphic.png')
 	
-def plot_consumed_power(results):
+def plot_consumed_power(results, scenario):
 	ax = plt.cla() 
 	ax = plt.gca()
 
@@ -41,6 +41,6 @@ def plot_consumed_power(results):
 	results.plot(kind='line',y='PowerConsumedRO(W)', label='Random OFF', color='green', ax=ax)
 	results.plot(kind='line',y='PowerConsumedFLC(W)', label='Fuzzy Controlled', color='red', ax=ax)
 	plt.ylabel('Potência consumida (W)')
-	plt.title('Potência consumida Cenário'+str(i))	
-	plt.savefig('DataOut/Sc'+str(i)+'PowerConsumptionGraphic.png')
+	plt.title('Potência consumida Cenário'+scenario)	
+	plt.savefig('Sc'+scenario+'PowerConsumptionGraphic.png')
 

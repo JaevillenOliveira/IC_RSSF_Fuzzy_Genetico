@@ -49,6 +49,7 @@ class ControllerInterface : public cSimpleModule,  protected cListener{
         OMNeTPipe* p;
         int packetsCount = 1;
         std::string opMode;
+        int numberApsOff = 0;
 
     public:
         ControllerInterface() {}
@@ -56,7 +57,8 @@ class ControllerInterface : public cSimpleModule,  protected cListener{
     protected:
         virtual void initialize() override;
         virtual void chooseRandomAp();
-        virtual void sortApByThroughput();
+        virtual void randomOff(const int id, ApInfo &ap);
+        virtual std::vector<std::pair<int, ControllerInterface::ApInfo>> sortApByThroughput();
         virtual void receiveSignal (cComponent *source, simsignal_t signalID, cObject *obj, cObject *details) override;
         virtual void handleMessage(cMessage *msg)override;
         virtual simsignal_t concatRegister(std::string s, std::string s1);

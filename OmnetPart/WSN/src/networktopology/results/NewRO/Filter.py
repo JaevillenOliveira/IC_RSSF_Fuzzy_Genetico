@@ -33,7 +33,7 @@ def results_from_wsn(wsn_file, run_name, scenario):
 	results.insert(17, "PowerConsumedRO(W)", fresult_fro[5])  
 
 	results.to_csv('outSc'+scenario+'.csv')
-	plot_all_graphics(results)
+	plot_all_graphics(results, scenario)
 	#dump_consumption_into_file(scenario)
 
 def results_from_wsn_ao(wsn_file, run_name, scenario):	
@@ -69,11 +69,11 @@ def call_func_wsn3():
 	wsn3 = pd.read_csv('wsn3.csv', usecols=['run', 'type', 'module', 'name', 'value', 'mean'])
 	results_from_wsn_ao(wsn3,'wsnSc3T', '3')
 
-def plot_all_graphics(results):
-	plt.plot_packet_loss(results)
-	plt.plot_jitter(results)
-	plt.plot_latency(results)
-	plt.plot_consumed_power(results)
+def plot_all_graphics(results, scenario):
+	plt.plot_packet_loss(results, scenario)
+	plt.plot_jitter(results, scenario)
+	plt.plot_latency(results, scenario)
+	plt.plot_consumed_power(results, scenario)
 
 call_func_wsn1()
 call_func_wsn2()

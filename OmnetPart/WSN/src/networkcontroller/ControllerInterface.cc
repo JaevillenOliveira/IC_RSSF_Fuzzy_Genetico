@@ -41,6 +41,7 @@ void ControllerInterface::initialize()
         randomOffTimer = new cMessage("randomOffTimer");
         scheduleAt(simTime() +  2, randomOffTimer);
     }
+    numberApsOff = 0;
 };
 
 void ControllerInterface::chooseRandomAp(){
@@ -63,14 +64,11 @@ void ControllerInterface::chooseRandomAp(){
     int id = ap.first;
     ApInfo apinfo = ap.second;
 
-    int numberApsOff = 0;
-    for (auto it = aplist.begin(); it != aplist.end(); ++it) {
-        if(it->second.isOff())
-            numberApsOff++;
-    }
+
     cout << "APs OFF:  " << numberApsOff << endl;
     if (!apinfo.isOff() && numberApsOff < (aplist.size()/2)){
         shutdownAp(id, &apinfo);
+        numberApsOff++;
         scheduleAt(simTime() +  delay, randomOffTimer);
 
     }else if(apinfo.isOff() && numberApsOff < (aplist.size()/2)){
@@ -78,7 +76,18 @@ void ControllerInterface::chooseRandomAp(){
     }
 }
 
-void ControllerInterface::sortApByThroughput(){
+void ControllerInterface::randomOff(const int id, ApInfo &ap){
+
+    int turnOffPerc = rand() % 101;
+    if(turnOffPerc >= 50 && !ap.isOff() && numberApsOff < (aplist.size()/2)){
+        shutdownAp(id, &ap);
+        numberApsOff++;
+    }
+
+}
+
+
+std::vector<std::pair<int, ControllerInterface::ApInfo>> ControllerInterface::sortApByThroughput(){
     if(!aplist.empty()){
          vec.clear();
          std::copy(aplist.begin(),aplist.end(),std::back_inserter<std::vector<pair>>(vec)); //copies items from map to vector
@@ -87,19 +96,29 @@ void ControllerInterface::sortApByThroughput(){
              if (l.second.getCurrentReport().getThroughput() != r.second.getCurrentReport().getThroughput())
                  return l.second.getCurrentReport().getThroughput() < r.second.getCurrentReport().getThroughput();
          });
-         for (auto it = vec.begin(); it != vec.end(); ++it) {
-             apAnalisys(it->first, it->second);
-         }
+         return vec;
     }
 }
 
 void ControllerInterface::handleMessage(cMessage *msg)
 {
     if (msg == apSortingTimer) {
-        sortApByThroughput();
-        scheduleAt(simTime() + 10, apSortingTimer);
+        std::vector<pair> vec = sortApByThroughput();
+        for (auto it = vec.begin(); it != vec.end(); ++it) {
+            apAnalisys(it->first, it->second);
+        }
+        if(numberApsOff < (aplist.size()/2)){
+            scheduleAt(simTime() + 10, apSortingTimer);
+        }
     }else if(msg == randomOffTimer){
-        chooseRandomAp();
+        std::vector<pair> vec = sortApByThroughput();
+        for (auto it = vec.begin(); it != vec.end(); ++it) {
+            randomOff(it->first, it->second);
+        }
+        if(numberApsOff < (aplist.size()/2)){
+            scheduleAt(simTime() + 10, randomOffTimer);
+        }
+
     }
 }
 
@@ -161,17 +180,13 @@ void ControllerInterface::apAnalisys (const int id, ApInfo &ap){
     float resp = *(float *)&r;
     cout << rName << "  " << resp << endl;
 
-
-    int numberApsOff = 0;
-    for (auto it = aplist.begin(); it != aplist.end(); ++it) {
-        if(it->second.isOff())
-            numberApsOff++;
-    }
     cout << "numberOff " << numberApsOff;
     if(resp <= 50 && ap.isOff()){
         restartAp(id, &ap);
-    } else if (resp > 50 && !ap.isOff() && numberApsOff < (aplist.size()/2)){
+        numberApsOff--;
+    } else if (resp > 50 && !ap.isOff()){ // && numberApsOff < (aplist.size()/2)){
         shutdownAp(id, &ap);
+        numberApsOff++;
     }
 }
 

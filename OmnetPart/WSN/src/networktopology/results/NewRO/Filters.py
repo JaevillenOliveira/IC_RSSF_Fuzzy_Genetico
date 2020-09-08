@@ -13,7 +13,7 @@ def ao_simulation_filter(wsn, run, scenario):
 
     for i in range(1, 11):
         packetSentCount = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-2')) & (wsn.type=='scalar') & 
-        (wsn.module.str.startswith("Sc"+scenario+".ss")) & (wsn.module.str.endswith("udp")) & 
+        (wsn.module.str.startswith("Sc"+scenario+".sensor")) & (wsn.module.str.endswith("udp")) & 
         (wsn.name=='packetSent:count')]   
 
         packetReceivedCount = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-2'))& (wsn.type=='scalar') & 
@@ -78,11 +78,11 @@ def ro_simulation_filter(wsn, run, scenario):
         (wsn.module.str.endswith('energyStorage'))] 
 
         if(int(scenario) == 1):
-            spentEnergyJ = 3000 - sum(residualEnergy.value)
+            spentEnergyJRO = 3000 - sum(residualEnergyRO.value)
         elif(int(scenario) == 2):
-            spentEnergyJ = 9000 - sum(residualEnergy.value)
+            spentEnergyJRO = 9000 - sum(residualEnergyRO.value)
         elif(int(scenario) == 3):
-            spentEnergyJ = 15000 - sum(residualEnergy.value)
+            spentEnergyJRO = 15000 - sum(residualEnergyRO.value)
         consumedPowerRO.append(spentEnergyJRO / 240)
 
         latencyRO = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-1')) & (wsn.type=='histogram') & 
@@ -109,7 +109,7 @@ def flc_simulation_filter(wsn, run, scenario):
 
     for i in range(1, 11):
         packetSentCountFLC = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-0')) & (wsn.type=='scalar') & 
-        (wsn.module.str.startswith('Sc'+scenario+'.ss')) & 
+        (wsn.module.str.startswith('Sc'+scenario+'.sensor')) & 
         (wsn.module.str.endswith("udp")) & (wsn.name=='packetSent:count')] 
 
         packetReceivedCountFLC = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-0'))& (wsn.type=='scalar') & 
@@ -126,11 +126,11 @@ def flc_simulation_filter(wsn, run, scenario):
         (wsn.module.str.endswith('energyStorage'))] 
 
         if(int(scenario) == 1):
-            spentEnergyJ = 3000 - sum(residualEnergy.value)
+            spentEnergyJFLC = 3000 - sum(residualEnergyFLC.value)
         elif(int(scenario) == 2):
-            spentEnergyJ = 9000 - sum(residualEnergy.value)
+            spentEnergyJFLC = 9000 - sum(residualEnergyFLC.value)
         elif(int(scenario) == 3):
-            spentEnergyJ = 15000 - sum(residualEnergy.value)
+            spentEnergyJFLC = 15000 - sum(residualEnergyFLC.value)
         consumedPowerFLC.append(spentEnergyJFLC / 240)
 
         latencyFLC = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-0')) & (wsn.type=='histogram') & 
