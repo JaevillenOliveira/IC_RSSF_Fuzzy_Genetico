@@ -44,7 +44,7 @@ void ControllerInterface::initialize()
     numberApsOff = 0;
 };
 
-void ControllerInterface::chooseRandomAp(){
+/*void ControllerInterface::chooseRandomAp(){
     if(!aplist.empty()){
         vec.clear();
         std::copy(aplist.begin(),aplist.end(),std::back_inserter<std::vector<pair>>(vec)); //copies items from map to vector
@@ -75,7 +75,7 @@ void ControllerInterface::chooseRandomAp(){
         scheduleAt(simTime() +  delay, randomOffTimer);
     }
 }
-
+*/
 void ControllerInterface::randomOff(const int id, ApInfo &ap){
 
     int turnOffPerc = rand() % 101;
@@ -180,11 +180,12 @@ void ControllerInterface::apAnalisys (const int id, ApInfo &ap){
     float resp = *(float *)&r;
     cout << rName << "  " << resp << endl;
 
+    cout << "listSize " << aplist.size();
     cout << "numberOff " << numberApsOff;
     if(resp <= 50 && ap.isOff()){
         restartAp(id, &ap);
         numberApsOff--;
-    } else if (resp > 50 && !ap.isOff()){ // && numberApsOff < (aplist.size()/2)){
+    } else if (resp > 50 && !ap.isOff() && numberApsOff < (aplist.size()/2)){
         shutdownAp(id, &ap);
         numberApsOff++;
     }
