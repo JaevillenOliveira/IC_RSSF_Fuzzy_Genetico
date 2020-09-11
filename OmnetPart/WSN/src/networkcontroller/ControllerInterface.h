@@ -12,6 +12,7 @@
 #include "../management/ap/ApReport.h"
 #include "../Matlab_Bridge/OMNeTPk.h"
 #include "../Matlab_Bridge/OMNeTPipe.h"
+#include <fstream>
 
 
 
@@ -49,6 +50,9 @@ class ControllerInterface : public cSimpleModule,  protected cListener{
         OMNeTPipe* p;
         int packetsCount = 1;
         std::string opMode;
+        std::string tNumber;
+        std::string scNumber;
+        ofstream MyFile;
         int numberApsOff = 0;
 
     public:

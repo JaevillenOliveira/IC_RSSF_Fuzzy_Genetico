@@ -12,6 +12,7 @@
 #include <iostream>
 #include "ControllerInterface.h"
 #include "../management/ap/ApReport.h"
+#include <fstream>
 
 Define_Module(ControllerInterface);
 
@@ -27,6 +28,7 @@ ControllerInterface::~ControllerInterface() {
 
     OMNeTPk* pk = new OMNeTPk(packetName);
     p->sendPk(*pk);
+    MyFile.close();
 }
 
 void ControllerInterface::initialize()
@@ -37,6 +39,10 @@ void ControllerInterface::initialize()
         apSortingTimer = new cMessage("apSortingTimer");
         scheduleAt(simTime() +  2, apSortingTimer);
         p = new OMNeTPipe("localhost", 18638);
+        tNumber = std::to_string(par("tNumber").intValue());
+        scNumber = std::to_string(par("scNumber").intValue());
+        MyFile.open("/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/FuzzyEntries/Sc"+scNumber+"T"+tNumber+".txt");
+        MyFile << "ID  RSSI  Neighbors  Sources  Throughput" << endl;
     }else if(opMode == "randomOFF"){
         randomOffTimer = new cMessage("randomOffTimer");
         scheduleAt(simTime() +  2, randomOffTimer);
@@ -150,6 +156,12 @@ void ControllerInterface::receiveSignal (cComponent *source, simsignal_t signalI
     }
     report = static_cast<ApReport*> (obj);
     ap->setCurrentReport(*report);
+
+    MyFile << source->getId() << (" ");
+    MyFile << report->getRssiMean() << (" ");
+    MyFile << report->getNumberOfNeighbours() << (" ");
+    MyFile << report->getNumberOfSta() << (" ");
+    MyFile << report->getThroughput() << endl;
 
     printf("\n");
     cout << "ID: " << source->getId() << ("    ");

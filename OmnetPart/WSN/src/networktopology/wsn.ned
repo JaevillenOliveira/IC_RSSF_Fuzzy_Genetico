@@ -61,6 +61,8 @@ module ControllerInterface
 {
     parameters:
         string opMode = default("AlwaysON");
+        int tNumber;
+        int scNumber;
         @class(ControllerInterface);
 }
 
