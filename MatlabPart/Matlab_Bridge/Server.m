@@ -1,5 +1,5 @@
 function Server
-    fis = readfis('ComnetUniformSetsV2.fis');   %readfis('TempSolution.fis');
+    fis = readfis('TempSolution.fis');   %readfis('ComnetUniformSetsV2.fis');
 
     pipe = OMNeTPipe("localhost", 18638);
     responseNames = 'respPk';
