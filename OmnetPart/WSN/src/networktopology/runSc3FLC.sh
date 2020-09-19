@@ -9,4 +9,6 @@ sleep 20
 
 .././WSN -u Cmdenv -f wsnSc3.ini -n ../../simulations:..:../../../../inet4/src:../../../../inet4/examples:../../../../inet4/tutorials:../../../../inet4/showcases -c wsnSc3T${i} -r '$opMode="fuzzyControlled"' --vector-recording=false
 
+sleep 5
+
 done
