@@ -41,11 +41,11 @@ public class Algorithm extends AbstractGeneticAlgorithm{
      */
     public Algorithm(Problemfz problem, int maxPopulationSize) throws FileNotFoundException, IOException {
         super(problem);         
-        this.setMaxPopulationSize(maxPopulationSize);   //(maxPopulationSize-1);
+        this.setMaxPopulationSize(maxPopulationSize-1);
         this.iterations = 0; 
         this.selectionOperator = new FzTournamentSelection(3);
         this.crossoverOperator = new Crossover(0.7);//new FzSetsBLXAlphaCrossover(0.7, problem);
-        this.mutationOperator = new Mutation(0.1);   //new FzSetsMutation(0.7, new Random(), problem);
+        this.mutationOperator = new Mutation(0.2);   //new FzSetsMutation(0.7, new Random(), problem);
         this.evaluator = new SequentialSolutionListEvaluator();
     }
 
