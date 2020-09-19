@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -72,6 +72,7 @@ public final class Problemfz extends AbstractDoubleProblem{
             double energyConsumed = 0;
             energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc1.txt");
             energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc2.txt");
+            energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc3.txt");
             
             s.setObjective(0, energyConsumed);       
             System.out.println("Evaluated " + s.getObjective(0));
