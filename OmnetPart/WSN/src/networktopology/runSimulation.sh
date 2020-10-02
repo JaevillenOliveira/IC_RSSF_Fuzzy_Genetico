@@ -9,8 +9,8 @@ sleep 12
 
 cd ~
 cd IC/OmnetPart/WSN/src/networktopology
-./runSc1FLC.sh
-./runSc2FLC.sh
+#./runSc1FLC.sh
+#./runSc2FLC.sh
 ./runSc3FLC.sh
 
 rm /home/jaevillen/IC/MatlabPart/Matlab_Bridge/TempSolution.fis

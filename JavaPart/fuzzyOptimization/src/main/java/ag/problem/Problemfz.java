@@ -13,7 +13,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
@@ -70,8 +69,8 @@ public final class Problemfz extends AbstractDoubleProblem{
             process.waitFor(); //Waits for the simulation to finish
             
             double energyConsumed = 0;
-            energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc1.txt");
-            energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc2.txt");
+            //energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc1.txt");
+            //energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc2.txt");
             energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc3.txt");
             
             s.setObjective(0, energyConsumed);       

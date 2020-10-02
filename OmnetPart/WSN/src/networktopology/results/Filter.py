@@ -79,7 +79,7 @@ def dump_consumption_into_file(scenario):
 	with open('/home/jaevillen/IC/Buffer/power_consumption_sc'+scenario+'.txt', 'w') as outfile:
 		json.dump(y, outfile)
 
-dump_consumption_into_file('1')
-dump_consumption_into_file('2')
+#dump_consumption_into_file('1')
+#dump_consumption_into_file('2')
 dump_consumption_into_file('3')
 
