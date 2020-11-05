@@ -60,7 +60,6 @@ class ControllerInterface : public cSimpleModule,  protected cListener{
         virtual ~ControllerInterface();
     protected:
         virtual void initialize() override;
-        //virtual void chooseRandomAp();
         virtual void randomOff(const int id, ApInfo &ap);
         virtual std::vector<std::pair<int, ControllerInterface::ApInfo>> sortApByThroughput();
         virtual void receiveSignal (cComponent *source, simsignal_t signalID, cObject *obj, cObject *details) override;

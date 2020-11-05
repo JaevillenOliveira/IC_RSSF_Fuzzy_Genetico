@@ -34,9 +34,7 @@ def results_from_wsn(wsn_file, run_name, scenario):
 
 	results.to_csv('outSc'+scenario+'.csv')
 	plot_all_graphics(results, scenario)
-	
-	
-
+		
 
 def results_from_wsn_ao(wsn_file, run_name, scenario):	
 	fresult_fao = fao(wsn_file, run_name, scenario) 
@@ -50,7 +48,7 @@ def results_from_wsn_ao(wsn_file, run_name, scenario):
 	results.insert(5, "PowerConsumed(W)", fresult_fao[5])  
 
 	results.to_csv('outSc'+scenario+'.csv')
-	#dump_consumption_into_file(scenario)
+	plot_all_graphics(results, scenario)
 	
 
 def call_func_wsn1():
@@ -81,5 +79,11 @@ def dump_consumption_into_file(scenario):
 
 #dump_consumption_into_file('1')
 #dump_consumption_into_file('2')
-dump_consumption_into_file('3')
+#dump_consumption_into_file('3')
+
+call_func_wsn1()
+call_func_wsn2()
+call_func_wsn3()
+
+
 

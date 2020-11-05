@@ -220,8 +220,6 @@ void MgmtAp::sendReport() {
     reportNotif.setNumberOfNeighbours(apList.size());
     reportNotif.setRssiMean(calculateRssiMean());
     if(th != nullptr){
-//        printf("\n");
-//        cout << "th Id" << this->getId() << "   " << this->th->getThroughput() << endl;
         reportNotif.setThroughput((this->th->getThroughput()*100)/37800000);
     }else
         reportNotif.setThroughput(0.0);
