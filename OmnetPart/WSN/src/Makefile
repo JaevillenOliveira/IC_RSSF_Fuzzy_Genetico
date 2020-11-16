@@ -38,10 +38,8 @@ OBJS = \
     $O/application/UdpApp.o \
     $O/application/UdpSinkAdap.o \
     $O/management/ap/MgmtAp.o \
-    $O/management/ap/MgmtApSF.o \
     $O/management/sensor/AgentSensor.o \
     $O/management/sensor/MgmtSensorHH.o \
-    $O/management/sensor/MgmtSensorSH.o \
     $O/management/sink/AgentSink.o \
     $O/networkcontroller/ControllerInterface.o
 

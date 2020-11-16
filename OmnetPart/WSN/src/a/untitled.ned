@@ -63,6 +63,15 @@ module ControllerInterface
         @class(ControllerInterface);
 }
 
+module Sensor extends WirelessHost
+{
+    parameters:
+        string sinkAddress;
+        wlan[*].mgmt.typename = default("MgmtSensorHH");
+        wlan[*].agent.typename = default("AgentSensor");
+    submodules:
+}
+
 network tst
 {
     @display("bgb=4682.004,2254.1194");
@@ -90,26 +99,26 @@ network tst
         sink1: WirelessHost {
             @display("p=1153.6072,1177.7412;is=s");
         }
-        ss7: WirelessHost {
+        ss7: Sensor {
             @display("p=1344.4312,1778.1187;is=s");
         }
 
-        ss6: WirelessHost {
+        ss6: Sensor {
             @display("p=1532.3624,1382.9812;is=s");
         }
-        ss5: WirelessHost {
+        ss5: Sensor {
             @display("p=1098.6749,1435.9874;is=s");
         }
-        ss4: WirelessHost {
+        ss4: Sensor {
             @display("p=1961.2312,737.26874;is=s");
         }
-        ss3: WirelessHost {
+        ss3: Sensor {
             @display("p=1821.4874,1648.0125;is=s");
         }
-        ss2: WirelessHost {
+        ss2: Sensor {
             @display("p=1455.2625,915.56244;is=s");
         }
-        ss1: WirelessHost {
+        ss1: Sensor {
             @display("p=1045.6687,636.07495;is=s");
         }
         ap2: myAccesspoint {
