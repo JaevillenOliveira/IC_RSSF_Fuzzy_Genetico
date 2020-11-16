@@ -216,13 +216,11 @@ void MgmtAp::receiveSignal(cComponent *source, simsignal_t signalID, cObject *ob
 void MgmtAp::sendReport() {
     EV << "Sending Report\n";
     ApReport reportNotif;
-    reportNotif.setNumberOfSta(this->countAssocSta() - 1);
+    reportNotif.setNumberOfSta(this->countAssocSta()-1);
     reportNotif.setNumberOfNeighbours(apList.size());
     reportNotif.setRssiMean(calculateRssiMean());
     if(th != nullptr){
-//        printf("\n");
-//        cout << "th Id" << this->getId() << "   " << this->th->getThroughput() << endl;
-        reportNotif.setThroughput((this->th->getThroughput()*100)/37800000);
+        reportNotif.setThroughput((this->th->getThroughput()*100)/15200000);
     }else
         reportNotif.setThroughput(0.0);
     emit(reportReadySignalID, &reportNotif);
