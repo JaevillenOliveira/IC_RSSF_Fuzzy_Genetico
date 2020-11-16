@@ -50,38 +50,6 @@ void ControllerInterface::initialize()
     numberApsOff = 0;
 };
 
-/*void ControllerInterface::chooseRandomAp(){
-    if(!aplist.empty()){
-        vec.clear();
-        std::copy(aplist.begin(),aplist.end(),std::back_inserter<std::vector<pair>>(vec)); //copies items from map to vector
-    }
-    std::random_device rd;  //Will be used to obtain a seed for the random number engine
-    std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
-    std::uniform_int_distribution<> dis(0, vec.size() - 1);
-    std::uniform_int_distribution<> d(0, 10);
-
-    int apToTurnOff = dis(gen);
-    int delay = d(gen);
-
-    cout << "Vec size" << vec.size() << endl;
-    cout << "apToTurnOff" << apToTurnOff << endl;
-
-    auto ap = vec.at(apToTurnOff);
-    int id = ap.first;
-    ApInfo apinfo = ap.second;
-
-
-    cout << "APs OFF:  " << numberApsOff << endl;
-    if (!apinfo.isOff() && numberApsOff < (aplist.size()/2)){
-        shutdownAp(id, &apinfo);
-        numberApsOff++;
-        scheduleAt(simTime() +  delay, randomOffTimer);
-
-    }else if(apinfo.isOff() && numberApsOff < (aplist.size()/2)){
-        scheduleAt(simTime() +  delay, randomOffTimer);
-    }
-}
-*/
 void ControllerInterface::randomOff(const int id, ApInfo &ap){
 
     int turnOffPerc = rand() % 101;
@@ -89,9 +57,7 @@ void ControllerInterface::randomOff(const int id, ApInfo &ap){
         shutdownAp(id, &ap);
         numberApsOff++;
     }
-
 }
-
 
 std::vector<std::pair<int, ControllerInterface::ApInfo>> ControllerInterface::sortApByThroughput(){
     if(!aplist.empty()){
@@ -124,7 +90,6 @@ void ControllerInterface::handleMessage(cMessage *msg)
         if(numberApsOff < (aplist.size()/2)){
             scheduleAt(simTime() + 10, randomOffTimer);
         }
-
     }
 }
 

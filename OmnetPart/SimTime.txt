@@ -1,0 +1,4 @@
+	Simulation time for the FLC approach
+		SC1 - 1h
+		SC2 - 1h 30min
+		SC3 - 3hrs 20min

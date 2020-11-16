@@ -55,6 +55,7 @@ module Sensor extends WirelessHost
         string sinkAddress;
         wlan[*].mgmt.typename = default("MgmtSensorHH");
         wlan[*].agent.typename = default("AgentSensor");
+    submodules:
 }
 
 module ControllerInterface
@@ -74,12 +75,12 @@ network Sc1
         @figure[title](type=label; pos=0,-1; anchor=sw; color=darkblue);
         @signal[packetReceived](type=inet::Packet);
         @signal[packetSent](type=inet::Packet);
-        @signal[handoverDelay](type=simtime_t);
-        @statistic[handoverTime](title="handoverTime"; source=handoverDelay; unit=s; record=mean; interpolationmode=none);
+        //@signal[handoverDelay](type=simtime_t);
+        //@statistic[handoverTime](title="handoverTime"; source=handoverDelay; unit=s; record=mean; interpolationmode=none);
         @statistic[packetReceived](title="packets received"; source=(packetReceived); record=count,"sum(packetBytes)","vector(packetBytes)"; interpolationmode=none);
         @statistic[packetSent](title="packets sent"; source=(packetSent); record=count,"sum(packetBytes)","vector(packetBytes)"; interpolationmode=none);
         @statistic[packetLoss](title="packet loss"; source=(count(packetSent)-count(packetReceived)); record=last; interpolationmode=none);
-        @statistic[throughput](title="throughput"; unit=bps; source="throughput(packetReceived)"; record=vector);
+        //@statistic[throughput](title="throughput"; unit=bps; source="throughput(packetReceived)"; record=vector);
 
     submodules:
         controller: ControllerInterface {
@@ -101,22 +102,10 @@ network Sc1
             @display("p=1455.2625,915.56244;is=s");
         }
         ap1: myAccesspoint {
-            @display("p=954.1125,1161.3187;r=791,#CC0000,,1;i=,#CC0000");
+            @display("p=949.2937,1161.3187;r=791,#CC0000,,1;i=,#CC0000");
         }
         sink1: WirelessHost {
-            @display("p=1098.6749,1185.4125;is=s");
-        }
-        sink2: WirelessHost {
-            @display("p=1643.1937,1166.1375;is=s");
-        }
-        ap2: myAccesspoint {
-            @display("p=1493.8125,1132.4062;r=791,#E9B96E,,1;i=,#E9B96E");
-        }
-        ap3: myAccesspoint {
-            @display("p=2052.7874,1161.3187;r=791,#CC0000,,1;i=,#CC0000");
-        }
-        sink3: WirelessHost {
-            @display("p=2202.1687,1166.1375;is=s");
+            @display("p=1156.5,1166.1375;is=s");
         }
         ss3: Sensor {
             @display("p=1821.4874,1648.0125;is=s");
@@ -131,7 +120,19 @@ network Sc1
             @display("p=1532.3624,1382.9812;is=s");
         }
         ss7: Sensor {
-            @display("p=1344.4312,1778.1187;is=s");
+            @display("p=1344.4312,1749.2062;is=s");
+        }
+        ap2: myAccesspoint {
+            @display("p=1493.8125,1161.3187;r=791,#CC0000,,1;i=,#CC0000");
+        }
+        sink2: WirelessHost {
+            @display("p=1676.9249,1117.95;is=s");
+        }
+        ap3: myAccesspoint {
+            @display("p=2052.7874,1161.3187;r=791,#CC0000,,1;i=,#CC0000");
+        }
+        sink3: WirelessHost {
+            @display("p=2240.7188,1117.95;is=s");
         }
 }
 
@@ -147,7 +148,7 @@ network Sc2
         @statistic[packetReceived](title="packets received"; source=(packetReceived); record=count,"sum(packetBytes)","vector(packetBytes)"; interpolationmode=none);
         @statistic[packetSent](title="packets sent"; source=(packetSent); record=count,"sum(packetBytes)","vector(packetBytes)"; interpolationmode=none);
         @statistic[packetLoss](title="packet loss"; source=(count(packetSent)-count(packetReceived)); record=last; interpolationmode=none);
-        @statistic[throughput](title="throughput"; unit=bps; source="throughput(packetReceived)"; record=vector);
+        //@statistic[throughput](title="throughput"; unit=bps; source="throughput(packetReceived)"; record=vector);
 
     submodules:
         controller: ControllerInterface {
@@ -280,10 +281,10 @@ network Sc3
             @display("p=2690.688,2354.352;r=791,#CC0000,,1;i=,#CC0000");
         }
         ap4: myAccesspoint {
-            @display("p=3269.5386,2345.5386;r=791,#CC0000,,1;i=,#CC0000");
+            @display("p=3198.4617,2345.5386;r=791,#CC0000,,1;i=,#CC0000");
         }
         ap5: myAccesspoint {
-            @display("p=3781.2925,2359.754;r=791,#EF2929,,1;i=,#EF2929");
+            @display("p=3762.3386,2345.5386;r=791,#E9B96E,,1;i=,#E9B96E");
         }
         ap6: myAccesspoint {
             @display("p=1445.2308,1928.554;r=791,#E9B96E,,1;i=,#E9B96E");
@@ -295,16 +296,16 @@ network Sc3
             @display("p=2648.8003,1928.554;r=791,#E9B96E,,1;i=,#E9B96E");
         }
         ap9: myAccesspoint {
-            @display("p=3245.8464,1928.554;r=791,#E9B96E,,1;i=,#E9B96E");
+            @display("p=3198.4617,1928.554;r=791,#AD7FA8,,1;i=,#AD7FA8");
         }
         ap10: myAccesspoint {
-            @display("p=3804.9849,1928.554;r=791,#E9B96E,,1;i=,#E9B96E");
+            @display("p=3762.3386,1956.9847;r=791,#AD7FA8,,1;i=,#AD7FA8");
         }
         ap11: myAccesspoint {
-            @display("p=1483.1385,1340.9847;r=791,#AD7FA8,,1;i=,#5C3566");
+            @display("p=1497.354,1431.0155;r=791,#AD7FA8,,1;i=,#5C3566");
         }
         ap12: myAccesspoint {
-            @display("p=2013.8463,1340.9847;r=791,#AD7FA8,,1;i=,#5C3566");
+            @display("p=2094.4001,1431.0155;r=791,#AD7FA8,,1;i=,#5C3566");
         }
         configurator: Ipv4NetworkConfigurator {
             @display("p=5741.736,192.192");
@@ -325,10 +326,10 @@ network Sc3
             @display("p=2852.554,2312.3694;is=vs;i=block/sink,#E9B96E");
         }
         sink4: WirelessHost {
-            @display("p=3421.1694,2364.4924;is=vs;i=block/sink,#E9B96E");
+            @display("p=3350.0925,2364.4924;is=vs;i=block/sink,#E9B96E");
         }
         sink5: WirelessHost {
-            @display("p=3932.9233,2364.4924;is=vs;i=block/sink,#E9B96E");
+            @display("p=3932.9233,2345.5386;is=vs;i=block/sink,#E9B96E");
         }
         sink6: WirelessHost {
             @display("p=1577.9078,1895.3848;is=vs;i=block/sink,#E9B96E");
@@ -340,16 +341,16 @@ network Sc3
             @display("p=2800.431,1838.5232;is=vs;i=block/sink,#E9B96E");
         }
         sink9: WirelessHost {
-            @display("p=3397.477,1890.6462;is=vs;i=block/sink,#E9B96E");
+            @display("p=3350.0925,1890.6462;is=vs;i=block/sink,#E9B96E");
         }
         sink10: WirelessHost {
-            @display("p=3951.8772,1810.0924;is=vs;i=block/sink,#E9B96E");
+            @display("p=3904.4927,1838.5232;is=vs;i=block/sink,#E9B96E");
         }
         sink11: WirelessHost {
-            @display("p=1634.7693,1265.1693;is=vs;i=block/sink");
+            @display("p=1648.9847,1355.2001;is=vs;i=block/sink");
         }
         sink12: WirelessHost {
-            @display("p=2151.2617,1265.1693;is=vs;i=block/sink,#E9B96E");
+            @display("p=2231.8154,1355.2001;is=vs;i=block/sink,#E9B96E");
         }
         ss1: Sensor {
             @display("p=1601.6001,1606.3386;is=s");
@@ -358,19 +359,19 @@ network Sc3
             @display("p=2373.9695,900.30774;is=s");
         }
         ss3: Sensor {
-            @display("p=2440.3079,1563.6924;is=s");
+            @display("p=2994.708,1705.8463;is=s");
         }
         ss4: Sensor {
             @display("p=2410.408,2274.272;is=s");
         }
         ss5: Sensor {
-            @display("p=1852.7385,2478.2156;is=s");
+            @display("p=1739.0155,1895.3848;is=s");
         }
         ss6: Sensor {
-            @display("p=1483.1385,2625.108;is=s");
+            @display("p=1810.0924,2653.5386;is=s");
         }
         ss7: Sensor {
-            @display("p=1201.2,1409.408;is=s");
+            @display("p=3615.4463,1355.2001;is=s");
         }
         ss8: Sensor {
             @display("p=1810.0924,1032.9847;is=s");
@@ -379,19 +380,19 @@ network Sc3
             @display("p=2442.44,1793.792;is=s");
         }
         ss10: Sensor {
-            @display("p=1743.7539,1933.2925;is=s");
+            @display("p=2942.5847,2137.0464;is=s");
         }
         ss11: Sensor {
-            @display("p=2151.2617,2696.1848;is=s");
+            @display("p=2293.4155,2696.1848;is=s");
         }
         ss12: Sensor {
-            @display("p=3070.5232,2084.923;is=s");
+            @display("p=3122.6462,2895.2002;is=s");
         }
         ss13: Sensor {
             @display("p=3615.4463,2141.7847;is=s");
         }
         ss14: Sensor {
-            @display("p=3615.4463,1563.6924;is=s");
+            @display("p=3615.4463,1791.1385;is=s");
         }
         ss15: Sensor {
             @display("p=3658.0925,2696.1848;is=s");
@@ -400,7 +401,7 @@ network Sc3
             @display("p=3421.1694,961.9078;is=s");
         }
         ss17: Sensor {
-            @display("p=3364.3079,1506.8308;is=s");
+            @display("p=1151.4463,1554.2155;is=s");
         }
         ss18: Sensor {
             @display("p=1089.8462,2137.0464;is=s");
@@ -426,41 +427,26 @@ network Sc3
         ss25: Sensor {
             @display("p=1919.077,2179.6924;is=s");
         }
-        ss26: Sensor {
-            @display("p=2871.5078,1606.3386;is=s");
-        }
-        ss27: Sensor {
-            @display("p=3004.1848,900.30774;is=s");
-        }
-        ss28: Sensor {
-            @display("p=3928.1848,2137.0464;is=s");
-        }
-        ss29: Sensor {
-            @display("p=2264.9849,2080.1848;is=s");
-        }
-        ss30: Sensor {
-            @display("p=2686.7078,2080.1848;is=s");
-        }
         visualizer: IntegratedCanvasVisualizer {
             @display("p=5741.736,1033.032");
         }
         ap13: myAccesspoint {
-            @display("p=2686.7078,1340.9847;r=791,#AD7FA8,,1;i=,#5C3566");
-        }
-        ap14: myAccesspoint {
-            @display("p=3160.554,1340.9847;r=791,#AD7FA8,,1;i=,#5C3566");
+            @display("p=2686.7078,1431.0155;r=791,#AD7FA8,,1;i=,#5C3566");
         }
         sink13: WirelessHost {
-            @display("p=2800.431,1265.1693;is=vs;i=block/sink");
+            @display("p=2824.1233,1355.2001;is=vs;i=block/sink,#E9B96E");
+        }
+        ap14: myAccesspoint {
+            @display("p=3198.4617,1478.4001;r=791,#AD7FA8,,1;i=,#5C3566");
         }
         sink14: WirelessHost {
-            @display("p=3297.9695,1265.1693;is=vs;i=block/sink,#E9B96E");
+            @display("p=3335.8772,1402.5847;is=vs;i=block/sink,#E9B96E");
         }
         ap15: myAccesspoint {
-            @display("p=3781.2925,1340.9847;r=791,#AD7FA8,,1;i=,#5C3566");
+            @display("p=3767.0771,1478.4001;r=791,#AD7FA8,,1;i=,#5C3566");
         }
         sink15: WirelessHost {
-            @display("p=3918.708,1265.1693;is=vs;i=block/sink,#E9B96E");
+            @display("p=3904.4927,1402.5847;is=vs;i=block/sink,#E9B96E");
         }
 }
 
