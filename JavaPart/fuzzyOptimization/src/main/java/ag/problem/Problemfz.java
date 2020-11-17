@@ -69,8 +69,8 @@ public final class Problemfz extends AbstractDoubleProblem{
             process.waitFor(); //Waits for the simulation to finish
             
             double energyConsumed = 0;
-            //energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc1.txt");
-            //energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc2.txt");
+            energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc1.txt");
+            energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc2.txt");
             energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc3.txt");
             
             s.setObjective(0, energyConsumed);       

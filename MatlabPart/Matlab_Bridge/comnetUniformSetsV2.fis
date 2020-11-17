@@ -29,11 +29,11 @@ MF3='HIGH':'trimf',[4 8 8]
 
 [Input3]
 Name='Number_Source'
-Range=[0 30]
+Range=[0 25]
 NumMFs=3
-MF1='LOW':'trimf',[0 0 15]
-MF2='MEDIUM':'trimf',[0 15 30]
-MF3='HIGH':'trimf',[15 30 30]
+MF1='LOW':'trimf',[0 0 12.5]
+MF2='MEDIUM':'trimf',[0 12.5 25]
+MF3='HIGH':'trimf',[12.5 25 25]
 
 [Input4]
 Name='Av_throughput'
