@@ -91,8 +91,8 @@ public class Algorithm extends AbstractGeneticAlgorithm{
         bw.close();
     }
     
-    private void logEvolution(List solutionList) throws IOException{   
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/EvolutionLog.txt", true))) {
+    private void logEvolution(List solutionList, int scenario) throws IOException{   
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/EvolutionLogSc"+String.valueOf(scenario)+".txt", true))) {
             Iterator it = solutionList.iterator();
             int subjectCounter = 0;
             bw.write("GENERATION " + this.iterations);
@@ -111,15 +111,15 @@ public class Algorithm extends AbstractGeneticAlgorithm{
      * @param modelSolution
      * @throws IOException
      */
-    public void run(FzArrayDoubleSolution modelSolution) throws IOException{
+    public void run(FzArrayDoubleSolution modelSolution, int scenario) throws IOException{
         List<FzArrayDoubleSolution> offspringPopulation;
         List<FzArrayDoubleSolution> matingPopulation;
-
+        System.out.println("Starting Scenario "+String.valueOf(scenario));
         population = this.createInitialPopulation();//This inherited method creates 'maxPopulationSize' new subjects
         population.add(0, modelSolution);
         setMaxPopulationSize(this.maxPopulationSize+1);  //It's declared twice because one subject is already saved in the file, therefore it just needs to create maxPopulationSize -1 new subjects
         population = evaluatePopulation(population);
-        this.logEvolution(population);
+        this.logEvolution(population, scenario);
         System.out.println("GENERATION "+this.iterations+ " NoChangeCounter "+this.noChangeCounter);
         initProgress();
         while(!this.isStoppingConditionReached()){
@@ -127,10 +127,10 @@ public class Algorithm extends AbstractGeneticAlgorithm{
             offspringPopulation = this.reproduction(matingPopulation);
             offspringPopulation = evaluatePopulation(offspringPopulation);
             population = replacement(population, offspringPopulation);
-            this.logEvolution(population);
+            this.logEvolution(population, scenario);
             System.out.println("GENERATION "+this.iterations+ " NoChangeCounter "+this.noChangeCounter);
-            this.writeBestSolution("/home/jaevillen/IC/Buffer/BestSolution.txt");
-            this.writePopulation("/home/jaevillen/IC/Buffer/FittestGeneration.txt");
+            this.writeBestSolution("/home/jaevillen/IC/Buffer/BestSolutionSc"+String.valueOf(scenario)+".txt");
+            this.writePopulation("/home/jaevillen/IC/Buffer/FittestGenerationSc"+String.valueOf(scenario)+".txt");
             updateProgress();
         }
     }

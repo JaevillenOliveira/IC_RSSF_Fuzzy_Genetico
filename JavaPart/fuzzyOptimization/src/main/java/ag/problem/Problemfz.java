@@ -8,6 +8,7 @@ package ag.problem;
 import ag.solution.FzArrayDoubleSolution;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -32,6 +33,7 @@ public final class Problemfz extends AbstractDoubleProblem{
     private BufferedWriter bw;
     private BufferedReader br;
     private StringTokenizer st;
+    private int scenarioId;
     
     /**
      *
@@ -43,7 +45,7 @@ public final class Problemfz extends AbstractDoubleProblem{
      * @param numberOfSets
      * @param setShape
      */
-    public Problemfz(String name, int numberOfObjectives, int numberOfVariables, ArrayList<Double> upperLimits, ArrayList<Double> lowerLimits, int numberOfSets, SetShape setShape) {
+    public Problemfz(String name, int numberOfObjectives, int numberOfVariables, ArrayList<Double> upperLimits, ArrayList<Double> lowerLimits, int numberOfSets, SetShape setShape, int scenarioId) {
         this.setName(name);
         this.setNumberOfObjectives(numberOfObjectives);
         this.setNumberOfVariables(numberOfVariables);
@@ -52,6 +54,7 @@ public final class Problemfz extends AbstractDoubleProblem{
         this.numberOfSets = numberOfSets;
         this.setShape = setShape;
         this.rdm = new Random();
+        this.scenarioId = scenarioId;
     }
  
     /**
@@ -63,15 +66,14 @@ public final class Problemfz extends AbstractDoubleProblem{
         try {
             this.writeSolution(s, "/home/jaevillen/IC/Buffer/TempSolution.txt");
             
-            ProcessBuilder processBuilder = new ProcessBuilder("/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/runSimulation.sh");
-            processBuilder.inheritIO();
+            ProcessBuilder processBuilder = new ProcessBuilder("/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/runSimulation.sh", String.valueOf(this.scenarioId));
+            //processBuilder.inheritIO();
+            processBuilder.redirectOutput(new File("/home/jaevillen/IC/Buffer/log.txt"));
             Process process = processBuilder.start();
             process.waitFor(); //Waits for the simulation to finish
             
             double energyConsumed = 0;
-            energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc1.txt");
-            energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc2.txt");
-            energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc3.txt");
+            energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc"+String.valueOf(this.scenarioId)+".txt");
             
             s.setObjective(0, energyConsumed);       
             System.out.println("Evaluated " + s.getObjective(0));

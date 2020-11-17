@@ -4,6 +4,7 @@ import json
 from Filters import ao_simulation_filter as fao
 from Filters import ro_simulation_filter as fro
 from Filters import flc_simulation_filter as fflc
+from Filters import flc_power_comsump_filter as pf
 
 import Plot as plt
 
@@ -88,8 +89,8 @@ def plot_all_graphics(results, scenario):
 	
 def dump_consumption_into_file(scenario):
 	wsn = pd.read_csv('wsn'+scenario+'.csv', usecols=['run', 'type', 'module', 'name', 'value', 'mean'])
-	fresult_fflc = fflc(wsn, 'wsnSc'+scenario+'T', scenario) 
-	power_consumption_dict = {'T'+str(i+1) : (fresult_fflc[5])[i] for i in range(0, len(fresult_fflc[5])) }
+	fresult_pf = pf(wsn, 'wsnSc'+scenario+'T', scenario) 
+	power_consumption_dict = {'T'+str(i+1) : fresult_pf[i] for i in range(0, len(fresult_pf)) }
 	y = json.dumps(power_consumption_dict)
 	with open('/home/jaevillen/IC/Buffer/power_consumption_sc'+scenario+'.txt', 'w') as outfile:
 		json.dump(y, outfile)
@@ -98,9 +99,9 @@ def dump_consumption_into_file(scenario):
 #dump_consumption_into_file('2')
 #dump_consumption_into_file('3')
 
-call_func_wsn1()
-call_func_wsn2()
-call_func_wsn3()
+#call_func_wsn1()
+#call_func_wsn2()
+#call_func_wsn3()
 
 
 

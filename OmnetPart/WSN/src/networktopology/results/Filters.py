@@ -104,6 +104,26 @@ def ro_simulation_filter(wsn, wl, run, scenario):
     return [totalPkSentCountRO, totalPkReceivedCountRO, packetLossRO, jitterMeanRO, latencyMeanRO, consumedPowerRO, th_wlRO];
 
 
+def flc_power_comsump_filter(wsn, run, scenario):
+    consumedPowerFLC = []
+
+    for i in range(1, 11):
+
+        residualEnergyFLC = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-0')) & (wsn.type=='scalar') & 
+        (wsn.name=='residualEnergyCapacity:last') & 
+        (wsn.module.str.endswith('energyStorage'))] 
+
+        if(int(scenario) == 1):
+            spentEnergyJFLC = 3000 - sum(residualEnergyFLC.value)
+        elif(int(scenario) == 2):
+            spentEnergyJFLC = 9000 - sum(residualEnergyFLC.value)
+        elif(int(scenario) == 3):
+            spentEnergyJFLC = 15000 - sum(residualEnergyFLC.value)
+        consumedPowerFLC.append(spentEnergyJFLC / 240)
+
+
+    return consumedPowerFLC;
+
 def flc_simulation_filter(wsn, wl, run, scenario):
 
     totalPkSentCountFLC = []

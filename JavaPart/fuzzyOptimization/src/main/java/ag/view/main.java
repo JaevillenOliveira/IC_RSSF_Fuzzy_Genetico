@@ -28,13 +28,14 @@ public class main {
      */
     public static void main(String[] args) {
         try {
-            ctr = new Controller();
-            pfz = ctr.readProblem();
-            ga = new Algorithm(pfz, ctr.getSizeOfPopulation());
-            ga.run(ctr.createModelSolution(pfz));
-            //pfz.writeSolution((DoubleSolution) ga.getResult(), "/home/jaevillen/IC/Buffer/BestSolution.txt");
-            //ga.writePopulation("/home/jaevillen/IC/Buffer/FittestGeneration.txt");
-
+            for(int i = 1; i <=3; i++){
+                ctr = new Controller(i);
+                pfz = ctr.readProblem();
+                ga = new Algorithm(pfz, ctr.getSizeOfPopulation());
+                ga.run(ctr.createModelSolution(pfz), i);
+                //pfz.writeSolution((DoubleSolution) ga.getResult(), "/home/jaevillen/IC/Buffer/BestSolution.txt");
+                //ga.writePopulation("/home/jaevillen/IC/Buffer/FittestGeneration.txt");
+            }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

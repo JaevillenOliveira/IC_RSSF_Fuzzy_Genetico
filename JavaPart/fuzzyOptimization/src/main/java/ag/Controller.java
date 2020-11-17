@@ -31,15 +31,28 @@ public class Controller {
     private StringTokenizer st;
     private int sizeOfPopulation;
     private double [] modelSubject = null;
+    private int scenarioId;
 
     /**
      *
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public Controller() throws FileNotFoundException, IOException {
-        this.br = new BufferedReader(new FileReader("/home/jaevillen/IC/Buffer/ConfigFile.txt"));
-        this.bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/ConfigFile.txt", true)); 
+    public Controller(int scenarioId) throws FileNotFoundException, IOException {
+        this.scenarioId = scenarioId;
+        switch(scenarioId){
+            case 1:
+                this.br = new BufferedReader(new FileReader("/home/jaevillen/IC/Buffer/ConfigFileSc1.txt"));
+                this.bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/ConfigFileSc1.txt", true)); 
+                
+            case 2:
+                this.br = new BufferedReader(new FileReader("/home/jaevillen/IC/Buffer/ConfigFileSc2.txt"));
+                this.bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/ConfigFileSc2.txt", true)); 
+                
+            case 3:
+                this.br = new BufferedReader(new FileReader("/home/jaevillen/IC/Buffer/ConfigFileSc3.txt"));
+                this.bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/ConfigFileSc3.txt", true)); 
+        }
     }
     
      /**
@@ -99,7 +112,7 @@ public class Controller {
                 /*Creates a Problem object with the information read
                  * For this problem the Variables of a Solution will be the points of each set of each fuzzy variable
                 */
-                return new Problemfz(name, objectives, numberOfVariables*numberofSets*3, upperLimits, lowerLimits, numberofSets, setsType);
+                return new Problemfz(name, objectives, numberOfVariables*numberofSets*3, upperLimits, lowerLimits, numberofSets, setsType, this.scenarioId);
             default:
                 break;
         }   
