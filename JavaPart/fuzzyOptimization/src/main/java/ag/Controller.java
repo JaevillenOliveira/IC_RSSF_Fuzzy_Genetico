@@ -40,19 +40,8 @@ public class Controller {
      */
     public Controller(int scenarioId) throws FileNotFoundException, IOException {
         this.scenarioId = scenarioId;
-        switch(scenarioId){
-            case 1:
-                this.br = new BufferedReader(new FileReader("/home/jaevillen/IC/Buffer/ConfigFileSc1.txt"));
-                this.bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/ConfigFileSc1.txt", true)); 
-                
-            case 2:
-                this.br = new BufferedReader(new FileReader("/home/jaevillen/IC/Buffer/ConfigFileSc2.txt"));
-                this.bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/ConfigFileSc2.txt", true)); 
-                
-            case 3:
-                this.br = new BufferedReader(new FileReader("/home/jaevillen/IC/Buffer/ConfigFileSc3.txt"));
-                this.bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/ConfigFileSc3.txt", true)); 
-        }
+        this.br = new BufferedReader(new FileReader("/home/jaevillen/IC/Buffer/ConfigFile.txt"));
+        this.bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/ConfigFile.txt", true)); 
     }
     
      /**

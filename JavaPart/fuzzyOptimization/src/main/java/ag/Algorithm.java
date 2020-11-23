@@ -9,8 +9,11 @@ import ag.problem.Problemfz;
 import ag.solution.FzArrayDoubleSolution;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -25,7 +28,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
  *
  * @author jaevillen
  */
-public class Algorithm extends AbstractGeneticAlgorithm{
+public class Algorithm extends AbstractGeneticAlgorithm implements Serializable {
     
     private int iterations;
     private int noChangeCounter;
@@ -47,6 +50,12 @@ public class Algorithm extends AbstractGeneticAlgorithm{
         this.crossoverOperator = new Crossover(0.7);//new FzSetsBLXAlphaCrossover(0.7, problem);
         this.mutationOperator = new Mutation(0.2);   //new FzSetsMutation(0.7, new Random(), problem);
         this.evaluator = new SequentialSolutionListEvaluator();
+    }
+    
+    private void saveExecState(String path, Object objToSave) throws FileNotFoundException, IOException{
+        ObjectOutputStream stateObj = new ObjectOutputStream(new FileOutputStream(path));
+        stateObj.writeObject(objToSave);
+        System.out.println("Object Saved to "+path);
     }
 
     /**
@@ -119,6 +128,7 @@ public class Algorithm extends AbstractGeneticAlgorithm{
         population.add(0, modelSolution);
         setMaxPopulationSize(this.maxPopulationSize+1);  //It's declared twice because one subject is already saved in the file, therefore it just needs to create maxPopulationSize -1 new subjects
         population = evaluatePopulation(population);
+        this.saveExecState("/home/jaevillen/IC/Buffer/ExecState.txt", population);
         this.logEvolution(population, scenario);
         System.out.println("GENERATION "+this.iterations+ " NoChangeCounter "+this.noChangeCounter);
         initProgress();
@@ -127,6 +137,7 @@ public class Algorithm extends AbstractGeneticAlgorithm{
             offspringPopulation = this.reproduction(matingPopulation);
             offspringPopulation = evaluatePopulation(offspringPopulation);
             population = replacement(population, offspringPopulation);
+            this.saveExecState("/home/jaevillen/IC/Buffer/ExecState.txt", population);
             this.logEvolution(population, scenario);
             System.out.println("GENERATION "+this.iterations+ " NoChangeCounter "+this.noChangeCounter);
             this.writeBestSolution("/home/jaevillen/IC/Buffer/BestSolutionSc"+String.valueOf(scenario)+".txt");
