@@ -5,18 +5,16 @@
  */
 package ag.solution;
 
+import java.io.Serializable;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.impl.ArrayDoubleSolution;
 
 /**
  *
  * @author jaevillen
  */
-public class FzArrayDoubleSolution extends ArrayDoubleSolution implements Cloneable{
+public class FzArrayDoubleSolution extends ArrayDoubleSolution implements Serializable{
 
     public FzArrayDoubleSolution(DoubleProblem problem) {
         super(problem);
