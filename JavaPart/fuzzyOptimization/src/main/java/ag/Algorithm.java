@@ -116,11 +116,12 @@ public class Algorithm extends AbstractGeneticAlgorithm implements Serializable 
     }
     
     private void updateLogs(Object population, int scenario) throws IOException{
-        this.saveExecState("/home/jaevillen/IC/Buffer/ExecState", population);
+        //this.saveExecState("/home/jaevillen/IC/Buffer/ExecState", population);
+        this.writePopulation("/home/jaevillen/IC/Buffer/FittestGenerationSc"+String.valueOf(scenario)+".txt");
         this.logEvolution((List) population, scenario);
         System.out.println("GENERATION "+this.iterations+ " NoChangeCounter "+this.noChangeCounter);
         this.writeBestSolution("/home/jaevillen/IC/Buffer/BestSolutionSc"+String.valueOf(scenario)+".txt");
-        this.writePopulation("/home/jaevillen/IC/Buffer/FittestGenerationSc"+String.valueOf(scenario)+".txt");
+        
     }
     
     /**
@@ -137,10 +138,10 @@ public class Algorithm extends AbstractGeneticAlgorithm implements Serializable 
         population = this.createInitialPopulation();//This inherited method creates 'maxPopulationSize' new subjects
         population.add(0, modelSolution);
         setMaxPopulationSize(this.maxPopulationSize+1);  //It's declared twice because one subject is already saved in the file, therefore it just needs to create maxPopulationSize -1 new subjects
-        
+        population = evaluatePopulation(population);
         
         this.updateLogs(population, scenario);
-        population = evaluatePopulation(population);
+        
         initProgress();
         while(!this.isStoppingConditionReached()){
             matingPopulation = selection(population); 

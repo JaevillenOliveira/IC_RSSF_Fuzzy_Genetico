@@ -3,15 +3,15 @@
 export PATH=$HOME/anaconda3/bin:$PATH
 export PATH=$HOME/omnetpp-5.5.1/bin:$PATH
 
+gnome-terminal --working-directory=IC/MatlabPart/Matlab_Bridge/ -- /usr/local/MATLAB/R2018b/bin/matlab -nodisplay -nosplash -nodesktop -r "run('/home/jaevillen/IC/MatlabPart/Matlab_Bridge/ReadFuzzySolution.m')"
+
+sleep 12
+
+cd ~
+cd IC/OmnetPart/WSN/src/networktopology
 
 if [ $@ -eq "1" ]
 then
-    gnome-terminal --working-directory=IC/MatlabPart/Matlab_Bridge/ -- /usr/local/MATLAB/R2018b/bin/matlab -nodisplay -nosplash -nodesktop -r "run('/home/jaevillen/IC/MatlabPart/Matlab_Bridge/ReadFuzzySolutionSc1.m')"
-
-    sleep 12
-
-    cd ~
-    cd IC/OmnetPart/WSN/src/networktopology
     ./runSc1FLC.sh
     rm /home/jaevillen/IC/MatlabPart/Matlab_Bridge/TempSolution.fis 
     cd results
@@ -20,12 +20,6 @@ then
 
 elif [ $@ == "2" ]
 then
-    gnome-terminal --working-directory=IC/MatlabPart/Matlab_Bridge/ -- /usr/local/MATLAB/R2018b/bin/matlab -nodisplay -nosplash -nodesktop -r "run('/home/jaevillen/IC/MatlabPart/Matlab_Bridge/ReadFuzzySolutionSc2.m')"
-
-    sleep 12
-
-    cd ~
-    cd IC/OmnetPart/WSN/src/networktopology
     ./runSc2FLC.sh
     rm /home/jaevillen/IC/MatlabPart/Matlab_Bridge/TempSolution.fis 
     cd results
@@ -34,12 +28,6 @@ then
 
 elif [ $@ == "3" ]
 then
-    gnome-terminal --working-directory=IC/MatlabPart/Matlab_Bridge/ -- /usr/local/MATLAB/R2018b/bin/matlab -nodisplay -nosplash -nodesktop -r "run('/home/jaevillen/IC/MatlabPart/Matlab_Bridge/ReadFuzzySolutionSc3.m')"
-
-    sleep 12
-
-    cd ~
-    cd IC/OmnetPart/WSN/src/networktopology
     ./runSc3FLC.sh
     rm /home/jaevillen/IC/MatlabPart/Matlab_Bridge/TempSolution.fis 
     cd results

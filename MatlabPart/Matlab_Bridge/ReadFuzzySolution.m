@@ -1,5 +1,5 @@
 function ReadFuzzySolution
-    config = fopen('/home/jaevillen/IC/Buffer/ConfigFileSc2.txt','r');
+    config = fopen('/home/jaevillen/IC/Buffer/ConfigFile.txt','r');
     fgetl(config); %% Reads the name
     fgetl(config); %% Reads configurations ... 
     upperLimits = fscanf(config,'%i', [1, 5]);

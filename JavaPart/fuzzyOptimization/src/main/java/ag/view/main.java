@@ -28,7 +28,7 @@ public class main {
      */
     public static void main(String[] args) {
         try {
-            for(int i = 1; i <=3; i++){
+            for(int i = 2; i <=3; i++){
                 ctr = new Controller(i);
                 pfz = ctr.readProblem();
                 ga = new Algorithm(pfz, ctr.getSizeOfPopulation());
