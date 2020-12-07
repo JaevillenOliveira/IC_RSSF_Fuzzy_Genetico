@@ -119,7 +119,6 @@ public class Algorithm extends AbstractGeneticAlgorithm implements Serializable 
         //this.saveExecState("/home/jaevillen/IC/Buffer/ExecState", population);
         this.writePopulation("/home/jaevillen/IC/Buffer/FittestGenerationSc"+String.valueOf(scenario)+".txt");
         this.logEvolution((List) population, scenario);
-        System.out.println("GENERATION "+this.iterations+ " NoChangeCounter "+this.noChangeCounter);
         this.writeBestSolution("/home/jaevillen/IC/Buffer/BestSolutionSc"+String.valueOf(scenario)+".txt");
         
     }
@@ -134,6 +133,7 @@ public class Algorithm extends AbstractGeneticAlgorithm implements Serializable 
         List<FzArrayDoubleSolution> matingPopulation;
         
         System.out.println("Starting Scenario "+String.valueOf(scenario));
+        System.out.println("GENERATION "+this.iterations+ " NoChangeCounter "+this.noChangeCounter);
         
         population = this.createInitialPopulation();//This inherited method creates 'maxPopulationSize' new subjects
         population.add(0, modelSolution);
@@ -144,6 +144,7 @@ public class Algorithm extends AbstractGeneticAlgorithm implements Serializable 
         
         initProgress();
         while(!this.isStoppingConditionReached()){
+            System.out.println("GENERATION "+this.iterations+ " NoChangeCounter "+this.noChangeCounter);
             matingPopulation = selection(population); 
             offspringPopulation = this.reproduction(matingPopulation);
             offspringPopulation = evaluatePopulation(offspringPopulation);
@@ -167,6 +168,7 @@ public class Algorithm extends AbstractGeneticAlgorithm implements Serializable 
         retakeProgress(iterations, noChangeCntr);
         
         while(!this.isStoppingConditionReached()){
+            System.out.println("GENERATION "+this.iterations+ " NoChangeCounter "+this.noChangeCounter);
             matingPopulation = selection(population); 
             offspringPopulation = this.reproduction(matingPopulation);
             offspringPopulation = evaluatePopulation(offspringPopulation);
