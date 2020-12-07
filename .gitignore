@@ -1,0 +1,11 @@
+*.sca
+*.vec
+*.vci
+*.anf
+*.o
+*__pycache__
+/OmnetPart/inet
+/inet4
+/JavaPart/fuzzyOptimization/target/
+/JavaPart/server/target/
+/JavaPart/fuzzyOptimization/nbproject/
