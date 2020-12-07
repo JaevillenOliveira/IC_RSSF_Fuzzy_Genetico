@@ -154,6 +154,34 @@ public class Algorithm extends AbstractGeneticAlgorithm implements Serializable 
             updateProgress();
         }
     }
+    
+    public void runRecovery(List<FzArrayDoubleSolution> lastPop, int iterations, int noChangeCntr, int scenario) throws IOException{
+        List<FzArrayDoubleSolution> offspringPopulation;
+        List<FzArrayDoubleSolution> matingPopulation;
+        
+        System.out.println("Retaking Scenario "+String.valueOf(scenario));
+        
+        population = lastPop;//This inherited method creates 'maxPopulationSize' new subjects
+        setMaxPopulationSize(this.maxPopulationSize+1);  //It's declared twice because one subject is already saved in the file, therefore it just needs to create maxPopulationSize -1 new subjects 
+
+        retakeProgress(iterations, noChangeCntr);
+        
+        while(!this.isStoppingConditionReached()){
+            matingPopulation = selection(population); 
+            offspringPopulation = this.reproduction(matingPopulation);
+            offspringPopulation = evaluatePopulation(offspringPopulation);
+            population = replacement(population, offspringPopulation);
+            
+            this.updateLogs(population, scenario);
+
+            updateProgress();
+        }
+    }
+    
+    protected void retakeProgress(int iter, int noChangeCntr){
+        this.iterations = iter;
+        this.noChangeCounter = noChangeCntr;
+    }
  
     @Override
     protected void initProgress() {

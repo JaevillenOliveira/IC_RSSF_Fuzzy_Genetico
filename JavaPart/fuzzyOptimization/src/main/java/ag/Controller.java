@@ -32,6 +32,7 @@ public class Controller {
     private int sizeOfPopulation;
     private double [] modelSubject = null;
     private int scenarioId;
+    private int numberFzVariables = 0;
 
     /**
      *
@@ -51,7 +52,7 @@ public class Controller {
      */
     public Problemfz readProblem() throws IOException{
         String name = br.readLine(); 
-        int objectives = 0, numberOfVariables = 0, numberofSets = 0;
+        int objectives = 0, numberofSets = 0;
         SetShape setsType = null;
         
         /*The first line contains the number of objectives, the number of fuzzy variables, number of sets of each fuzzy variable,
@@ -61,8 +62,9 @@ public class Controller {
 
         while(st.hasMoreTokens()){
             objectives = Integer.parseInt(st.nextToken()); //Reads the number of objectives
-            numberOfVariables = Integer.parseInt(st.nextToken());
+            this.numberFzVariables = Integer.parseInt(st.nextToken());
             numberofSets = Integer.parseInt(st.nextToken()); //Reads the number of sets that each variable has
+            
             switch(st.nextToken()){ // Reads the shape of the sets (for now is implemented only for triangular sets)
                 case "triangular":
                     setsType = SetShape.TRIANGULAR; //The set's shape defines, among other things, the number of points of the function
@@ -83,7 +85,7 @@ public class Controller {
         */
         switch(setsType){
             case TRIANGULAR:
-                this.modelSubject = this.readModel(numberOfVariables, numberofSets, setsType.getNumPoints()); // Reads the model configuration from a file
+                this.modelSubject = this.readModel(this.numberFzVariables, numberofSets, setsType.getNumPoints()); // Reads the model configuration from a file
                 for(int i = 0; i < modelSubject.length; i+=setsType.getNumPoints()){  
                     double [] constraints = this.calculatelimitsTriangularSetsConstraints(modelSubject [i], modelSubject [i+1], modelSubject [i+2]); 
                     /*
@@ -101,12 +103,51 @@ public class Controller {
                 /*Creates a Problem object with the information read
                  * For this problem the Variables of a Solution will be the points of each set of each fuzzy variable
                 */
-                return new Problemfz(name, objectives, numberOfVariables*numberofSets*3, upperLimits, lowerLimits, numberofSets, setsType, this.scenarioId);
+                return new Problemfz(name, objectives, this.numberFzVariables*numberofSets*3, upperLimits, lowerLimits, numberofSets, setsType, this.scenarioId);
             default:
                 break;
         }   
         return null;
     }
+    
+    public List<FzArrayDoubleSolution> readPopulation(String filePath, Problemfz pfz) throws IOException{
+        
+        List<FzArrayDoubleSolution> lastpop = new ArrayList<FzArrayDoubleSolution>();
+        BufferedReader lbr = new BufferedReader(new FileReader(filePath));
+        String energy = null;
+        ArrayList<Double> subject = null;
+        
+        for (int i=0; i < this.sizeOfPopulation; i++){
+            this.st = new StringTokenizer(lbr.readLine());            
+            while (st.hasMoreTokens()) {
+                energy = st.nextToken();
+            }
+            
+            subject = new ArrayList<Double>();
+            for (int j=0; j < this.numberFzVariables; j++) {
+                this.st = new StringTokenizer(lbr.readLine());
+                while(this.st.hasMoreTokens()){
+                    subject.add(Double.parseDouble(st.nextToken()));
+                }
+            }
+            FzArrayDoubleSolution sol = this.createSolution(pfz, subject);
+            sol.setObjective(0, Double.parseDouble(energy));
+            lastpop.add(sol);
+                     
+        }
+        lbr.close();
+        return lastpop;
+    }
+    
+    protected FzArrayDoubleSolution createSolution(Problemfz pfz, ArrayList<Double> subject){
+        FzArrayDoubleSolution fzs = new FzArrayDoubleSolution(pfz);
+        int cnt = 0;
+        for(double d : subject){
+            fzs.setVariableValue(cnt++, d);
+        }
+        return fzs;
+    }
+    
     
     /**
      * Uses the array containing the points of the model solution, read from a file, to create 
