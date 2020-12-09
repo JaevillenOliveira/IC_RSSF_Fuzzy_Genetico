@@ -1,6 +1,12 @@
-	TeoricalRate	ShouldBeSent	PacketsSent	ActualRate	Loss	Time	Sensors	APs
-	8Mbps		13333 pks	25334  (?)	15,2Mbps	1,38%	20s	1		1
-	9Mbps		15000 pks	29232  (?)	17,5Mbps	14,52%	20s	1		1	
-	10Mbps		16666 pks	31668  (?)	19,0Mbps	21,06%	20s	1		1	
-	12Mbps		20000 pks	38000  (?)	22,8Mbps	34,03%	20s	1		1
+	Pks Size: 1500 Bytes	Time: 20s	1 Sensor	1 AP
+
+	TeoricalRate	ShouldBeSent	PacketsSent	ActualRate	Loss	
+	8Mbps		13333 pks	25334  (?)	15,2Mbps	1,38%	
+	9Mbps		15000 pks	29232  (?)	17,5Mbps	14,52%	
+	10Mbps		16666 pks	31668  (?)	19,0Mbps	21,06%		
+	12Mbps		20000 pks	38000  (?)	22,8Mbps	34,03%	
 	
+	
+	(?) When a packet doesn't get to the endpoint the sensor will try to resend that packet.
+	Maybe, that resending will enter in the count of sent packets, making it appear that was sent
+	more packets than it should.

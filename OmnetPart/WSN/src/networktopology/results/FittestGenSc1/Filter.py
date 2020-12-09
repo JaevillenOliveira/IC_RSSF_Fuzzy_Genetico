@@ -108,7 +108,7 @@ def dump_consumption_into_file(scenario):
 #dump_consumption_into_file('2')
 #dump_consumption_into_file('3')
 
-#call_func_wsn1()
+call_func_wsn1()
 #call_func_wsn2()
 #call_func_wsn3()
 
