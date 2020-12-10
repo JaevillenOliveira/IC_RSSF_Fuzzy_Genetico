@@ -4,6 +4,7 @@ import json
 from Filters import ao_simulation_filter as fao
 from Filters import ro_simulation_filter as fro
 from Filters import flc_simulation_filter as fflc
+from Filters import flcag_simulation_filter as fflcag
 from Filters import flc_power_comsump_filter as pf
 
 import Plot as plt
@@ -12,36 +13,44 @@ def results_from_wsn(wsn_file, wl, run_name, scenario):
 	fresult_fao = fao(wsn_file, wl, run_name, scenario) 
 	fresult_fro = fro(wsn_file, wl, run_name, scenario)
 	fresult_fflc = fflc(wsn_file, wl, run_name, scenario) 
+	fresult_fflcag = fflcag(wsn_file, wl, run_name, scenario) 
 
 	results = pd.DataFrame(index=['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10'])
 	
 	results["PacketsSent"] = fresult_fao[0]
-	results["PacketsSentFLC"] = fresult_fflc[0]
 	results["PacketsSentRO"] = fresult_fro[0]
+	results["PacketsSentFLC"] = fresult_fflc[0]
+	results["PacketsSentFLCAG"] = fresult_fflcag[0] 
 	
 	results["PacketsReceived"] = fresult_fao[1]
-	results["PacketsReceivedFLC"] =fresult_fflc[1]
 	results["PacketsReceivedRO"] = fresult_fro[1]
+	results["PacketsReceivedFLC"] =fresult_fflc[1]
+	results["PacketsReceivedFLCAG"] = fresult_fflcag[1] 
 	
 	results["PacketsLost(%)"] = fresult_fao[2]
-	results["PacketsLostFLC(%)"] = fresult_fflc[2]
 	results["PacketsLostRO(%)"] = fresult_fro[2]
+	results["PacketsLostFLC(%)"] = fresult_fflc[2]
+	results["PacketsLostFLCAG(%)"] = fresult_fflcag[2] 
 	
 	results["Jitter"] = fresult_fao[3]
-	results["JitterFLC"] = fresult_fflc[3]
 	results["JitterRO"] = fresult_fro[3]
+	results["JitterFLC"] = fresult_fflc[3]
+	results["JitterFLCAG"] = fresult_fflcag[3] 
 	
 	results["Latency"] = fresult_fao[4]
-	results["LatencyFLC"] = fresult_fflc[4]
 	results["LatencyRO"] = fresult_fro[4]
+	results["LatencyFLC"] = fresult_fflc[4]
+	results["LatencyFLCAG"] = fresult_fflcag[4] 
 	
 	results["PowerConsumed(W)"] = fresult_fao[5]
-	results["PowerConsumedFLC(W)"] = fresult_fflc[5]
 	results["PowerConsumedRO(W)"] = fresult_fro[5]
+	results["PowerConsumedFLC(W)"] = fresult_fflc[5]
+	results["PowerConsumedFLCAG(W)"] = fresult_fflcag[5]
 	
 	results["Th/Wl(%)"] = fresult_fao[6]
-	results["Th/WlFLC(%)"] = fresult_fflc[6]
 	results["Th/WlRO(%)"] = fresult_fro[6]
+	results["Th/WlFLC(%)"] = fresult_fflc[6]
+	results["Th/WlFLCAG(%)"] = fresult_fflcag[6] 
 
 	results.to_csv('outSc'+scenario+'.csv')
 	plot_all_graphics(results, scenario)

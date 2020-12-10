@@ -173,5 +173,56 @@ def flc_simulation_filter(wsn, wl, run, scenario):
         th_wlFLC.append(totalPkSentCountFLC[i-1] * 100 / wl[i-1])
 
     return [totalPkSentCountFLC, totalPkReceivedCountFLC, packetLossFLC, jitterMeanFLC, latencyMeanFLC, consumedPowerFLC, th_wlFLC];
+    
+    
+def flcag_simulation_filter(wsn, wl, run, scenario):
+
+    totalPkSentCountFLC = []
+    totalPkReceivedCountFLC = []
+    packetLossFLC = []
+    consumedPowerFLC = []
+    latencyMeanFLC = []
+    jitterMeanFLC = []
+    th_wlFLC = []
+
+    for i in range(1, 11):
+        packetSentCountFLC = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-3')) & (wsn.type=='scalar') & 
+        (wsn.module.str.startswith('Sc'+scenario+'.ss')) & 
+        (wsn.module.str.endswith("udp")) & (wsn.name=='packetSent:count')] 
+
+        packetReceivedCountFLC = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-3'))& (wsn.type=='scalar') & 
+        (wsn.module.str.startswith('Sc'+scenario+'.sink')) & 
+        (wsn.module.str.endswith("udp")) & (wsn.name=='packetReceived:count')]
+
+        totalPkSentCountFLC.append(sum(packetSentCountFLC.value))
+        totalPkReceivedCountFLC.append(sum(packetReceivedCountFLC.value))
+        packetLossFLC.append((totalPkSentCountFLC[i-1] - totalPkReceivedCountFLC[i-1]) * 100 / totalPkSentCountFLC[i-1])
+
+
+        residualEnergyFLC = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-3')) & (wsn.type=='scalar') & 
+        (wsn.name=='residualEnergyCapacity:last') & 
+        (wsn.module.str.endswith('energyStorage'))] 
+
+        if(int(scenario) == 1):
+            spentEnergyJFLC = 3000 - sum(residualEnergyFLC.value)
+        elif(int(scenario) == 2):
+            spentEnergyJFLC = 9000 - sum(residualEnergyFLC.value)
+        elif(int(scenario) == 3):
+            spentEnergyJFLC = 15000 - sum(residualEnergyFLC.value)
+        consumedPowerFLC.append(spentEnergyJFLC / 240)
+
+        latencyFLC = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-3')) & (wsn.type=='histogram') & 
+        (wsn.name=='endToEndDelay:histogram')] 
+
+        latencyMeanFLC.append(latencyFLC["mean"].mean())
+
+        jitterFLC = wsn[(wsn.run.str.startswith('wsnSc'+scenario+'T'+str(i)+'-3')) & 
+        (wsn.type=='histogram') & (wsn.name=='jitter:histogram')] 
+
+        jitterMeanFLC.append(jitterFLC["mean"].mean()) 
+        
+        th_wlFLC.append(totalPkSentCountFLC[i-1] * 100 / wl[i-1])
+
+    return [totalPkSentCountFLC, totalPkReceivedCountFLC, packetLossFLC, jitterMeanFLC, latencyMeanFLC, consumedPowerFLC, th_wlFLC];
      
 
