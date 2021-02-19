@@ -76,11 +76,13 @@ void ControllerInterface::handleMessage(cMessage *msg)
 {
     if (msg == apSortingTimer) {
         std::vector<pair> vec = sortApByThroughput();
-        for (auto it = vec.begin(); it != vec.end(); ++it) {
-            apAnalisys(it->first, it->second);
+
+        bool changes = false;
+        for (auto it = vec.begin(); it != vec.end() && !changes; ++it) {
+          changes = apAnalisys(it->first, it->second);
         }
         if(numberApsOff < (aplist.size()/2)){
-            scheduleAt(simTime() + 10, apSortingTimer);
+            scheduleAt(simTime() + 3, apSortingTimer);
         }
     }else if(msg == randomOffTimer){
         std::vector<pair> vec = sortApByThroughput();
@@ -136,7 +138,7 @@ void ControllerInterface::receiveSignal (cComponent *source, simsignal_t signalI
     cout << "Throughput: " << report->getThroughput();
 }
 
-void ControllerInterface::apAnalisys (const int id, ApInfo &ap){
+bool ControllerInterface::apAnalisys (const int id, ApInfo &ap){
 
     std::string s = "packet" + std::to_string(packetsCount++);
     int n = s.length();
@@ -157,26 +159,29 @@ void ControllerInterface::apAnalisys (const int id, ApInfo &ap){
     float resp = *(float *)&r;
     cout << rName << "  " << resp << endl;
 
-    cout << "listSize " << aplist.size();
-    cout << "numberOff " << numberApsOff;
+    cout << "listSize " << aplist.size() << endl;
+    cout << "numberOff " << numberApsOff << endl;
     if(resp <= 50 && ap.isOff()){
         restartAp(id, &ap);
         numberApsOff--;
+        return true; // Means that a change was made in the network topology
     } else if (resp > 50 && !ap.isOff() && numberApsOff < (aplist.size()/2)){
         shutdownAp(id, &ap);
         numberApsOff++;
+        return true;// Means that a change was made in the network topology
     }
+    return false;// Means that no change was made in the network topology
 }
 
 void ControllerInterface::shutdownAp (const int id, ApInfo *ap){
-    printf("\n %s %i ", "Shutting Down AP", id);
+    printf("\n %s %i ", "Shutting Down AP", id, "\n");
     ApInfo *apinfo = lookupAp(id);
     apinfo->setOff(true);
     this->emit(ap->getControlSignalID(),true, nullptr);
 }
 
 void ControllerInterface::restartAp (const int id, ApInfo *ap){
-    printf("\n %s %i", "Restarting AP", id);
+    printf("\n %s %i", "Restarting AP", id, "\n");
     ApInfo *apinfo = lookupAp(id);
     apinfo->setOff(false);
     this->emit(ap->getControlSignalID(),false, nullptr);

@@ -66,7 +66,7 @@ class ControllerInterface : public cSimpleModule,  protected cListener{
         virtual void handleMessage(cMessage *msg)override;
         virtual simsignal_t concatRegister(std::string s, std::string s1);
         virtual ApInfo *lookupAp(int id);
-        virtual void apAnalisys (const int id, ApInfo &ap);
+        virtual bool apAnalisys (const int id, ApInfo &ap);
         virtual void shutdownAp (const int id, ApInfo *ap);
         virtual void restartAp (const int id, ApInfo *ap);
 };
