@@ -220,7 +220,7 @@ void MgmtAp::sendReport() {
     reportNotif.setNumberOfNeighbours(apList.size());
     reportNotif.setRssiMean(calculateRssiMean());
     if(th != nullptr){
-        reportNotif.setThroughput((this->th->getThroughput()*100)/15200000);
+        reportNotif.setThroughput((this->th->getThroughput()*100)/1300000);
     }else
         reportNotif.setThroughput(0.0);
     emit(reportReadySignalID, &reportNotif);

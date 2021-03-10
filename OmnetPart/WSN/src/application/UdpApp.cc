@@ -17,6 +17,7 @@
 #include "inet/networklayer/common/FragmentationTag_m.h"
 #include "inet/transportlayer/contract/udp/UdpControlInfo_m.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 using namespace inet;
 using namespace std;
@@ -41,20 +42,23 @@ L3Address UdpApp::chooseDestAddr()
 
 void UdpApp::sendPacket()
 {
-    std::ostringstream str;
-    str << packetName << "-" << numSent;
-    Packet *packet = new Packet(str.str().c_str());
-    if(dontFragment)
-        packet->addTagIfAbsent<FragmentationReq>()->setDontFragment(true);
-    const auto& payload = makeShared<ApplicationPacket>();
-    payload->setChunkLength(B(par("messageLength")));
-    payload->setSequenceNumber(numSent);
-    payload->addTag<CreationTimeTag>()->setCreationTime(simTime());
-    packet->insertAtBack(payload);
-    L3Address destAddr = chooseDestAddr();
-    emit(packetSentSignal, packet);
-    socket.sendTo(packet, destAddr, destPort);
-    numSent++;
+    int send = rand() % 100 + 1;
+    if (send > 30){
+        std::ostringstream str;
+        str << packetName << "-" << numSent;
+        Packet *packet = new Packet(str.str().c_str());
+        if(dontFragment)
+            packet->addTagIfAbsent<FragmentationReq>()->setDontFragment(true);
+        const auto& payload = makeShared<ApplicationPacket>();
+        payload->setChunkLength(B(par("messageLength")));
+        payload->setSequenceNumber(numSent);
+        payload->addTag<CreationTimeTag>()->setCreationTime(simTime());
+        packet->insertAtBack(payload);
+        L3Address destAddr = chooseDestAddr();
+        emit(packetSentSignal, packet);
+        socket.sendTo(packet, destAddr, destPort);
+        numSent++;
+    }
 }
 
 void UdpApp::processStart()
