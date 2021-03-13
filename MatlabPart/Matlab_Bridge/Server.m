@@ -1,5 +1,5 @@
 function Server
-    fis = readfis('wsnFuzzyController.fis'); %readfis('TempSolution.fis');   
+    fis = readfis('TempSolution.fis');   %readfis('wsnFuzzyController.fis');
 
     pipe = OMNeTPipe("localhost", 18638);
     responseNames = 'respPk';

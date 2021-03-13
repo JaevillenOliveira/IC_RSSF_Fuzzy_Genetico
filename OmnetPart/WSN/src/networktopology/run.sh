@@ -3,17 +3,13 @@
 export PATH=$HOME/anaconda3/bin:$PATH
 export PATH=$HOME/omnetpp-5.5.1/bin:$PATH
 
-#./runSc1RandomOFF.sh
-#./runSc2RandomOFF.sh
-#./runSc3RandomOFF.sh
+#source runAO_RO.sh; run_tests 3
+#source runAO_RO.sh; run_tests 2
+#source runAO_RO.sh; run_tests 3
 
-#./runSc1AlwaysON.sh
-#./runSc2AlwaysON.sh
-#./runSc3AlwaysON.sh
-
-./runSc1FLC.sh
-./runSc2FLC.sh
-./runSc3FLC.sh
+source runFLC.sh; run_tests 1
+#source runFLC.sh; run_tests 2
+#source runFLC.sh; run_tests 3
 
 cd results
 scavetool x wsnSc1T* -o wsn1.csv

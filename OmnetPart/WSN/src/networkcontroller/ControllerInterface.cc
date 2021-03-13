@@ -33,21 +33,25 @@ ControllerInterface::~ControllerInterface() {
 
 void ControllerInterface::initialize()
 {
-    this->getSimulation()->getSystemModule()->subscribe("reportReadySignal", this);
-    opMode = par("opMode").stdstringValue();
-    if(opMode == "fuzzyControlled"){
-        apSortingTimer = new cMessage("apSortingTimer");
-        scheduleAt(simTime() +  2, apSortingTimer);
-        p = new OMNeTPipe("localhost", 18638);
-        tNumber = std::to_string(par("tNumber").intValue());
-        scNumber = std::to_string(par("scNumber").intValue());
-        MyFile.open("/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/FuzzyEntries/Sc"+scNumber+"T"+tNumber+".txt");
-        MyFile << "ID  RSSI  Neighbors  Sources  Throughput" << endl;
-    }else if(opMode == "randomOFF"){
-        randomOffTimer = new cMessage("randomOffTimer");
-        scheduleAt(simTime() +  2, randomOffTimer);
+    try {
+        this->getSimulation()->getSystemModule()->subscribe("reportReadySignal", this);
+        opMode = par("opMode").stdstringValue();
+        if(opMode == "fuzzyControlled"){
+            apSortingTimer = new cMessage("apSortingTimer");
+            scheduleAt(simTime() +  2, apSortingTimer);
+            p = new OMNeTPipe("localhost", 18638);
+            tNumber = std::to_string(par("tNumber").intValue());
+            scNumber = std::to_string(par("scNumber").intValue());
+            MyFile.open("/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/FuzzyEntries/Sc"+scNumber+"T"+tNumber+".txt");
+            MyFile << "ID  RSSI  Neighbors  Sources  Throughput" << endl;
+        }else if(opMode == "randomOFF"){
+            randomOffTimer = new cMessage("randomOffTimer");
+            scheduleAt(simTime() +  2, randomOffTimer);
+        }
+        numberApsOff = 0;
+    } catch(...){
+        exit (3);
     }
-    numberApsOff = 0;
 };
 
 void ControllerInterface::randomOff(const int id, ApInfo &ap){

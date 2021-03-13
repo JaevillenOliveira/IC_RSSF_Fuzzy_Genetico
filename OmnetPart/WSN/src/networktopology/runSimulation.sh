@@ -12,7 +12,7 @@ cd IC/OmnetPart/WSN/src/networktopology
 
 if [ $@ -eq "1" ]
 then
-    ./runSc1FLC.sh
+    source runFLC.sh; run_tests 1
     rm /home/jaevillen/IC/MatlabPart/Matlab_Bridge/TempSolution.fis 
     cd results
     scavetool x wsnSc1T* -o wsn1.csv
@@ -20,7 +20,7 @@ then
 
 elif [ $@ == "2" ]
 then
-    ./runSc2FLC.sh
+    source runFLC.sh; run_tests 2
     rm /home/jaevillen/IC/MatlabPart/Matlab_Bridge/TempSolution.fis 
     cd results
     scavetool x wsnSc2T* -o wsn2.csv
@@ -28,7 +28,7 @@ then
 
 elif [ $@ == "3" ]
 then
-    ./runSc3FLC.sh
+    source runFLC.sh; run_tests 3
     rm /home/jaevillen/IC/MatlabPart/Matlab_Bridge/TempSolution.fis 
     cd results
     scavetool x wsnSc3T* -o wsn3.csv
