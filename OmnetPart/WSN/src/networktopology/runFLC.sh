@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function start_server() {
-	gnome-terminal --working-directory=IC/MatlabPart/Matlab_Bridge/ -- /usr/local/MATLAB/R2019b/bin/matlab -nodisplay -nosplash -nodesktop -r "run('/home/jaevillen/IC/MatlabPart/Matlab_Bridge/Server.m')" &
+	gnome-terminal --working-directory=IC/MatlabPart/Matlab_Bridge/ -- /usr/local/MATLAB/R2018b/bin/matlab -nodisplay -nosplash -nodesktop -r "run('/home/jaevillen/IC/MatlabPart/Matlab_Bridge/Server.m')" &
 	
 }
 
@@ -11,13 +11,14 @@ function run_sim() {
 }
 
 function run_tests() {     
-	start_server
-	sleep 20        
+	#start_server
+	#sleep 20        
 	             
-	for i in $(seq 1 1) 
+	for i in $(seq 1 10) 
 	do
 		loop_count=0
 		start_server
+	    sleep 5
 		run_sim $1 $i 
 		status=$?
 		

@@ -34,6 +34,7 @@ public class Algorithm extends AbstractGeneticAlgorithm implements Serializable 
     private int noChangeCounter;
     private double bestFit;
     private SequentialSolutionListEvaluator evaluator;
+    private String myPath;
       
     /**
      *
@@ -42,9 +43,10 @@ public class Algorithm extends AbstractGeneticAlgorithm implements Serializable 
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public Algorithm(Problemfz problem, int maxPopulationSize) throws FileNotFoundException, IOException {
+    public Algorithm(Problemfz problem, int maxPopulationSize, String myPath) throws FileNotFoundException, IOException {
         super(problem);         
         this.setMaxPopulationSize(maxPopulationSize-1);
+        this.myPath = myPath;
         this.iterations = 0; 
         this.selectionOperator = new FzTournamentSelection(3);
         this.crossoverOperator = new Crossover(0.7);//new FzSetsBLXAlphaCrossover(0.7, problem);
@@ -52,12 +54,6 @@ public class Algorithm extends AbstractGeneticAlgorithm implements Serializable 
         this.evaluator = new SequentialSolutionListEvaluator();
     }
     
-    private void saveExecState(String path, Object objToSave) throws FileNotFoundException, IOException{
-        ObjectOutputStream stateObj = new ObjectOutputStream(new FileOutputStream(path));
-        stateObj.writeObject(objToSave);
-        System.out.println("Object Saved to "+path);
-    }
-
     /**
      * Writes the entire population into a file
      * @param filePath
@@ -100,8 +96,8 @@ public class Algorithm extends AbstractGeneticAlgorithm implements Serializable 
         bw.close();
     }
     
-    private void logEvolution(List solutionList, int scenario) throws IOException{   
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/EvolutionLogSc"+String.valueOf(scenario)+".txt", true))) {
+    private void logEvolution(List solutionList, String filePath) throws IOException{   
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
             Iterator it = solutionList.iterator();
             int subjectCounter = 0;
             bw.write("GENERATION " + this.iterations);
@@ -117,9 +113,9 @@ public class Algorithm extends AbstractGeneticAlgorithm implements Serializable 
     
     private void updateLogs(Object population, int scenario) throws IOException{
         //this.saveExecState("/home/jaevillen/IC/Buffer/ExecState", population);
-        this.writePopulation("/home/jaevillen/IC/Buffer/FittestGenerationSc"+String.valueOf(scenario)+".txt");
-        this.logEvolution((List) population, scenario);
-        this.writeBestSolution("/home/jaevillen/IC/Buffer/BestSolutionSc"+String.valueOf(scenario)+".txt");
+        this.writePopulation(this.myPath+"FittestGenerationSc"+String.valueOf(scenario)+".txt");
+        this.logEvolution((List) population, this.myPath+"EvolutionLogSc"+String.valueOf(scenario)+".txt");
+        this.writeBestSolution(this.myPath+"BestSolutionSc"+String.valueOf(scenario)+".txt");
         
     }
     

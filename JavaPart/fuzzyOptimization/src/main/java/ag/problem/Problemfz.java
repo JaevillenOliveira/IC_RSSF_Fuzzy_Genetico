@@ -34,6 +34,8 @@ public final class Problemfz extends AbstractDoubleProblem{
     private BufferedReader br;
     private StringTokenizer st;
     private int scenarioId;
+    private String simFilePath;
+    private String bufferPath;
     
     /**
      *
@@ -45,7 +47,9 @@ public final class Problemfz extends AbstractDoubleProblem{
      * @param numberOfSets
      * @param setShape
      */
-    public Problemfz(String name, int numberOfObjectives, int numberOfVariables, ArrayList<Double> upperLimits, ArrayList<Double> lowerLimits, int numberOfSets, SetShape setShape, int scenarioId) {
+    public Problemfz(String name, int numberOfObjectives, int numberOfVariables, 
+                        ArrayList<Double> upperLimits, ArrayList<Double> lowerLimits, 
+                        int numberOfSets, SetShape setShape, int scenarioId, String bufferPath, String simFilePath) {
         this.setName(name);
         this.setNumberOfObjectives(numberOfObjectives);
         this.setNumberOfVariables(numberOfVariables);
@@ -55,6 +59,8 @@ public final class Problemfz extends AbstractDoubleProblem{
         this.setShape = setShape;
         this.rdm = new Random();
         this.scenarioId = scenarioId;
+        this.bufferPath = bufferPath;
+        this.simFilePath = simFilePath;
     }
  
     /**
@@ -64,17 +70,18 @@ public final class Problemfz extends AbstractDoubleProblem{
     @Override
     public void evaluate(DoubleSolution s) {
         try {
-            this.writeSolution(s, "/home/jaevillen/IC/Buffer/TempSolution.txt");
+            this.writeSolution(s, this.bufferPath+"TempSolution.txt");
             
-            ProcessBuilder processBuilder = new ProcessBuilder("/home/jaevillen/IC/OmnetPart/WSN/src/networktopology/runSimulation.sh", String.valueOf(this.scenarioId));
+            ProcessBuilder processBuilder = new ProcessBuilder(this.simFilePath, String.valueOf(this.scenarioId));
             //processBuilder.inheritIO();
-            processBuilder.redirectOutput(new File("/home/jaevillen/IC/Buffer/log.txt"));
+            processBuilder.redirectOutput(new File(this.bufferPath+"log.txt"));
             Process process = processBuilder.start();
             process.waitFor(); //Waits for the simulation to finish
             
             double energyConsumed = 0;
-            energyConsumed += this.getEnergyConsumed("/home/jaevillen/IC/Buffer/power_consumption_sc"+String.valueOf(this.scenarioId)+".txt");
+            energyConsumed += this.getEnergyConsumed(this.bufferPath+"power_consumption_sc"+String.valueOf(this.scenarioId)+".txt");
             
+            System.out.println("Subject evaluated: "+String.valueOf(energyConsumed));
             s.setObjective(0, energyConsumed);       
             System.out.println("Evaluated " + s.getObjective(0));
 //            System.exit(0);

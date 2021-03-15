@@ -39,10 +39,10 @@ public class Controller {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public Controller(int scenarioId) throws FileNotFoundException, IOException {
+    public Controller(int scenarioId, String filePath) throws FileNotFoundException, IOException {
         this.scenarioId = scenarioId;
-        this.br = new BufferedReader(new FileReader("/home/jaevillen/IC/Buffer/ConfigFile.txt"));
-        this.bw = new BufferedWriter(new FileWriter("/home/jaevillen/IC/Buffer/ConfigFile.txt", true)); 
+        this.br = new BufferedReader(new FileReader(filePath));
+        this.bw = new BufferedWriter(new FileWriter(filePath, true)); 
     }
     
      /**
@@ -50,7 +50,7 @@ public class Controller {
      * @return the Problem object 
      * @throws IOException
      */
-    public Problemfz readProblem() throws IOException{
+    public Problemfz readProblem(String bufferPath, String simFilePath) throws IOException{
         String name = br.readLine(); 
         int objectives = 0, numberofSets = 0;
         SetShape setsType = null;
@@ -103,7 +103,7 @@ public class Controller {
                 /*Creates a Problem object with the information read
                  * For this problem the Variables of a Solution will be the points of each set of each fuzzy variable
                 */
-                return new Problemfz(name, objectives, this.numberFzVariables*numberofSets*3, upperLimits, lowerLimits, numberofSets, setsType, this.scenarioId);
+                return new Problemfz(name, objectives, this.numberFzVariables*numberofSets*3, upperLimits, lowerLimits, numberofSets, setsType, this.scenarioId, bufferPath, simFilePath);
             default:
                 break;
         }   
